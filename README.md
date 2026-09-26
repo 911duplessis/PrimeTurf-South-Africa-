@@ -165,11 +165,12 @@ photo → mark area → size & surface → use → choose turf → requirements 
 | `visualiser.js` | Flow controller: steps, validation, collecting answers, rendering the result, CTAs. It **never calls a model directly.** |
 | `providers.js` | **The AI seam.** `LocalProvider` (today) and `RemoteProvider` (AI). `getProvider()` picks one based on `site.json → visualiser.apiBase`. |
 | `renderer.js` | Loads and downscales the photo (≤1600px), runs the tap-to-outline editor, and composites procedural turf into the marked area while keeping the photo's light and shade. |
+| `detect.js` | Lawn auto-detect: colour classification, largest connected region, traced to an editable polygon. Runs in the browser on a 160px copy of the photo. |
 | `area.js` | Works out m² from the outline. It projects the outline onto the ground, allowing for the camera angle, and scales it with one edge length the visitor enters. Expect about ±25%. |
 | `estimator.js` | A pure pricing function. It places each project inside its turf range's band (Value R200–450, Standard R350–600, Premium R500–850, Sport R285–625) by site difficulty, and always stays **inside R200–R850/m²**. |
 | `lib/turf.js` | Turf texture painter, with looks `natural`, `lush`, `hardwearing` and `putting`. |
 
-**Mark area step:** after outlining, the visitor enters the length of the highlighted edge (the widest edge across the photo, nearest the camera; "Use a different edge" cycles through them). `area.js` turns that into m² and fills in the size step, which says "Calculated from your outline".
+**Mark area step:** `detect.js` finds the lawn in the photo (the largest patch of grass-coloured pixels, including brown patches inside green) and outlines it automatically. The visitor can keep it, press "Detect lawn" again, or clear it and tap their own. `area.js` then estimates m² straight away from the camera height for the chosen viewpoint (standing about 1.6 m, upstairs about 4.5 m), with the tilt worked out from the lawn's converging sides. Entering one real edge length replaces that with a measured figure. Implausible estimates (under 8 m² or over 2000 m²) are never shown; the visitor is asked for a length instead. The size step says where the figure came from.
 
 **Choose turf step:** the PrimeTurf range from `src/_data/products.json` (name, tier, pile, stitch rate, guarantee and photo in `src/assets/img/products/`). Each product links to a price band (`priceTier` → `priceBands`) that the estimator prices within, and a `look` that picks the concept colour style. To add a product, add an entry and a 640×400 WebP.
 

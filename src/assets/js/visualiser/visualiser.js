@@ -10,7 +10,8 @@
  * The controller never talks to a model directly — swap the provider, not this file.
  */
 import { loadToCanvas, maskEditor } from "./renderer.js";
-import { areaFromOutline, nearestEdge } from "./area.js";
+import { areaFromOutline, areaFromPhoto, nearestEdge, VIEWPOINTS } from "./area.js";
+import { detectLawn } from "./detect.js";
 import { estimate, label } from "./estimator.js";
 import { getProvider } from "./providers.js";
 import { createCompare } from "../ba-slider.js";
@@ -94,6 +95,7 @@ function init(root) {
       state.sample = sample;
       state.polygon = sample ? SAMPLE.polygon : null;
       state.editor?.destroy(); state.editor = null;
+      state.triedDetect = false;
       if (sample && !areaTouched) { m2.value = String(SAMPLE.areaM2); syncRange(); }
       // Ask the vision model (if configured) for a head start — don't block the flow.
       state.analysis = null;
@@ -135,18 +137,50 @@ function init(root) {
   const calibLen = q("[data-calib-len]");
   const calibOut = q("[data-calib-out]");
   const areaSource = q("[data-area-source]");
+  const detectStatus = q("[data-detect-status]");
+  const viewpoint = () => VIEWPOINTS[form.querySelector('[name="viewpoint"]:checked')?.value] || VIEWPOINTS.ground;
   function measureOutline() {
+    if (!state.polygon) return;
     const len = num(calibLen.value);
-    if (!state.polygon || !(len > 0)) {
-      calibOut.textContent = "Enter one length and we’ll work out the area from your outline.";
+    const measured = len > 0;
+    const a = measured
+      ? areaFromOutline(state.polygon, state.edge, len, state.photo, viewpoint())
+      : areaFromPhoto(state.polygon, state.photo, viewpoint(), state.edge);
+    if (!a) {
+      calibOut.textContent = measured
+        ? "We couldn’t size that outline. Try another edge, or set the size on the next step."
+        : "We can’t judge distances in this photo. Enter the length of the highlighted edge below and we’ll work out the area.";
       return;
     }
-    const a = areaFromOutline(state.polygon, state.edge, len, state.photo);
-    if (!a) { calibOut.textContent = "We couldn’t measure that outline. Try another edge, or enter the size on the next step."; return; }
     const m = Math.max(1, Math.round(a));
-    calibOut.innerHTML = `Your outline is about <strong>${m} m²</strong>. You can adjust it on the next step.`;
-    setArea(m, "outline");
+    calibOut.innerHTML = measured
+      ? `Your area is about <strong>${m} m²</strong>, from your outline and measurement.`
+      : `Your area is about <strong>${m} m²</strong>, estimated from your photo.`;
+    setArea(m, measured ? "measured" : "photo");
   }
+
+  /** Find the lawn in the photo and use it as the outline. */
+  function autoDetect({ announce = true } = {}) {
+    if (!state.photo) return false;
+    const c = document.createElement("canvas");
+    c.width = 160; c.height = Math.max(1, Math.round(160 * state.photo.height / state.photo.width));
+    const ctx = c.getContext("2d", { willReadFrequently: true });
+    ctx.drawImage(state.photo, 0, 0, c.width, c.height);
+    const px = ctx.getImageData(0, 0, c.width, c.height);
+    const res = detectLawn({ data: px.data, width: px.width, height: px.height, channels: 4 });
+    detectStatus.hidden = !announce;
+    if (!res) {
+      detectStatus.textContent = "We couldn’t find a lawn in this photo. Tap around the area to outline it.";
+      return false;
+    }
+    state.polygon = res.polygon; state.edge = null;
+    state.editor?.destroy(); state.editor = null;
+    if (current() === "area") onEnter("area");
+    detectStatus.textContent = "Lawn detected. Check the outline. If it’s off, clear it and tap your own.";
+    return true;
+  }
+  q("[data-viz-detect]").addEventListener("click", () => autoDetect());
+  form.addEventListener("change", (e) => { if (e.target.name === "viewpoint") measureOutline(); });
   calibLen.addEventListener("input", measureOutline);
   q("[data-calib-next]").addEventListener("click", () => {
     if (!state.polygon) return;
@@ -168,9 +202,14 @@ function init(root) {
     m2Range.style.setProperty("--fill", `${((m2Range.value - m2Range.min) / (m2Range.max - m2Range.min)) * 100}%`);
     presets.forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.m2Preset === v)));
   }
+  const AREA_SOURCES = {
+    photo: "Estimated from your photo, roughly ±35%. Adjust it if you know the size.",
+    measured: "Calculated from your outline and measurement, roughly ±20%.",
+  };
   const setArea = (v, source = "") => {
     m2.value = String(v); areaTouched = true; syncRange(); updateLive();
-    areaSource.hidden = source !== "outline";
+    areaSource.hidden = !AREA_SOURCES[source];
+    areaSource.textContent = AREA_SOURCES[source] || "";
   };
   ["input", "change"].forEach((ev) => m2Range.addEventListener(ev, () => setArea(m2Range.value)));
   m2.addEventListener("input", () => { areaTouched = true; areaSource.hidden = true; syncRange(); });
@@ -224,7 +263,7 @@ function init(root) {
   updateInstallHint();
 
   /* ---------- Live indicative estimate while answering ---------- */
-  const LIVE_STEPS = new Set(["size", "use", "look", "extras", "contact"]);
+  const LIVE_STEPS = new Set(["area", "size", "use", "look", "extras", "contact"]);
   const liveEst = q("[data-live-est]");
   function updateLive() {
     if (!LIVE_STEPS.has(current())) { liveEst.hidden = true; return; }
@@ -238,6 +277,10 @@ function init(root) {
 
   /* ---------- Enter hooks ---------- */
   function onEnter(key) {
+    if (key === "area" && state.photo && !state.editor && !state.polygon && !state.triedDetect) {
+      state.triedDetect = true;
+      if (autoDetect()) return;
+    }
     if (key === "area" && state.photo && !state.editor) {
       state.editor = maskEditor(q("[data-viz-mask-canvas]"), state.photo, {
         initial: state.polygon || [],
