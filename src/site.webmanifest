@@ -1,1 +1,1 @@
-{ "name": "PrimeTurf", "short_name": "PrimeTurf", "icons": [{ "src": "/assets/img/favicon.svg", "type": "image/svg+xml", "sizes": "any" }], "theme_color": "#0F1411", "background_color": "#F4F5F1", "display": "browser" }
+{ "name": "PrimeTurf", "short_name": "PrimeTurf", "icons": [{ "src": "/assets/img/brand/favicon-180.png", "type": "image/png", "sizes": "180x180" }, { "src": "/assets/img/brand/favicon-512.png", "type": "image/png", "sizes": "512x512" }], "theme_color": "#1A3A2A", "background_color": "#FAF8F2", "display": "browser" }

@@ -13,12 +13,12 @@ breadcrumbs:
       <h1 class="display-l">Talk to {{ site.contact.person }}.</h1>
       <p class="lede">{{ site.promises.quote }}. {{ site.promises.response }}. {{ site.promises.siteVisit }}.</p>
       <ul class="contact-cards">
-        <li><a class="contact-card" href="tel:{{ site.contact.phoneE164 }}"><span class="mono">Call</span><strong>{{ site.contact.phoneDisplay }}</strong></a></li>
-        <li><a class="contact-card" href="https://wa.me/{{ site.contact.whatsapp }}" target="_blank" rel="noopener"><span class="mono">WhatsApp</span><strong>{{ site.contact.phoneDisplay }}</strong></a></li>
-        <li><a class="contact-card" href="mailto:{{ site.contact.email }}"><span class="mono">Email</span><strong>{{ site.contact.email }}</strong></a></li>
+        <li><a class="contact-card" href="tel:{{ site.contact.phoneE164 }}"><span class="label">Call</span><strong>{{ site.contact.phoneDisplay }}</strong></a></li>
+        <li><a class="contact-card" href="https://wa.me/{{ site.contact.whatsapp }}" target="_blank" rel="noopener"><span class="label">WhatsApp</span><strong>{{ site.contact.phoneDisplay }}</strong></a></li>
+        <li><a class="contact-card" href="mailto:{{ site.contact.email }}"><span class="label">Email</span><strong>{{ site.contact.email }}</strong></a></li>
       </ul>
       <div class="warranty-note">
-        <p class="mono">Warranty</p>
+        <p class="label">Warranty</p>
         <p>{{ site.warranty.statement }}</p>
       </div>
     </div>

@@ -15,7 +15,7 @@ eleventyComputed:
     {% if collections.caseStudies.length %}
     <ul class="post-list">
       {% for p in collections.caseStudies %}
-      <li data-reveal><a class="post-card" href="{{ p.url }}"><span class="mono">{{ p.data.location }}</span><h2 class="post-card__title">{{ p.data.title }}</h2><p>{{ p.data.summary }}</p><span class="svc-card__arrow" aria-hidden="true">→</span></a></li>
+      <li data-reveal><a class="post-card" href="{{ p.url }}"><span class="label">{{ p.data.location }}</span><h2 class="post-card__title">{{ p.data.title }}</h2><p>{{ p.data.summary }}</p><span class="svc-card__arrow" aria-hidden="true">→</span></a></li>
       {% endfor %}
     </ul>
     {% else %}

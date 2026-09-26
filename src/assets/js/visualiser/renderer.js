@@ -64,7 +64,7 @@ export function maskEditor(canvas, source, { onChange, initial = [] } = {}) {
     const poly = points.length >= 3 ? points : null;
 
     if (poly) {
-      ctx.fillStyle = "rgba(198,242,78,.32)";
+      ctx.fillStyle = "rgba(212,169,64,.32)";
       ctx.fill(pathFrom(poly, w, h));
     } else {
       // Preview of the default area, dashed.
@@ -72,7 +72,7 @@ export function maskEditor(canvas, source, { onChange, initial = [] } = {}) {
       ctx.setLineDash([10 * u, 8 * u]);
       ctx.strokeStyle = "rgba(255,255,255,.8)";
       ctx.lineWidth = 2 * u;
-      ctx.fillStyle = "rgba(198,242,78,.14)";
+      ctx.fillStyle = "rgba(212,169,64,.16)";
       const d = pathFrom(defaultMask(), w, h);
       ctx.fill(d); ctx.stroke(d);
       ctx.restore();
@@ -81,16 +81,16 @@ export function maskEditor(canvas, source, { onChange, initial = [] } = {}) {
       ctx.beginPath();
       points.forEach(([x, y], i) => (i ? ctx.lineTo(x * w, y * h) : ctx.moveTo(x * w, y * h)));
       if (poly) ctx.closePath();
-      ctx.strokeStyle = "#C6F24E";
+      ctx.strokeStyle = "#D4A940";
       ctx.lineWidth = 3 * u;
       ctx.stroke();
       points.forEach(([x, y], i) => {
         ctx.beginPath();
         ctx.arc(x * w, y * h, (i === 0 ? 10 : 7) * u, 0, Math.PI * 2);
-        ctx.fillStyle = i === 0 ? "#0F1411" : "#C6F24E";
+        ctx.fillStyle = i === 0 ? "#1A3A2A" : "#D4A940";
         ctx.fill();
         ctx.lineWidth = 2.5 * u;
-        ctx.strokeStyle = i === 0 ? "#C6F24E" : "#0F1411";
+        ctx.strokeStyle = i === 0 ? "#D4A940" : "#1A3A2A";
         ctx.stroke();
       });
     }
@@ -178,12 +178,12 @@ export function renderConcept(source, polygon, look = "natural") {
 
   // 5. Label — this is a concept, not a photograph.
   const fs = Math.max(11, Math.round(unit * 15));
-  o.font = `500 ${fs}px "Geist Mono", ui-monospace, monospace`;
+  o.font = `600 ${fs}px Montserrat, "Helvetica Neue", Arial, sans-serif`;
   const text = "CONCEPT ONLY · PRIMETURF";
   const tw = o.measureText(text).width;
-  o.fillStyle = "rgba(15,20,17,.72)";
+  o.fillStyle = "rgba(26,58,42,.85)";
   o.fillRect(w - tw - fs * 2, h - fs * 2.6, tw + fs * 1.4, fs * 1.9);
-  o.fillStyle = "#C6F24E";
+  o.fillStyle = "#D4A940";
   o.fillText(text, w - tw - fs * 1.3, h - fs * 1.25);
   return out;
 }

@@ -19,7 +19,7 @@ eleventyComputed:
   <div class="wrap detail">
     <div class="detail__main">
       <dl class="spec-table">
-        {% for s in product.specs %}<div><dt class="mono">{{ s.label }}</dt><dd>{{ s.value }}</dd></div>{% endfor %}
+        {% for s in product.specs %}<div><dt class="label">{{ s.label }}</dt><dd>{{ s.value }}</dd></div>{% endfor %}
       </dl>
       <p><strong>Best for:</strong> {{ product.bestFor | join(", ") }}</p>
     </div>

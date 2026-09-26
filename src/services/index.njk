@@ -14,7 +14,7 @@ breadcrumbs:
       {% for s in services %}
       <li data-reveal>
         <a class="svc-card" href="/services/{{ s.slug }}/">
-          <span class="mono svc-card__group">{{ s.group | capitalize }}</span>
+          <span class="label svc-card__group">{{ s.group | capitalize }}</span>
           <h2 class="svc-card__title">{{ s.title }}</h2>
           <p>{{ s.summary }}</p>
           <span class="svc-card__arrow" aria-hidden="true">→</span>

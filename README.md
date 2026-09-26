@@ -11,19 +11,19 @@ npm run build    # → _site/
 
 ---
 
-## 1. Visual direction: "Surveyed Green"
+## 1. Brand system
+
+The site follows the **PrimeTurf Brand System (existing identity, optimised edition)**. It is built from the logo package in `911duplessis/PrimeTurf` (commit `bc9bf2ab`, `assets/logo/`). Don't introduce other colours, fonts or logo variants.
 
 | | |
 |---|---|
-| **Idea** | Precise, measured and quietly confident. It borrows from site surveys and spec sheets: mono labels, coordinates, rulers and ledgers. Motion is organic and slow, like growth. That pairing reads as premium without being flowery, and it suits commercial tenders. |
-| **Colour** | Chalk `#F4F5F1` (a cool off-white, deliberately not cream) · Graphite `#0F1411` · one **signal lime** accent `#C6F24E` used sparingly · Turf `#2E7A3C` · **Clay** `#B8683F`, used only for "before" and dry-ground states. |
-| **Type** | *Bricolage Grotesque* for display (characterful and contemporary) · *Geist* for body text · *Geist Mono* for specs, labels and coordinates. |
-| **Motion** | The hero opens on dry ground, and a lime scan-line sweeps up to leave turf behind. Content reveals grow upward with a clip-path. Buttons fill from the bottom like a blade growing. Hovering a ledger row draws an underline. The before/after slider uses eased physics. All motion respects `prefers-reduced-motion`. |
-| **Imagery** | Turf in the hero, the swatches and the visualiser is drawn **procedurally** on canvas (`lib/turf.js`), so it is crisp, weighs almost nothing and stays on-brand. Project photography goes in the Before/After pairs (see §4). |
+| **Logo** | Real master artwork only, in `src/assets/img/brand/`. The horizontal logo is in the header on white. The footer uses the same logo on an ivory panel, because no approved reverse (dark-ground) version exists yet. The favicons come from the official favicon set. |
+| **Colour** | Primary Green `#1A5A28` (CTAs, links) · Deep Green `#1A3A2A` (text, dark bands) · Warm Gold `#B8902A` (hairlines only) · Gold Light `#D4A940` (gold on dark, gold CTA with deep-green text) · Gold Text `#8A6B20` · Ivory `#FAF8F2` · White · Muted `#4B6456`. Green leads and gold stays at or below about 10% of the area. |
+| **Type** | Cinzel 400 for headlines (the wordmark's face) · Cormorant Garamond for subheads, ledes and card titles · Montserrat for body text and UI. |
+| **Shape & space** | 2px corners on buttons and inputs, 6px on cards and images. Hairlines before shadows. The signature ornament is one short gold hairline under an eyebrow. Sections have generous padding (112px desktop / 64px mobile). |
+| **Imagery** | Until real installation photography is supplied, the hero and the swatches use procedurally painted turf (`lib/turf.js`) under the deep-green scrim, which is the only gradient the system allows. |
 
-What was deliberately left out from the old site: dark-green-and-cream palette, Cinzel serif, and its section order and layout.
-
----
+All tokens are CSS custom properties (`--pt-*`) at the top of `src/assets/css/main.css`, and they mirror the brand system's `tokens.json`.
 
 ## 2. Information architecture
 
@@ -80,7 +80,7 @@ What was deliberately left out from the old site: dark-green-and-cream palette, 
 │  │  ├─ layouts/                base · page · post · case-study
 │  │  └─ partials/               header · footer · schema · ba-gallery · visualiser · quote-form · cta-band …
 │  ├─ assets/
-│  │  ├─ css/main.css            Design tokens + all components
+│  │  ├─ css/main.css            Brand tokens (--pt-*) + all components
 │  │  ├─ js/main.js              Header, menu, reveals, hero, calculator, quote forms
 │  │  ├─ js/ba-slider.js         Before/After slider (reusable)
 │  │  ├─ js/lib/turf.js          Procedural turf painter
@@ -192,6 +192,8 @@ The site uses root-relative URLs (`/assets/…`), so serve it from the root of a
 3. Optional: add `ANTHROPIC_API_KEY` (and your image provider key) under Environment Variables.
 
 ### GitHub Pages (static only)
+> If Pages shows `Error: Invalid syntax for include tag … partials/quote-form.njk`, Pages is set to **Deploy from a branch** and is running Jekyll on the raw source. Switch the source to **GitHub Actions** (step 1). The root `.nojekyll` file stops Jekyll from processing the repo.
+
 1. Repo → Settings → Pages → Source: **GitHub Actions**. `.github/workflows/pages.yml` builds and deploys on every push to `main`.
 2. Set a **custom domain** (`primeturf.co.za`) in the same settings page. Without one, the site sits under `/<repo>/` and root-relative asset paths break.
 3. `api/` is ignored on Pages. The visualiser runs in local mode.
