@@ -1,0 +1,31 @@
+---
+layout: layouts/base.njk
+ogType: article
+---
+{#- Case study. Front matter: title, location, service (slug), areaM2, completed, before, after, summary. -#}
+{%- set svc = services | findBy("slug", service) -%}
+<article>
+  <header class="page-hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/projects/">Projects</a></li><li><span aria-current="page">{{ title }}</span></li></ol></nav>
+      <p class="eyebrow">{{ location }}{% if svc %} · {{ svc.title }}{% endif %}{% if areaM2 %} · {{ areaM2 }} m²{% endif %}</p>
+      <h1 class="display-l">{{ title }}</h1>
+      {% if summary %}<p class="lede">{{ summary }}</p>{% endif %}
+    </div>
+  </header>
+  {% if before and after %}
+  <div class="wrap">
+    <figure class="ba" data-ba>
+      <div class="ba__frame" data-ba-frame>
+        <img class="ba__img" src="{{ after }}" alt="After: {{ title }}" width="1600" height="1000">
+        <div class="ba__before" data-ba-before><img class="ba__img" src="{{ before }}" alt="Before: {{ title }}" width="1600" height="1000"></div>
+        <span class="ba__tag ba__tag--before" aria-hidden="true">Before</span><span class="ba__tag ba__tag--after" aria-hidden="true">After</span>
+        <div class="ba__handle" data-ba-handle role="slider" tabindex="0" aria-label="Before and after comparison" aria-valuemin="0" aria-valuemax="100"><span class="ba__knob" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6 3 12l6 6M15 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+      </div>
+    </figure>
+    <script type="module">import { initCompare } from "/assets/js/ba-slider.js"; document.querySelectorAll("article [data-ba]").forEach(initCompare);</script>
+  </div>
+  {% endif %}
+  <div class="wrap wrap--narrow prose section">{{ content | safe }}</div>
+</article>
+{% include "partials/cta-band.njk" %}

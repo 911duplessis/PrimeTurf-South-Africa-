@@ -1,0 +1,28 @@
+---
+pagination:
+  data: publishedProducts
+  size: 1
+  addAllPagesToCollections: true
+  alias: product
+permalink: "/turf/{{ product.slug }}/"
+layout: layouts/page.njk
+eleventyComputed:
+  title: "{{ product.name }} Artificial Turf"
+  description: "{{ product.summary }}"
+  eyebrow: "Turf range"
+  heading: "{{ product.name }}"
+  lede: "{{ product.summary }}"
+  breadcrumbs:
+    - label: "{{ product.name }}"
+---
+<section class="section section--flush-top">
+  <div class="wrap detail">
+    <div class="detail__main">
+      <dl class="spec-table">
+        {% for s in product.specs %}<div><dt class="mono">{{ s.label }}</dt><dd>{{ s.value }}</dd></div>{% endfor %}
+      </dl>
+      <p><strong>Best for:</strong> {{ product.bestFor | join(", ") }}</p>
+    </div>
+    <aside class="detail__aside"><div class="panel">{% include "partials/quote-form.njk" %}</div></aside>
+  </div>
+</section>

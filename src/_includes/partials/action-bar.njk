@@ -1,0 +1,6 @@
+{#- Mobile-only persistent contact bar. -#}
+<div class="action-bar" data-action-bar>
+  <a href="tel:{{ site.contact.phoneE164 }}" class="action-bar__btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg>Call</a>
+  <a href="https://wa.me/{{ site.contact.whatsapp }}?text={{ 'Hi Leon, I would like a free turf quote.' | urlencode }}" class="action-bar__btn" target="_blank" rel="noopener">{% include "partials/icon-wa.njk" %}WhatsApp</a>
+  <a href="/contact/" class="action-bar__btn action-bar__btn--primary">Free quote</a>
+</div>

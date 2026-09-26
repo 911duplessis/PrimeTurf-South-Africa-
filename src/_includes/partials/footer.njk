@@ -1,0 +1,45 @@
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="logo logo--light" href="/" aria-label="{{ site.name }} — home">{% include "partials/logo.njk" %}</a>
+        <p>Premium artificial turf specialists serving {{ site.regions | join(" and the ") }}. Every project scoped, supplied and installed by our own team.</p>
+      </div>
+      <div class="site-footer__cols">
+        <div>
+          <h2 class="site-footer__h">Contact</h2>
+          <ul>
+            <li>{{ site.contact.person }}</li>
+            <li><a href="tel:{{ site.contact.phoneE164 }}">{{ site.contact.phoneDisplay }}</a></li>
+            <li><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></li>
+            <li><a href="https://wa.me/{{ site.contact.whatsapp }}" target="_blank" rel="noopener">WhatsApp</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__h">Services</h2>
+          <ul>{% for s in services %}<li><a href="/services/{{ s.slug }}/">{{ s.title }}</a></li>{% endfor %}</ul>
+        </div>
+        <div>
+          <h2 class="site-footer__h">Areas</h2>
+          <ul>{% for l in locations %}<li><a href="/areas/{{ l.slug }}/">{{ l.name }}</a></li>{% endfor %}</ul>
+        </div>
+        <div>
+          <h2 class="site-footer__h">Company</h2>
+          <ul>
+            <li><a href="/visualise/">Visualise your project</a></li>
+            <li><a href="/resources/">Resources</a></li>
+            <li><a href="/contact/">Contact &amp; quotes</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer__warranty">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.3 8 11 4.6-1.7 8-6 8-11V5l-8-3zm-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 4.8-4.8 1.4 1.4-6.2 6.2z" fill="currentColor"/></svg>
+      <p><strong>Warranty.</strong> {{ site.warranty.statement }}</p>
+    </div>
+    <div class="site-footer__base">
+      <p>© {{ build.year }} {{ site.name }}. Pricing shown on this site is indicative only.</p>
+      <p><a href="/sitemap.xml">Sitemap</a></p>
+    </div>
+  </div>
+</footer>

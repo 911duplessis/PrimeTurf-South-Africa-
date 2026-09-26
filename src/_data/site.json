@@ -1,0 +1,43 @@
+{
+  "name": "PrimeTurf",
+  "legalName": "PrimeTurf",
+  "url": "https://primeturf.co.za",
+  "locale": "en_ZA",
+  "lang": "en-ZA",
+  "tagline": "Premium artificial turf, supplied and installed by our own team.",
+  "description": "Premium artificial turf supply and installation across Gauteng and the Western Cape. Zero water, UV-stabilised and fully drained. Every project scoped, supplied and installed by our own team.",
+  "regions": ["Gauteng", "Western Cape"],
+  "contact": {
+    "person": "Leon",
+    "phoneDisplay": "076 804 8868",
+    "phoneE164": "+27768048868",
+    "whatsapp": "27768048868",
+    "email": "leon@primeturf.co.za"
+  },
+  "promises": {
+    "quote": "Free, no-obligation quote",
+    "response": "Response within 2 hours",
+    "siteVisit": "Same-day site visits available across Gauteng"
+  },
+  "warranty": {
+    "product": "6-year manufacturer’s product warranty",
+    "workmanship": "24-month workmanship / installation guarantee",
+    "statement": "Every PrimeTurf installation carries a 6-year manufacturer’s product warranty and a 24-month workmanship / installation guarantee."
+  },
+  "pricing": {
+    "minPerM2": 450,
+    "maxPerM2": 850,
+    "statement": "Fully installed ranges typically R450–R850 per m², depending on turf grade and site preparation. Indicative only — confirmed after a site visit."
+  },
+  "forms": {
+    "_comment": "Set endpoint to a form backend (Formspree, Basin, a Vercel function, etc.). When empty, forms fall back to WhatsApp / email hand-off.",
+    "endpoint": ""
+  },
+  "visualiser": {
+    "_comment": "Set apiBase to your deployed AI endpoint (see /api and README). Empty = fully client-side concept overlay.",
+    "apiBase": ""
+  },
+  "social": {
+    "ogImage": "/assets/img/og/og-default.jpg"
+  }
+}

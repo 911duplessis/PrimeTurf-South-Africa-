@@ -1,0 +1,181 @@
+{#-
+  "Visualise Your Project" — guided concept + indicative estimate.
+  Markup only; behaviour lives in /assets/js/visualiser/*.js
+  Each step is a <fieldset data-step="name">. The controller shows one at a time,
+  validates it, and collects answers into a single `answers` object
+  (see visualiser.js → collectAnswers()). Add or reorder steps here and
+  register them in STEPS inside visualiser.js.
+-#}
+<div class="viz" data-visualiser>
+  <noscript><p class="viz__noscript">The visualiser needs JavaScript. You can still <a href="/contact/">request a free quote</a> or WhatsApp {{ site.contact.person }} on {{ site.contact.phoneDisplay }}.</p></noscript>
+
+  <div class="viz__shell">
+    <aside class="viz__rail" aria-label="Progress">
+      <ol class="viz__steps" data-viz-progress>
+        <li data-for="photo">Photo</li>
+        <li data-for="area">Mark area</li>
+        <li data-for="size">Size &amp; surface</li>
+        <li data-for="use">Use</li>
+        <li data-for="look">Look</li>
+        <li data-for="extras">Requirements</li>
+        <li data-for="contact">Your details</li>
+        <li data-for="result">Concept</li>
+      </ol>
+      <p class="viz__privacy mono" data-viz-privacy>Photo processed in your browser. Nothing is uploaded until you choose to send it.</p>
+    </aside>
+
+    <form class="viz__form" data-viz-form novalidate>
+      <!-- 1. PHOTO -->
+      <fieldset class="viz__step" data-step="photo">
+        <legend class="viz__legend"><span class="mono">01</span> Upload a photo of the space</legend>
+        <p class="viz__hint">A wide, daylight photo taken from where you usually stand works best.</p>
+        <label class="dropzone" data-dropzone>
+          <input type="file" accept="image/*" data-viz-file class="sr-only">
+          <span class="dropzone__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0-4 4m4-4 4 4M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="dropzone__title">Drop a photo or <u>browse</u></span>
+          <span class="dropzone__meta mono">JPG · PNG · WebP · up to 20 MB</span>
+        </label>
+        <button type="button" class="btn btn--text" data-viz-sample>No photo handy? Use a sample garden →</button>
+        <p class="viz__error" data-viz-error="photo" role="alert" hidden></p>
+      </fieldset>
+
+      <!-- 2. AREA -->
+      <fieldset class="viz__step" data-step="area" hidden>
+        <legend class="viz__legend"><span class="mono">02</span> Mark where the turf goes</legend>
+        <p class="viz__hint">Tap around the edge of the lawn area to outline it. Skip this and we’ll use the lower part of the photo.</p>
+        <div class="viz__canvas-wrap">
+          <canvas class="viz__canvas" data-viz-mask-canvas aria-label="Photo. Tap to add outline points." role="img"></canvas>
+        </div>
+        <div class="viz__tools">
+          <button type="button" class="chip" data-viz-undo>Undo point</button>
+          <button type="button" class="chip" data-viz-clear>Clear outline</button>
+          <span class="mono viz__count" data-viz-points>0 points</span>
+        </div>
+      </fieldset>
+
+      <!-- 3. SIZE & SURFACE -->
+      <fieldset class="viz__step" data-step="size" hidden>
+        <legend class="viz__legend"><span class="mono">03</span> Approximate size and current surface</legend>
+        <div class="field">
+          <label for="viz-m2" class="field__label">Approximate area</label>
+          <div class="m2-input">
+            <input id="viz-m2" name="areaM2" type="number" inputmode="decimal" min="5" max="20000" step="1" value="60" required>
+            <span class="m2-input__unit">m²</span>
+          </div>
+          <input type="range" min="5" max="600" step="5" value="60" data-viz-m2-range aria-label="Approximate area slider" class="range">
+          <p class="viz__hint mono">Tip: length × width. A typical double garage is roughly 36 m².</p>
+        </div>
+        <div class="field">
+          <span class="field__label" id="surface-label">What’s there now?</span>
+          <div class="options" role="radiogroup" aria-labelledby="surface-label">
+            <label class="opt"><input type="radio" name="surface" value="lawn" checked><span>Existing lawn</span></label>
+            <label class="opt"><input type="radio" name="surface" value="soil"><span>Bare soil / sand</span></label>
+            <label class="opt"><input type="radio" name="surface" value="paving"><span>Paving or concrete</span></label>
+            <label class="opt"><input type="radio" name="surface" value="old-turf"><span>Old artificial turf</span></label>
+            <label class="opt"><input type="radio" name="surface" value="mixed"><span>Mixed / not sure</span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 4. USE -->
+      <fieldset class="viz__step" data-step="use" hidden>
+        <legend class="viz__legend"><span class="mono">04</span> How will the space be used?</legend>
+        <div class="options options--grid" role="radiogroup" aria-label="Intended use">
+          <label class="opt"><input type="radio" name="use" value="family" checked><span>Family lawn</span></label>
+          <label class="opt"><input type="radio" name="use" value="pets"><span>Pets</span></label>
+          <label class="opt"><input type="radio" name="use" value="pool"><span>Pool surround</span></label>
+          <label class="opt"><input type="radio" name="use" value="putting"><span>Putting green</span></label>
+          <label class="opt"><input type="radio" name="use" value="decorative"><span>Low traffic / decorative</span></label>
+          <label class="opt"><input type="radio" name="use" value="commercial"><span>Commercial / estate</span></label>
+          <label class="opt"><input type="radio" name="use" value="school-sport"><span>School / sports</span></label>
+        </div>
+      </fieldset>
+
+      <!-- 5. LOOK -->
+      <fieldset class="viz__step" data-step="look" hidden>
+        <legend class="viz__legend"><span class="mono">05</span> Preferred look</legend>
+        <div class="looks" role="radiogroup" aria-label="Preferred look">
+          <label class="look"><input type="radio" name="look" value="natural" checked><span class="look__swatch" data-swatch="natural"></span><span class="look__name">Natural</span><span class="look__desc">Mixed greens with a hint of straw. Understated.</span></label>
+          <label class="look"><input type="radio" name="look" value="lush"><span class="look__swatch" data-swatch="lush"></span><span class="look__name">Lush &amp; dense</span><span class="look__desc">Deep, even green. Soft underfoot.</span></label>
+          <label class="look"><input type="radio" name="look" value="hardwearing"><span class="look__swatch" data-swatch="hardwearing"></span><span class="look__name">Hard-wearing</span><span class="look__desc">Shorter, resilient pile for high traffic.</span></label>
+          <label class="look"><input type="radio" name="look" value="putting"><span class="look__swatch" data-swatch="putting"></span><span class="look__name">Putting surface</span><span class="look__desc">Short, tight and fast-rolling.</span></label>
+        </div>
+      </fieldset>
+
+      <!-- 6. EXTRAS -->
+      <fieldset class="viz__step" data-step="extras" hidden>
+        <legend class="viz__legend"><span class="mono">06</span> Anything we should know?</legend>
+        <div class="options options--grid">
+          <label class="opt opt--check"><input type="checkbox" name="extras" value="slope"><span>Slope or uneven ground</span></label>
+          <label class="opt opt--check"><input type="checkbox" name="extras" value="drainage"><span>Water pools after rain</span></label>
+          <label class="opt opt--check"><input type="checkbox" name="extras" value="roots"><span>Tree roots</span></label>
+          <label class="opt opt--check"><input type="checkbox" name="extras" value="shade"><span>Heavy shade</span></label>
+          <label class="opt opt--check"><input type="checkbox" name="extras" value="access"><span>Limited access (no vehicle access)</span></label>
+          <label class="opt opt--check"><input type="checkbox" name="extras" value="irrigation"><span>Irrigation to remove / cap</span></label>
+        </div>
+        <div class="field">
+          <label for="viz-notes" class="field__label">Notes <span class="field__opt">optional</span></label>
+          <textarea id="viz-notes" name="notes" rows="3" placeholder="e.g. edging along a flower bed, timing, access details"></textarea>
+        </div>
+      </fieldset>
+
+      <!-- 7. CONTACT -->
+      <fieldset class="viz__step" data-step="contact" hidden>
+        <legend class="viz__legend"><span class="mono">07</span> Where should we send your concept?</legend>
+        <div class="grid-2">
+          <div class="field"><label for="viz-name" class="field__label">Name</label><input id="viz-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="viz-phone" class="field__label">Mobile</label><input id="viz-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="07x xxx xxxx"></div>
+          <div class="field"><label for="viz-email" class="field__label">Email</label><input id="viz-email" name="email" type="email" autocomplete="email"></div>
+          <div class="field">
+            <label for="viz-area" class="field__label">Area</label>
+            <select id="viz-area" name="location">
+              {% for l in locations %}<option value="{{ l.name }}">{{ l.name }} — {{ l.region }}</option>{% endfor %}
+              <option value="Other Gauteng">Other — Gauteng</option>
+              <option value="Other Western Cape">Other — Western Cape</option>
+            </select>
+          </div>
+        </div>
+        <label class="consent"><input type="checkbox" name="consent" required> <span>I’m happy for PrimeTurf to contact me about this project.</span></label>
+        <p class="viz__error" data-viz-error="contact" role="alert" hidden></p>
+      </fieldset>
+
+      <!-- 8. RESULT -->
+      <section class="viz__step viz__result" data-step="result" hidden aria-live="polite">
+        <div class="viz__loading" data-viz-loading>
+          <span class="grow-loader" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <p class="mono" data-viz-loading-text>Preparing your concept…</p>
+        </div>
+        <div class="viz__output" data-viz-output hidden>
+          <div class="viz__concept">
+            <div data-viz-compare></div>
+            <p class="concept-flag mono">Concept visual only — not a photograph of a finished installation.</p>
+          </div>
+          <div class="viz__estimate">
+            <p class="eyebrow">Indicative installed price</p>
+            <p class="estimate__total display-m" data-viz-total>—</p>
+            <p class="estimate__rate mono" data-viz-rate>—</p>
+            <ul class="estimate__summary" data-viz-summary></ul>
+            <p class="estimate__notes" data-viz-notes></p>
+            <div class="disclaimer" role="note">
+              <strong>Indicative only.</strong> This range uses the typical fully installed guide of R{{ site.pricing.minPerM2 }}–R{{ site.pricing.maxPerM2 }} per m², adjusted for the answers you gave. The concept image is a computer-generated impression, not a design or a guarantee of the finished result. Your fixed quote is confirmed after a free site visit.
+            </div>
+            <div class="viz__ctas">
+              <button type="button" class="btn btn--lime btn--block" data-viz-book>Book my free site visit</button>
+              <a class="btn btn--ink btn--block" data-viz-wa target="_blank" rel="noopener" href="https://wa.me/{{ site.contact.whatsapp }}">{% include "partials/icon-wa.njk" %} Send to Leon on WhatsApp</a>
+              <a class="btn btn--outline btn--block" href="tel:{{ site.contact.phoneE164 }}">Call {{ site.contact.phoneDisplay }}</a>
+              <button type="button" class="btn btn--text" data-viz-download>Download concept image</button>
+              <button type="button" class="btn btn--text" data-viz-restart>Start again</button>
+            </div>
+            <p class="viz__sent" data-viz-sent role="status" hidden></p>
+          </div>
+        </div>
+      </section>
+
+      <div class="viz__nav" data-viz-nav>
+        <button type="button" class="btn btn--outline" data-viz-back disabled>Back</button>
+        <button type="button" class="btn btn--text viz__skip" data-viz-skip hidden>Skip</button>
+        <button type="submit" class="btn btn--ink" data-viz-next>Continue</button>
+      </div>
+    </form>
+  </div>
+</div>

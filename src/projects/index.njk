@@ -1,0 +1,25 @@
+---
+layout: layouts/page.njk
+title: Projects
+description: PrimeTurf project case studies across Gauteng and the Western Cape.
+eyebrow: Projects
+heading: Recent work.
+lede: Case studies from residential, estate and commercial installations.
+breadcrumbs:
+  - label: Projects
+eleventyComputed:
+  noindex: "{{ collections.caseStudies.length == 0 }}"
+---
+<section class="section section--flush-top">
+  <div class="wrap">
+    {% if collections.caseStudies.length %}
+    <ul class="post-list">
+      {% for p in collections.caseStudies %}
+      <li data-reveal><a class="post-card" href="{{ p.url }}"><span class="mono">{{ p.data.location }}</span><h2 class="post-card__title">{{ p.data.title }}</h2><p>{{ p.data.summary }}</p><span class="svc-card__arrow" aria-hidden="true">→</span></a></li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="lede">Case studies are being prepared. In the meantime, see <a href="/#results">before &amp; after examples</a> or <a href="/visualise/">visualise your own space</a>.</p>
+    {% endif %}
+  </div>
+</section>

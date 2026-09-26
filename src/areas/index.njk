@@ -1,0 +1,27 @@
+---
+layout: layouts/page.njk
+title: Areas We Serve
+description: PrimeTurf installs artificial turf across Gauteng — Sandton, Hyde Park, Pretoria East, Centurion, Edenvale, Boksburg — and in Cape Town and surrounds.
+eyebrow: Areas
+heading: Gauteng and the Western Cape.
+lede: Same-day site visits available across Gauteng. Cape Town and surrounds by appointment.
+breadcrumbs:
+  - label: Areas
+---
+<section class="section section--flush-top">
+  <div class="wrap">
+    {% for region, info in regions %}
+    <div class="region" data-reveal>
+      <header class="region__head">
+        <h2 class="display-m">{{ region }}</h2>
+        <p class="mono">{{ info.climate }}</p>
+      </header>
+      <ul class="area-grid">
+        {% for l in locations | where("region", region) %}
+        <li><a class="area-card" href="/areas/{{ l.slug }}/"><span class="area-card__name">{{ l.name }}</span><span class="area-card__coord mono">{{ (l.lat * -1) | round(3) }}° S · {{ l.lng | round(3) }}° E</span><span class="area-card__arrow" aria-hidden="true">→</span></a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+</section>

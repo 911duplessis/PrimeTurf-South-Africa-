@@ -1,0 +1,19 @@
+{
+  "_comment": "Individual turf product pages. Add real product specs from the supplier's data sheet only. Entries with published:false are not built. See README → Adding a turf product.",
+  "items": [
+    {
+      "slug": "example-product",
+      "published": false,
+      "name": "Example Turf Name",
+      "summary": "One-line description from the supplier data sheet.",
+      "bestFor": ["Residential lawns"],
+      "specs": [
+        { "label": "Pile height", "value": "— mm" },
+        { "label": "Fibre", "value": "—" },
+        { "label": "UV stabilised", "value": "Yes" },
+        { "label": "Product warranty", "value": "6 years (manufacturer)" }
+      ],
+      "image": "/assets/img/og/og-default.jpg"
+    }
+  ]
+}

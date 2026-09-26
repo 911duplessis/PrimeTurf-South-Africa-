@@ -1,0 +1,43 @@
+---
+pagination:
+  data: services
+  size: 1
+  addAllPagesToCollections: true
+  alias: svc
+permalink: "/services/{{ svc.slug }}/"
+layout: layouts/page.njk
+eleventyComputed:
+  title: "{{ svc.title }} — Artificial Turf Installation"
+  description: "{{ svc.summary }} Scoped, supplied and installed by PrimeTurf across Gauteng and the Western Cape."
+  eyebrow: "Service · {{ svc.group | capitalize }}"
+  heading: "{{ svc.title }}"
+  lede: "{{ svc.summary }}"
+  breadcrumbs:
+    - label: Services
+      href: /services/
+    - label: "{{ svc.title }}"
+  schemaService:
+    name: "{{ svc.title }}"
+    description: "{{ svc.summary }}"
+---
+<section class="section section--flush-top">
+  <div class="wrap detail">
+    <div class="detail__main prose">
+      <p class="lede">{{ svc.body }}</p>
+      <h2>What’s included</h2>
+      <ul class="check-list">{% for p in svc.points %}<li>{{ p }}</li>{% endfor %}</ul>
+      <h2>Built on the PrimeTurf standard</h2>
+      <ul class="check-list">{% for b in benefits %}<li><strong>{{ b.title }}.</strong> {{ b.short }}</li>{% endfor %}</ul>
+      <h2>Pricing</h2>
+      <p>{{ site.pricing.statement }}</p>
+      <p><a class="btn btn--ink" href="/visualise/">Visualise your space &amp; get a range →</a></p>
+    </div>
+    <aside class="detail__aside">
+      <div class="panel">
+        <p class="eyebrow">Get a quote for {{ svc.title | lower }}</p>
+        {% set presetService = svc.title %}
+        {% include "partials/quote-form.njk" %}
+      </div>
+    </aside>
+  </div>
+</section>

@@ -1,0 +1,22 @@
+{
+  "name": "primeturf-south-africa",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PrimeTurf — premium artificial turf supply and installation, Gauteng and the Western Cape.",
+  "type": "module",
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy",
+    "placeholders": "node scripts/make-placeholders.mjs",
+    "clean": "rm -rf _site"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.128.0"
+  }
+}
