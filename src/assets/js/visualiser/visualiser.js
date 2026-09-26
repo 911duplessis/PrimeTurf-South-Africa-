@@ -15,6 +15,7 @@ import { detectLawn } from "./detect.js";
 import { estimate, label } from "./estimator.js";
 import { getProvider } from "./providers.js";
 import { createCompare } from "../ba-slider.js";
+import { renderQuoteCard, quoteRef, toBlob } from "./quote-card.js";
 import { turfCanvas } from "../lib/turf.js";
 import { submitLead, waUrl, mailUrl, formatRand } from "../lib/leads.js";
 
@@ -403,6 +404,98 @@ function init(root) {
 
     loading.hidden = true;
     output.hidden = false;
+    prepareQuote();
+  }
+
+  /* ---------- Branded quote: render, then email it to PrimeTurf (and the customer) ---------- */
+  const quoteStatus = q("[data-quote-status]");
+  const btnQuote = q("[data-viz-download-quote]");
+  const btnSend = q("[data-viz-book]");
+  const validEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(e || "").trim());
+  let quote = null; // { ref, canvas, blob }
+
+  async function prepareQuote() {
+    quote = null; btnQuote.disabled = true; btnSend.hidden = true;
+    quoteStatus.textContent = "Preparing your branded quote…";
+    const a = answers;
+    const ref = quoteRef();
+    const rows = [
+      ["Turf", productName(a.product)],
+      ["Area", `${est.area} m²`],
+      ["Current surface", label("surface", a.surface)],
+      ["Installation", a.surface === "paving" ? "Hard installation (bonded to paving/concrete)" : "Soft installation (7-step base)"],
+      ["Use", label("use", a.use)],
+      ["Requirements", a.extras.length ? a.extras.map((x) => label("extras", x)).join(", ") : "None noted"],
+    ];
+    try {
+      const canvas = await renderQuoteCard({
+        before: state.photo, after: state.concept.src,
+        logo: `${cfg.base}assets/img/brand/primeturf-horizontal-logo-reversed.png`,
+        ref, name: a.contact.name, location: a.contact.location,
+        total: `${formatRand(est.total.low)} – ${formatRand(est.total.high)}`,
+        rate: `${formatRand(est.perM2.low)}–${formatRand(est.perM2.high)} per m² · ${est.area} m²`,
+        rows, notes: est.notes,
+        contact: { person: `${cfg.contact.person}, PrimeTurf`, phone: cfg.contact.phoneDisplay, email: cfg.contact.email, web: "primeturf.co.za" },
+      });
+      quote = { ref, canvas, blob: await toBlob(canvas) };
+      q("[data-quote-img]").src = URL.createObjectURL(quote.blob);
+      q("[data-quote-preview]").hidden = false;
+      btnQuote.disabled = false;
+      await sendQuote();
+    } catch (err) {
+      console.warn("[visualiser] quote card failed", err);
+      quoteStatus.textContent = "We couldn’t prepare the quote image, but your range is above. Send it to Leon on WhatsApp.";
+    }
+  }
+
+  async function sendQuote() {
+    if (!quote) return;
+    const a = answers;
+    const cc = validEmail(a.contact.email) ? a.contact.email.trim() : "";
+    quoteStatus.textContent = "Sending your quote…";
+    btnSend.hidden = true;
+    const photoBlob = await toBlob(state.photo, 0.82);
+    const res = await submitLead({
+      Enquiry: "Visualiser quote and free site visit request",
+      Reference: quote.ref,
+      Name: a.contact.name, Phone: a.contact.phone, Email: a.contact.email, Area: a.contact.location,
+      "Indicative range": `${formatRand(est.total.low)} – ${formatRand(est.total.high)}`,
+      "Per m²": `${formatRand(est.perM2.low)}–${formatRand(est.perM2.high)}`,
+      "Size (m²)": est.area, "Size from": sizeSource(),
+      Turf: productName(a.product), "Current surface": label("surface", a.surface), Use: label("use", a.use),
+      Requirements: a.extras.map((x) => label("extras", x)).join(", ") || "None noted",
+      Notes: a.notes, "Sample photo": a.samplePhoto ? "Yes (visitor used the sample garden)" : "",
+    }, {
+      subject: `PrimeTurf quote ${quote.ref}: ${a.contact.name}, ${a.contact.location} (~${est.area} m²)`,
+      cc,
+      files: [
+        { field: "attachment", blob: quote.blob, filename: `PrimeTurf-quote-${quote.ref}.jpg` },
+        { field: "attachment2", blob: photoBlob, filename: `site-photo-${quote.ref}.jpg` },
+      ],
+    });
+    if (res.ok) {
+      quoteStatus.innerHTML = "";
+      quoteStatus.append(cc
+        ? `Sent. Your quote is on its way to ${cc}, and Leon will be in touch within 2 hours to arrange your free site visit.`
+        : "Sent to Leon. He’ll be in touch within 2 hours to arrange your free site visit. Download your copy below.");
+      quoteStatus.classList.add("is-sent");
+    } else {
+      console.warn("[visualiser] lead not sent", res.error);
+      quoteStatus.classList.remove("is-sent");
+      quoteStatus.textContent = "We couldn’t send your quote automatically. Download it, then send it to Leon on WhatsApp or by email.";
+      btnSend.hidden = false;
+    }
+  }
+  btnQuote.addEventListener("click", () => {
+    if (!quote) return;
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(quote.blob);
+    link.download = `PrimeTurf-quote-${quote.ref}.jpg`;
+    link.click();
+  });
+  function sizeSource() {
+    const src = q("[data-area-source]");
+    return src && !src.hidden ? src.textContent : "Entered by visitor";
   }
 
   function productName(id) { return PRODUCTS[id]?.name || "Not chosen yet"; }
@@ -423,26 +516,12 @@ function init(root) {
     ].filter(Boolean).join("\n");
   }
 
-  q("[data-viz-book]").addEventListener("click", async (e) => {
-    const btn = e.currentTarget;
-    btn.disabled = true;
-    const res = await submitLead({
-      type: "visualiser",
-      answers,
-      estimate: est,
-      conceptKind: state.concept?.kind,
-      // Upgrade path: upload the concept + original to storage and send URLs here.
-    });
-    btn.disabled = false;
-    const sent = q("[data-viz-sent]");
-    sent.hidden = false;
-    if (res.ok) {
-      sent.textContent = "Request sent. Leon will be in touch within 2 hours to arrange your free site visit.";
-    } else {
-      sent.innerHTML = "";
-      sent.append("Opening your email app with the details. Prefer WhatsApp? Use the button above.");
-      location.href = mailUrl("Free site visit request (visualiser)", summaryText());
-    }
+  // Retry (shown only when automatic sending failed): try again, then fall back to email hand-off.
+  btnSend.addEventListener("click", async () => {
+    btnSend.disabled = true;
+    await sendQuote();
+    btnSend.disabled = false;
+    if (!quoteStatus.classList.contains("is-sent")) location.href = mailUrl(`Free site visit request (visualiser) ${quote?.ref || ""}`, summaryText());
   });
 
   q("[data-viz-download]").addEventListener("click", () => {

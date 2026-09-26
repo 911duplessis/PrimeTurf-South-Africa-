@@ -134,9 +134,10 @@ Before/after pairs live in `src/assets/img/projects/` as WebP, shot from the sam
 The portfolio builds itself from folders, so photos can keep stacking up without any code changes.
 
 1. **Add a photo:** drop a JPG, PNG or WebP into `src/portfolio/photos/<category>/`, for example `src/portfolio/photos/putting-greens/`. The next build resizes it to 480, 960 and 1600px WebP, lazy-loads it and adds it to the grid. The caption comes from the file name (`garden-lawn-after.jpg` becomes "Garden lawn after").
-2. **Add a category:** create a new folder. It gets its own filter chip automatically. To set its label and position, add it to `src/_data/portfolioCategories.json`. Folders not listed there go at the end, with a label taken from the folder name.
-3. **Optional details:** in `src/_data/portfolioMeta.json`, key an entry by `"folder/file.jpg"` to set `caption`, `alt`, `location`, `tags` (to show the photo under extra categories as well), `featured: true` (to pin it to the top) or `date` (newer first).
-4. **Before/after pairs:** pairs in `projects.json` appear in the portfolio automatically under "Before & after", and they open as a slider in the lightbox.
+2. **Keep something unpublished:** put it in a folder whose name starts with `_` (for example `_marketing/`, which holds the Facebook ad graphics). Those folders are skipped.
+3. **Add a category:** create a new folder. It gets its own filter chip automatically. To set its label and position, add it to `src/_data/portfolioCategories.json`. Folders not listed there go at the end, with a label taken from the folder name.
+4. **Optional details:** in `src/_data/portfolioMeta.json`, key an entry by `"folder/file.jpg"` to set `caption`, `alt`, `location`, `tags` (to show the photo under extra categories as well), `featured: true` (to pin it to the top) or `date` (newer first).
+5. **Before/after pairs:** pairs in `projects.json` appear in the portfolio automatically under "Before & after", and they open as a slider in the lightbox.
 
 Filters are deep-linkable (`/portfolio/#putting-greens`). The grid shows 12 photos, then "Show more". The lightbox supports arrow keys, Esc and swipe. The same photo sourcing rule applies.
 
@@ -197,7 +198,12 @@ generateConcept({photo, polygon, answers}) → { src, kind: 'local' | 'ai' }
 ```
 
 ### Lead capture
-Forms and "Book my free site visit" POST JSON to `site.json → forms.endpoint` if you set one (Formspree, Basin, your own function, a CRM webhook). If it is empty, they hand off to WhatsApp or email with the details pre-filled, which works on any static host.
+Leads are emailed through **FormSubmit** (`site.json → forms.endpoint`, set to `https://formsubmit.co/ajax/leon@primeturf.co.za`). It's free, needs no account, and works from a static host.
+
+- **One-time activation:** the first submission after deploying sends an "Activate Form" email to leon@primeturf.co.za. Click it; until then nothing is delivered and the site offers WhatsApp/email instead. Afterwards you can replace the address in the endpoint with the random string FormSubmit emails you, so it isn't visible to spam bots.
+- **Visualiser:** when the result appears, `quote-card.js` draws a branded A4 quote (logo, Now/Concept photos, price range, project details, contact and warranty) and `leads.js` emails it to PrimeTurf with the site photo attached. The customer is CC'd when they give an email, and can also download the quote.
+- **Quote forms** send the same way, as a labelled table.
+- If `forms.endpoint` is empty or sending fails, everything falls back to WhatsApp or email with the details pre-filled.
 
 ---
 

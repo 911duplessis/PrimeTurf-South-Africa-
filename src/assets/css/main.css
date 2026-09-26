@@ -507,6 +507,13 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 .product__desc { color: var(--pt-muted); font-size: .85rem; line-height: 1.45; padding-inline: .4rem; }
 .product__price { margin-top: auto; padding: .4rem .4rem 0; font-size: .85rem; font-weight: 600; color: var(--pt-primary-green); }
 .product__specs { padding: .5rem .4rem 0; font-size: .75rem; color: var(--pt-deep-green); border-top: 1px solid var(--pt-hairline); }
+/* Branded quote on the result step */
+.quote-status { margin: 1rem 0 .75rem; padding: .75rem 1rem; border-radius: var(--pt-radius-sm); background: var(--pt-white); border: 1px solid var(--pt-hairline-strong); font-size: .9rem; }
+.quote-status.is-sent { border-color: var(--pt-primary-green); border-left: 3px solid var(--pt-primary-green); color: var(--pt-deep-green); font-weight: 600; }
+.quote-preview { margin: 1rem 0 0; }
+.quote-preview img { width: 100%; max-width: 260px; height: auto; border-radius: var(--pt-radius-sm); box-shadow: 0 6px 24px rgba(26,58,42,.18); }
+.quote-preview figcaption { margin-top: .4rem; }
+.field__tip { margin: .35rem 0 0; font-size: .8rem; color: var(--pt-muted); }
 /* Stop the browser scrolling the photo away when the area box appears below it mid-outline. */
 .viz { overflow-anchor: none; }
 /* Outline → area calibration */
