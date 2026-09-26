@@ -626,8 +626,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 .site-footer a:hover { color: var(--pt-gold-light); }
 .site-footer__top { display: grid; grid-template-columns: 1fr 2.2fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--pt-hairline-dark); }
 /* No approved reverse logo exists yet: the full-colour logo sits on an ivory panel */
-.logo--panel { background: var(--pt-ivory); padding: 14px 18px; border-radius: var(--pt-radius-sm); }
-.logo--panel .logo__img { width: 172px; }
+/* Footer: reversed logo (ivory "Prime", gold "Turf") sits directly on deep green */
+.logo--reversed .logo__img { width: 200px; height: auto; }
 .site-footer__brand p { margin-top: 1.25rem; max-width: 26em; }
 .site-footer__cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
 .site-footer__cols ul { list-style: none; display: grid; gap: .45rem; }
