@@ -1,0 +1,53 @@
+---
+layout: layouts/page.njk
+title: Portfolio
+description: Artificial turf installations by PrimeTurf across Gauteng and the Western Cape. Residential lawns, putting greens, pool surrounds, play areas and before-and-after transformations.
+eyebrow: Portfolio
+heading: Transformations.
+lede: Real PrimeTurf installations, photographed by our team. Filter by project type, and tap any photo to view it larger.
+breadcrumbs:
+  - label: Portfolio
+scripts:
+  - /assets/js/portfolio.js
+---
+<section class="section section--flush-top">
+  <div class="wrap">
+    <div class="pf-filters" role="group" aria-label="Filter projects" data-pf-filters>
+      <button type="button" class="pf-chip" aria-pressed="true" data-filter="all">All <span class="pf-chip__n">{{ portfolio.total }}</span></button>
+      {% for c in portfolio.categories %}
+      <button type="button" class="pf-chip" aria-pressed="false" data-filter="{{ c.slug }}">{{ c.label }} <span class="pf-chip__n">{{ c.count }}</span></button>
+      {% endfor %}
+    </div>
+    <p class="pf-status label" data-pf-status aria-live="polite">Showing {{ portfolio.total }} projects</p>
+
+    <ul class="pf-grid" data-pf-grid>
+      {% for it in portfolio.items %}
+      <li class="pf-item" data-cats="{{ it.cats | join(' ') }}" data-index="{{ loop.index0 }}">
+        <button type="button" class="pf-open" data-pf-open
+          data-full="{{ it.img.full | htmlBaseUrl }}" data-caption="{{ it.caption }}" data-cat="{{ it.categoryLabel }}"
+          {% if it.kind == "pair" %}data-before="{{ it.before.full | htmlBaseUrl }}" data-note="{{ it.note }}"{% endif %}
+          aria-label="View larger: {{ it.caption }}">
+          <img src="{{ it.img.src }}" srcset="{{ it.img.srcset }}" sizes="(max-width: 600px) 50vw, (max-width: 1000px) 33vw, 400px"
+            width="{{ it.img.width }}" height="{{ it.img.height }}" alt="{{ it.alt }}" loading="{{ 'eager' if loop.index <= 6 else 'lazy' }}" decoding="async">
+          {% if it.kind == "pair" %}<span class="pf-badge">Before &amp; after · drag</span>{% endif %}
+        </button>
+        <p class="pf-cap"><span class="label">{{ it.categoryLabel }}</span>{{ it.caption }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="pf-more"><button type="button" class="btn btn--outline" data-pf-more hidden>Show more</button></div>
+  </div>
+</section>
+
+<dialog class="pf-lightbox" data-pf-lightbox aria-label="Project photo">
+  <div class="pf-lb__bar">
+    <p class="pf-lb__count label" data-lb-count></p>
+    <button type="button" class="pf-lb__btn" data-lb-close aria-label="Close">×</button>
+  </div>
+  <div class="pf-lb__stage" data-lb-stage></div>
+  <div class="pf-lb__foot">
+    <button type="button" class="pf-lb__btn" data-lb-prev aria-label="Previous photo">‹</button>
+    <p class="pf-lb__cap"><span class="label" data-lb-cat></span><span data-lb-caption></span></p>
+    <button type="button" class="pf-lb__btn" data-lb-next aria-label="Next photo">›</button>
+  </div>
+</dialog>

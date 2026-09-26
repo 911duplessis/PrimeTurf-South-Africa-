@@ -1,0 +1,14 @@
+{
+  "_comment": "Display order and labels for portfolio filters. A photo's category is the folder it sits in under src/portfolio/photos/. A new folder works without an entry here (its label is made from the folder name); add one to control the order or label.",
+  "items": [
+    { "slug": "residential-lawns", "label": "Residential lawns" },
+    { "slug": "putting-greens", "label": "Putting greens" },
+    { "slug": "pool-surrounds", "label": "Pool surrounds" },
+    { "slug": "play-areas", "label": "Play areas" },
+    { "slug": "courtyards", "label": "Courtyards" },
+    { "slug": "commercial", "label": "Commercial" },
+    { "slug": "maintenance", "label": "Maintenance & refresh" },
+    { "slug": "installation", "label": "Installation process" },
+    { "slug": "before-after", "label": "Before & after" }
+  ]
+}

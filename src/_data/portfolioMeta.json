@@ -1,0 +1,18 @@
+{
+  "_comment": "Optional details per photo, keyed by 'folder/file-name.jpg'. Everything is optional: without an entry a photo still appears, captioned from its file name. Fields: caption, alt, location, tags (extra filters, e.g. [\"before-after\"]), featured (true = shown first), date (YYYY-MM-DD, newer first).",
+  "putting-greens/putting-green-completed.jpg": { "caption": "Backyard putting green, completed", "alt": "Completed backyard putting green with brick edging beside a house", "featured": true },
+  "putting-greens/putting-green-at-dusk.jpg": { "caption": "Putting green at dusk, with garden lighting", "alt": "Putting green at dusk with garden lighting and an entertainment area" },
+  "putting-greens/steps-and-hedge-wall.jpg": { "caption": "Steps and hedge wall at the putting green project", "alt": "Brick steps beside a hedge wall" },
+  "installation/putting-green-base-preparation.jpg": { "caption": "Putting green: base preparation and compaction", "alt": "Compacted base being prepared for a putting green", "tags": ["putting-greens"] },
+  "installation/putting-green-infill-and-brushing.jpg": { "caption": "Putting green: infill and brushing", "alt": "Installer brushing infill into a new putting green", "tags": ["putting-greens"] },
+  "installation/our-installation-team.jpg": { "caption": "The PrimeTurf installation team", "alt": "The PrimeTurf installation team on a newly installed turf court" },
+  "installation/courtyard-groundwork.jpg": { "caption": "Courtyard: excavation and groundwork", "alt": "Two installers preparing the ground in a courtyard", "tags": ["courtyards"] },
+  "play-areas/inlaid-hopscotch.jpg": { "caption": "Play area with an inlaid hopscotch", "alt": "Turf play area with a coloured hopscotch inlaid into it" },
+  "play-areas/hopscotch-before-and-after.jpg": { "caption": "Hopscotch play area: before and after", "alt": "Hopscotch play area after installation, with an inset of the space before", "tags": ["before-after"] },
+  "play-areas/play-track-before-and-after.jpg": { "caption": "Play track: before and after", "alt": "Bare ground beside a wall, and the same space with turf and a blue track", "tags": ["before-after"] },
+  "residential-lawns/garden-lawn-before-and-after.jpg": { "caption": "Garden lawn: before and after", "alt": "Garden lawn after installation, with an inset of the bare soil before", "tags": ["before-after"] },
+  "residential-lawns/pet-friendly-lawn-before-and-after.jpg": { "caption": "Pet-friendly lawn: before and after", "alt": "Patchy garden being prepared, and the finished lawn with two dogs", "tags": ["before-after"] },
+  "residential-lawns/narrow-garden-before-and-after.jpg": { "caption": "Narrow garden: before and after", "alt": "Cluttered narrow garden before, and the same strip finished in turf", "tags": ["before-after"] },
+  "pool-surrounds/pool-surround-before-and-after.jpg": { "caption": "Pool surround: before and after", "alt": "Bare ground beside a pool, and the same area finished in turf", "tags": ["before-after"] },
+  "courtyards/courtyard-lawn.jpg": { "caption": "Courtyard lawn, completed", "alt": "Finished courtyard lawn beside a colonnade" }
+}

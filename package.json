@@ -13,7 +13,8 @@
     "node": ">=20"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.6"
+    "@11ty/eleventy": "^3.1.6",
+    "@11ty/eleventy-img": "^7.0.0"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.128.0"
