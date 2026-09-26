@@ -3,5 +3,5 @@
   { "id": "climate", "title": "Climate Ready", "short": "UV-stabilised for high-altitude sun and coastal salt air.", "body": "Turf engineered for Gauteng’s high-altitude sun and Cape Town’s coastal salt air, so colour and fibre hold up season after season.", "label": "UV" },
   { "id": "drainage", "title": "All-Weather Drainage", "short": "No pooling after summer storms or winter rain.", "body": "Built to handle Gauteng summer downpours and Cape Town winter rain without pooling.", "label": "↓" },
   { "id": "team", "title": "Our Own Team", "short": "Scoped, supplied and installed in-house.", "body": "Every project is scoped, supplied and installed by our own team — one point of accountability from site visit to handover.", "label": "1" },
-  { "id": "warranty", "title": "Warranties in Writing", "short": "6-year product warranty + 24-month workmanship guarantee.", "body": "A 6-year manufacturer’s product warranty and a 24-month workmanship / installation guarantee on every installation.", "label": "6+2" }
+  { "id": "warranty", "title": "Warranties in Writing", "short": "Up to 6-year product warranty + 24-month workmanship guarantee.", "body": "A manufacturer’s product warranty of up to 6 years (5 on Deco and Multisport) and a 24-month workmanship / installation guarantee on every installation.", "label": "6+2" }
 ]

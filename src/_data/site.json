@@ -20,14 +20,14 @@
     "siteVisit": "Same-day site visits available across Gauteng"
   },
   "warranty": {
-    "product": "6-year manufacturer’s product warranty",
+    "product": "Manufacturer’s product warranty of up to 6 years",
     "workmanship": "24-month workmanship / installation guarantee",
-    "statement": "Every PrimeTurf installation carries a 6-year manufacturer’s product warranty and a 24-month workmanship / installation guarantee."
+    "statement": "Every PrimeTurf installation carries a manufacturer’s product warranty of up to 6 years (5 on Deco and Multisport, 6 on the rest) and a 24-month workmanship / installation guarantee."
   },
   "pricing": {
-    "minPerM2": 450,
+    "minPerM2": 200,
     "maxPerM2": 850,
-    "statement": "Fully installed ranges typically R450–R850 per m², depending on turf grade and site preparation. Indicative only — confirmed after a site visit."
+    "statement": "Fully installed ranges typically R200–R850 per m², depending on the turf range and site preparation. Indicative only — confirmed after a site visit."
   },
   "forms": {
     "_comment": "Set endpoint to a form backend (Formspree, Basin, a Vercel function, etc.). When empty, forms fall back to WhatsApp / email hand-off.",

@@ -488,6 +488,12 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 .opt input:checked + span { border-color: var(--pt-primary-green); box-shadow: inset 0 0 0 1px var(--pt-primary-green); }
 .opt--check input:checked + span::before { background-color: var(--pt-primary-green); border-color: var(--pt-primary-green); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2l2.2 2.2 4.8-4.8' fill='none' stroke='%23FAF8F2' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E"); }
 .opt input:focus-visible + span { outline: 2px solid var(--pt-deep-green); outline-offset: 2px; }
+/* Home pricing: band per turf range */
+.price-bands { list-style: none; padding: 0; margin: 1rem 0 1.25rem; border-top: 1px solid var(--pt-hairline-strong); }
+.price-bands li { display: grid; grid-template-columns: 1fr auto; gap: .1rem 1rem; padding: .7rem 0; border-bottom: 1px solid var(--pt-hairline); }
+.price-bands__name { font-weight: 600; }
+.price-bands__eg { grid-column: 1; font-size: .8rem; color: var(--pt-muted); }
+.price-bands strong { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-family: var(--pt-font-serif); font-size: 1.15rem; color: var(--pt-deep-green); white-space: nowrap; }
 /* Product catalogue step */
 .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: .75rem; margin-top: .75rem; }
 .product { position: relative; display: flex; flex-direction: column; gap: .3rem; padding: .5rem .5rem 1rem; border-radius: var(--pt-radius-md); border: 1px solid var(--pt-hairline-strong); background: var(--pt-white); cursor: pointer; transition: border-color .2s, box-shadow .2s; }
@@ -499,7 +505,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 .product__tier { padding-inline: .4rem; color: var(--pt-gold-text); }
 .product__name { font-family: var(--pt-font-serif); font-weight: 600; font-size: 1.2rem; padding-inline: .4rem; }
 .product__desc { color: var(--pt-muted); font-size: .85rem; line-height: 1.45; padding-inline: .4rem; }
-.product__specs { margin-top: auto; padding: .5rem .4rem 0; font-size: .75rem; color: var(--pt-deep-green); border-top: 1px solid var(--pt-hairline); }
+.product__price { margin-top: auto; padding: .4rem .4rem 0; font-size: .85rem; font-weight: 600; color: var(--pt-primary-green); }
+.product__specs { padding: .5rem .4rem 0; font-size: .75rem; color: var(--pt-deep-green); border-top: 1px solid var(--pt-hairline); }
 /* Outline → area calibration */
 .calib { margin-top: 1rem; padding: 1rem; border: 1px solid var(--pt-hairline-strong); border-left: 3px solid var(--pt-primary-gold); border-radius: var(--pt-radius-sm); background: var(--pt-white); }
 .calib__label { display: block; font-weight: 600; margin-bottom: .5rem; }
