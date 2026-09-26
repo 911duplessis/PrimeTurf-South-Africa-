@@ -6,13 +6,13 @@
         {% for item in nav %}<li><a class="nav__link" href="{{ item.href }}"{% if page.url == item.href %} aria-current="page"{% endif %}>{{ item.label }}</a></li>{% endfor %}
       </ul>
       <div class="nav__mobile-extra">
-        <a class="btn btn--lime btn--block" href="/contact/">Get a free quote</a>
+        <a class="btn btn--primary btn--block" href="/contact/">Get a free quote</a>
         <p class="nav__contact"><a href="tel:{{ site.contact.phoneE164 }}">{{ site.contact.phoneDisplay }}</a> · <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></p>
       </div>
     </nav>
     <div class="site-header__actions">
       <a class="link-phone" href="tel:{{ site.contact.phoneE164 }}"><span class="dot" aria-hidden="true"></span>{{ site.contact.phoneDisplay }}</a>
-      <a class="btn btn--ink btn--sm" href="/contact/">Free quote</a>
+      <a class="btn btn--primary btn--sm" href="/contact/">Free quote</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
         <span class="sr-only">Menu</span><span class="menu-toggle__bars" aria-hidden="true"></span>
       </button>

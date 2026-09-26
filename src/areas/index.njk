@@ -14,11 +14,11 @@ breadcrumbs:
     <div class="region" data-reveal>
       <header class="region__head">
         <h2 class="display-m">{{ region }}</h2>
-        <p class="mono">{{ info.climate }}</p>
+        <p class="label">{{ info.climate }}</p>
       </header>
       <ul class="area-grid">
         {% for l in locations | where("region", region) %}
-        <li><a class="area-card" href="/areas/{{ l.slug }}/"><span class="area-card__name">{{ l.name }}</span><span class="area-card__coord mono">{{ (l.lat * -1) | round(3) }}° S · {{ l.lng | round(3) }}° E</span><span class="area-card__arrow" aria-hidden="true">→</span></a></li>
+        <li><a class="area-card" href="/areas/{{ l.slug }}/"><span class="area-card__name">{{ l.name }}</span><span class="area-card__meta label">{{ l.region }}</span><span class="area-card__arrow" aria-hidden="true">→</span></a></li>
         {% endfor %}
       </ul>
     </div>

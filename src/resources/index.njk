@@ -13,7 +13,7 @@ breadcrumbs:
     <ul class="post-list">
       {% for post in collections.resources %}
       <li data-reveal><a class="post-card" href="{{ post.url }}">
-        <time class="mono" datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time>
+        <time class="label" datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time>
         <h2 class="post-card__title">{{ post.data.title }}</h2>
         <p>{{ post.data.description }}</p>
         <span class="svc-card__arrow" aria-hidden="true">→</span>

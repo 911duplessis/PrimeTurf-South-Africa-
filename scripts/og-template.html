@@ -1,18 +1,21 @@
 <!doctype html><html><head><meta charset="utf-8">
-<!-- Social share image source. Render: serve _site, copy this file into it, screenshot at 1200×630 → src/assets/img/og/og-default.jpg -->
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Geist+Mono:wght@400;500&display=block">
-<link rel="stylesheet" href="/assets/css/main.css"><style>
-body{margin:0;width:1200px;height:630px;overflow:hidden;background:#F4F5F1;padding:0}
+<!-- Social share image source (brand system). Render: serve _site, copy this file into it, screenshot at 1200×630 → src/assets/img/og/og-default.jpg -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&family=Montserrat:wght@600&display=block">
+<style>
+body{margin:0;width:1200px;height:630px;overflow:hidden;background:#FAF8F2;position:relative;font-family:Montserrat,Arial,sans-serif}
+.l{position:absolute;left:0;top:0;bottom:0;width:640px;padding:72px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between}
+.l img{width:340px}
+.t{font-family:Cinzel,Georgia,serif;font-size:52px;line-height:1.12;letter-spacing:.02em;color:#1A3A2A;margin:0}
+.t span{display:block;color:#1A5A28}
+.rule{width:56px;height:1px;background:#B8902A;margin:28px 0 22px}
+.m{font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#1A3A2A}
+.r{position:absolute;right:0;top:0;bottom:0;width:560px}
 canvas{position:absolute;inset:0}
-.fade{position:absolute;inset:0;background:linear-gradient(90deg,#F4F5F1 0%,rgba(244,245,241,.95) 45%,rgba(244,245,241,0) 75%)}
-.c{position:absolute;left:72px;top:64px;right:72px}
-.t{font-family:var(--f-display);font-size:104px;line-height:.92;letter-spacing:-.045em;font-weight:600;margin:40px 0 28px}
-.t span{color:#2E7A3C;display:block}
-.m{font-family:var(--f-mono);font-size:20px;letter-spacing:.06em;text-transform:uppercase;color:#27302A}
-</style></head><body><canvas id="c" width="1200" height="630"></canvas><div class="fade"></div>
-<div class="c"><a class="logo" style="transform:scale(1.5);transform-origin:left top;display:inline-flex"><svg class="logo__mark" viewBox="0 0 32 32"><rect x="1" y="1" width="30" height="30" rx="8" fill="currentColor"/><path d="M8 23V13M12.5 23V9M17 23V12M21.5 23V8M26 23v-7" stroke="#C6F24E" stroke-width="2.2" stroke-linecap="round"/></svg><span class="logo__word">Prime<b>Turf</b></span></a>
-<div class="t">Always green.<span>Never watered.</span></div>
-<div class="m">Artificial turf · Gauteng &amp; Western Cape · 076 804 8868</div></div>
-<script type="module">import{paintTurf}from"/assets/js/lib/turf.js";paintTurf(document.getElementById("c").getContext("2d"),1200,630,"lush",{seed:4,scale:1.2,horizon:.45});document.body.dataset.ready=1;</script>
+.scrim{position:absolute;inset:0;background:linear-gradient(20deg,rgba(26,58,42,.55),rgba(26,58,42,.1))}
+</style></head><body>
+<div class="r"><canvas id="c" width="560" height="630"></canvas><div class="scrim"></div></div>
+<div class="l"><img src="/assets/img/brand/primeturf-horizontal-logo.png" alt="">
+<div><p class="t">Always green.<span>Never watered.</span></p><div class="rule"></div>
+<div class="m">Artificial turf · Gauteng &amp; Western Cape</div></div></div>
+<script type="module">import{paintTurf}from"/assets/js/lib/turf.js";paintTurf(document.getElementById("c").getContext("2d"),560,630,"lush",{seed:4,scale:1.2,horizon:.45});document.body.dataset.ready=1;</script>
 </body></html>
