@@ -1,0 +1,52 @@
+---
+layout: layouts/page.njk
+title: About PrimeTurf
+description: PrimeTurf are luxury artificial turf specialists in Gauteng and the Western Cape. Installation, maintenance and refresh of residential and commercial artificial turf, AstroTurf and putting greens.
+eyebrow: About us
+heading: Luxury artificial turf specialists.
+lede: Serving Gauteng and the Western Cape. Every project is scoped, supplied and installed by our own team.
+breadcrumbs:
+  - label: About
+---
+<section class="section section--flush-top">
+  <div class="wrap detail">
+    <div class="detail__main prose">
+      <h2>The PrimeTurf approach</h2>
+      <p>With years of experience in the installation and maintenance of residential and commercial artificial turf and AstroTurf, we deliver high-quality, long-lasting solutions tailored to your needs.</p>
+      <p>We take pride in delivering neat, professional workmanship, reliable service and exceptional quality. From private homes and estates to businesses, schools, restaurants and sports facilities, we create outdoor spaces that are built to last and designed to impress.</p>
+
+      <h2>Elevate your outdoor lifestyle</h2>
+      <p>Specialising in premium artificial turf, putting greens and custom outdoor solutions, we transform ordinary spaces into extraordinary environments.</p>
+      <p>Whether you are enhancing a residential garden or a commercial property, our expert team delivers tailored, high-quality installations designed to suit your lifestyle and vision. From outdoor living areas to indoor applications, we bring craftsmanship, beauty, functionality, lasting quality and attention to detail to every project.</p>
+
+      <h2>Why choose artificial turf?</h2>
+      <ul class="check-list">
+        <li>No more watering or mowing.</li>
+        <li>Pet-friendly and low maintenance.</li>
+        <li>Beautiful, lush green lawns all year round.</li>
+        <li>Premium estate-level finish.</li>
+        <li>24-month workmanship warranty.</li>
+        <li>6-year manufacturer’s warranty.</li>
+      </ul>
+
+      <h2>Already have artificial turf installed?</h2>
+      <p>We don’t just install artificial turf. We also specialise in restoring and maintaining existing installations. Our professional cleaning, maintenance and refresh services help revive the appearance of your turf, leaving it clean, vibrant and as good as new.</p>
+      <p><a href="/services/maintenance-refresh/">Maintenance &amp; refresh →</a></p>
+    </div>
+    <aside class="detail__aside">
+      <figure class="team__photo">
+        <img src="/assets/img/work/install-team.webp" alt="The PrimeTurf installation team standing on a newly installed turf court" width="1100" height="825" loading="lazy" decoding="async">
+        <figcaption>The PrimeTurf installation team</figcaption>
+      </figure>
+      <div class="panel" style="margin-top: var(--pt-space-md)">
+        <p class="eyebrow">Free, no-obligation quote</p>
+        <p>{{ site.promises.response }}. {{ site.promises.siteVisit }}.</p>
+        <div class="viz__ctas">
+          <a class="btn btn--primary btn--block" href="https://wa.me/{{ site.contact.whatsapp }}" target="_blank" rel="noopener">{% include "partials/icon-wa.njk" %} WhatsApp {{ site.contact.person }}</a>
+          <a class="btn btn--outline btn--block" href="tel:{{ site.contact.phoneE164 }}">Call {{ site.contact.phoneDisplay }}</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+{% include "partials/install-types.njk" %}

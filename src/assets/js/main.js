@@ -46,7 +46,7 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   btn.addEventListener("click", () => set(btn.getAttribute("aria-expanded") !== "true"));
   nav.addEventListener("click", (e) => e.target.closest("a") && set(false));
   addEventListener("keydown", (e) => e.key === "Escape" && set(false));
-  matchMedia("(min-width: 1021px)").addEventListener("change", () => set(false));
+  matchMedia("(min-width: 1121px)").addEventListener("change", () => set(false));
 })();
 
 /* ---------- Scroll reveals (staggered within a parent) ---------- */

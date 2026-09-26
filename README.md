@@ -158,6 +158,8 @@ photo → mark area → size & surface → use → look → requirements → con
 | `estimator.js` | A pure pricing function. It always stays **inside R450–R850/m²**. |
 | `lib/turf.js` | Turf texture painter, with looks `natural`, `lush`, `hardwearing` and `putting`. |
 
+**Size step:** "Help me measure" adds up length × width rectangles and fills in the m² automatically. The surface choice shows whether the job is a hard installation (bonded onto paving or concrete) or a soft installation (the 7-step base process). From this step on, an "Indicative so far" price updates live as each answer changes, using the same `estimate()` as the final result.
+
 **Today (no backend):** everything runs in the browser, and the photo is never uploaded. The result is a draggable Now/Concept comparison, an indicative range, a summary, a disclaimer, and **Book free site visit / WhatsApp (pre-filled summary) / Call / Download concept**.
 
 **Honesty guardrails built in:** "Concept visual only" appears under the image and is stamped on it. The disclaimer states that the price is indicative and the image is an impression. Every figure is clamped to the published price range.

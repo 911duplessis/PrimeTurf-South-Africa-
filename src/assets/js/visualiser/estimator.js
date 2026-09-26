@@ -26,7 +26,7 @@ export const GRADE_BANDS = {
 
 /** Site-preparation loadings, R per m², added to both ends of the band. */
 export const PREP_LOADINGS = {
-  surface: { lawn: 20, soil: 0, paving: 10, "old-turf": 35, mixed: 20 },
+  surface: { lawn: 20, soil: 0, paving: 0, "old-turf": 35, mixed: 20 }, // paving = hard installation (bonded, minimal prep)
   extras: { slope: 35, drainage: 35, roots: 25, access: 20, irrigation: 10, shade: 0 },
 };
 
@@ -34,7 +34,7 @@ export const PREP_LOADINGS = {
 const SITE_ASSESSED_USES = new Set(["commercial", "school-sport", "putting"]);
 
 const LABELS = {
-  surface: { lawn: "Existing lawn", soil: "Bare soil / sand", paving: "Paving or concrete", "old-turf": "Old artificial turf", mixed: "Mixed / not sure" },
+  surface: { lawn: "Existing lawn", soil: "Bare soil / sand", paving: "Paving or concrete (hard installation)", "old-turf": "Old artificial turf", mixed: "Mixed / not sure" },
   use: { family: "Family lawn", pets: "Pets", pool: "Pool surround", putting: "Putting green", decorative: "Low traffic / decorative", commercial: "Commercial / estate", "school-sport": "School / sports" },
   look: { natural: "Natural", lush: "Lush & dense", hardwearing: "Hard-wearing", putting: "Putting surface" },
   extras: { slope: "Slope", drainage: "Drainage issues", roots: "Tree roots", shade: "Heavy shade", access: "Limited access", irrigation: "Irrigation removal" },
@@ -71,6 +71,7 @@ export function estimate(a, pricing = { minPerM2: 450, maxPerM2: 850 }) {
 
   if ((a.extras || []).some((x) => ["slope", "drainage", "roots"].includes(x))) notes.push("Slope, drainage and root work are confirmed on site.");
   if ((a.extras || []).includes("shade")) notes.push("Heavy shade noted — we’ll check drainage and leaf fall on site.");
+  if (a.surface === "paving") notes.push("Hard installation: turf is bonded to your existing surface, so minimal preparation is needed.");
   if (SITE_ASSESSED_USES.has(a.use)) notes.push(`${label("use", a.use)} projects are scoped individually after a site assessment.`);
 
   return {

@@ -1,0 +1,27 @@
+{#- "Who we are": copy from the current primeturf.co.za homepage. -#}
+<section class="section" id="about" aria-labelledby="about-title">
+  <div class="wrap who">
+    <div class="who__intro">
+      <p class="eyebrow">Who we are</p>
+      <h2 id="about-title" class="display-l" data-reveal>Luxury artificial turf specialists in Gauteng &amp; the Western Cape.</h2>
+      <p class="lede">With years of experience in the installation and maintenance of residential and commercial artificial turf and AstroTurf, we deliver high-quality, long-lasting solutions tailored to your needs.</p>
+      <p>We take pride in delivering neat, professional workmanship, reliable service and exceptional quality. From private homes and estates to businesses, schools, restaurants and sports facilities, we create outdoor spaces that are built to last and designed to impress.</p>
+      <div class="hero__ctas">
+        <a class="btn btn--primary" href="https://wa.me/{{ site.contact.whatsapp }}?text={{ 'Hi Leon, I would like a free turf quote.' | urlencode }}" target="_blank" rel="noopener">{% include "partials/icon-wa.njk" %} WhatsApp free quote</a>
+        <a class="btn btn--outline" href="tel:{{ site.contact.phoneE164 }}">Call {{ site.contact.phoneDisplay }}</a>
+      </div>
+    </div>
+    <aside class="who__why" data-reveal>
+      <h3 class="who__why-title">Why choose artificial turf?</h3>
+      <ul class="check-list">
+        <li>No more watering or mowing.</li>
+        <li>Pet-friendly and low maintenance.</li>
+        <li>Beautiful, lush green lawns all year round.</li>
+        <li>Premium estate-level finish.</li>
+        <li>24-month workmanship warranty.</li>
+        <li>6-year manufacturer’s warranty.</li>
+      </ul>
+      <a class="btn btn--text" href="/about/">More about PrimeTurf →</a>
+    </aside>
+  </div>
+</section>
