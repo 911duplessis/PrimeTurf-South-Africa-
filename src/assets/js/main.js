@@ -1,7 +1,6 @@
 /**
  * Site-wide behaviour. Progressive enhancement only — every page works without JS.
  */
-import { paintTurf } from "./lib/turf.js";
 import { submitLead, waUrl, mailUrl, formatRand } from "./lib/leads.js";
 
 document.documentElement.classList.add("js");
@@ -66,46 +65,13 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   els.forEach((el) => io.observe(el));
 })();
 
-/* ---------- Hero: dry ground → turf "growth" sweep ---------- */
+/* ---------- Hero: gentle parallax on the project photo ---------- */
 (() => {
-  const hero = $("[data-hero]");
-  if (!hero) return;
-  const dry = $("[data-hero-dry]", hero);
-  const turf = $("[data-hero-turf]", hero);
-  const dpr = Math.min(devicePixelRatio || 1, 1.5);
-  let w = 0, h = 0;
-
-  const paint = () => {
-    const r = hero.getBoundingClientRect();
-    const nw = Math.round(r.width * dpr), nh = Math.round(r.height * dpr);
-    if (Math.abs(nw - w) < 40 && Math.abs(nh - h) < 120) return; // ignore mobile URL-bar jitter
-    w = nw; h = nh;
-    for (const [c, look] of [[dry, "dry"], [turf, "lush"]]) {
-      c.width = w; c.height = h;
-      paintTurf(c.getContext("2d"), w, h, look, { seed: 11, scale: dpr * (innerWidth < 700 ? 1.1 : 1.35), horizon: 0.4 });
-    }
-  };
-  paint();
-  let t; addEventListener("resize", () => { clearTimeout(t); t = setTimeout(paint, 200); });
-
-  if (reduceMotion) { hero.style.setProperty("--wipe", "0%"); hero.style.setProperty("--wipe-line-o", 0); return; }
-
-  // Sweep the turf layer up from the bottom, like it's growing in.
-  const start = performance.now() + 350, dur = 2200;
-  const ease = (x) => 1 - Math.pow(1 - x, 3);
-  const tick = (now) => {
-    const p = Math.min(Math.max((now - start) / dur, 0), 1);
-    hero.style.setProperty("--wipe", `${(1 - ease(p)) * 100}%`);
-    hero.style.setProperty("--wipe-line-o", p < 0.85 ? 1 : 1 - (p - 0.85) / 0.15);
-    if (p < 1) requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
-
-  // Gentle parallax on the field while the hero is on screen.
-  const field = $(".hero__field", hero);
+  const field = $("[data-hero] .hero__field");
+  if (!field || reduceMotion) return;
   addEventListener("scroll", () => {
     if (scrollY > innerHeight) return;
-    field.style.transform = `translate3d(0, ${scrollY * 0.18}px, 0)`;
+    field.style.transform = `translate3d(0, ${scrollY * 0.15}px, 0)`;
   }, { passive: true });
 })();
 

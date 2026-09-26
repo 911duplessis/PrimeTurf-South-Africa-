@@ -10,9 +10,7 @@ scripts:
 {# ───────────────────────── 1. HERO ───────────────────────── #}
 <section class="hero" data-hero aria-labelledby="hero-title">
   <div class="hero__field" aria-hidden="true">
-    <canvas class="hero__canvas hero__canvas--dry" data-hero-dry></canvas>
-    <canvas class="hero__canvas hero__canvas--turf" data-hero-turf></canvas>
-    <div class="hero__wipe-line" data-hero-line></div>
+    <img class="hero__img" src="/assets/img/work/putting-green-completed.webp" alt="" width="1080" height="1080" fetchpriority="high" decoding="async">
     <div class="hero__grid"></div>
   </div>
   <div class="wrap hero__inner">
@@ -63,9 +61,26 @@ scripts:
         <p class="eyebrow eyebrow--gold">Before &amp; after</p>
         <h2 id="results-title" class="display-l" data-reveal>Drag to see the difference.</h2>
       </div>
-      <p class="section-head__aside">From tired lawns and bare soil to a finished surface that stays green through drought and downpour.</p>
+      <p class="section-head__aside">Real PrimeTurf projects, photographed from the same spot before and after.</p>
     </header>
     {% include "partials/ba-gallery.njk" %}
+
+    <div class="work" aria-labelledby="work-title">
+      <header class="work__head">
+        <h3 id="work-title" class="work__title">Recent work</h3>
+        <p class="work__note">Photos from PrimeTurf installations.</p>
+      </header>
+      <ul class="work__grid">
+        {% for g in gallery %}
+        <li class="work__item{% if g.feature %} work__item--feature{% endif %}" data-reveal>
+          <figure>
+            <img src="{{ g.src }}" alt="{{ g.alt }}" width="{{ g.w }}" height="{{ g.h }}" loading="lazy" decoding="async">
+            <figcaption>{{ g.caption }}</figcaption>
+          </figure>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
   </div>
 </section>
 

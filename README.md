@@ -21,7 +21,7 @@ The site follows the **PrimeTurf Brand System (existing identity, optimised edit
 | **Colour** | Primary Green `#1A5A28` (CTAs, links) · Deep Green `#1A3A2A` (text, dark bands) · Warm Gold `#B8902A` (hairlines only) · Gold Light `#D4A940` (gold on dark, gold CTA with deep-green text) · Gold Text `#8A6B20` · Ivory `#FAF8F2` · White · Muted `#4B6456`. Green leads and gold stays at or below about 10% of the area. |
 | **Type** | Cinzel 400 for headlines (the wordmark's face) · Cormorant Garamond for subheads, ledes and card titles · Montserrat for body text and UI. |
 | **Shape & space** | 2px corners on buttons and inputs, 6px on cards and images. Hairlines before shadows. The signature ornament is one short gold hairline under an eyebrow. Sections have generous padding (112px desktop / 64px mobile). |
-| **Imagery** | Until real installation photography is supplied, the hero and the swatches use procedurally painted turf (`lib/turf.js`) under the deep-green scrim, which is the only gradient the system allows. |
+| **Imagery** | Only authentic PrimeTurf project photos: PT-watermarked posts from the PrimeTurf Facebook page and the PT-labelled before/after set. The hero photo sits under the deep-green scrim, which is the only gradient the system allows. Procedural turf (`lib/turf.js`) is used only for the visualiser's look swatches and concept overlay. **Never use AI-generated scenes as project photos.** |
 
 All tokens are CSS custom properties (`--pt-*`) at the top of `src/assets/css/main.css`, and they mirror the brand system's `tokens.json`.
 
@@ -63,7 +63,6 @@ All tokens are CSS custom properties (`--pt-*`) at the top of `src/assets/css/ma
 │  ├─ analyse.js                 Vision pre-fill (Claude) → area, surface, outline
 │  └─ concept.js                 Image-model stub → AI "after" image (returns 501 until wired)
 ├─ scripts/
-│  ├─ make-placeholders.mjs      Regenerates the illustrative before/after SVGs
 │  └─ og-template.html           Source for the social share image
 ├─ src/
 │  ├─ _data/                     ← CONTENT LIVES HERE
@@ -127,7 +126,9 @@ Body in Markdown…
 Copy `src/projects/case-studies/_template.md` to a new file. Fill it with **real** project facts and photos, then remove `draft: true` and `permalink: false`. The page gets its own before/after slider, and `/projects/` becomes indexable automatically.
 
 ### Before/After photos
-Put real photos (1600×1000 or larger, WebP or AVIF, same framing for before and after) in `src/assets/img/projects/`. Update `projects.json` and set `"placeholder": false`, which removes the "Illustration" tag. The current SVGs are **illustrations, not PrimeTurf projects**, and are labelled that way on the page.
+Before/after pairs live in `src/assets/img/projects/` as WebP, shot from the same position before and after, and are listed in `projects.json`. The "Recent work" grid on the home page reads `src/_data/gallery.json`, with photos in `src/assets/img/work/`.
+
+**Photo sourcing rule:** use only authentic PrimeTurf photos, meaning PT-watermarked, posted on the PrimeTurf Facebook page, or taken by the team. Several images in older PrimeTurf repos are AI-generated. They carry Gemini's ✦ sparkle mark, and some show invented "projects" such as "Sandton Villa · 240m²" and "Steyn City". Never publish them as work.
 
 ---
 
@@ -213,7 +214,8 @@ The site uses root-relative URLs (`/assets/…`), so serve it from the root of a
 - [x] Accessible forms (labels, `aria-invalid`, live status), keyboard-operable slider and visualiser, reduced-motion support
 
 **To do before launch**
-- [ ] Replace the illustrative before/after SVGs with real project photos (WebP/AVIF, descriptive alt text)
+- [x] Before/after pairs and the gallery use authentic PrimeTurf photos
+- [ ] Add more pairs as projects are photographed (same position before and after)
 - [ ] Add a physical `address` / `geo` to the LocalBusiness schema **only if** there is a public business address
 - [ ] Claim and verify the Google Business Profile; keep name, phone and site identical to `site.json`
 - [ ] Submit `https://primeturf.co.za/sitemap.xml` in Google Search Console

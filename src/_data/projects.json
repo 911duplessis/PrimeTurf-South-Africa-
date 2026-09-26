@@ -1,9 +1,8 @@
 {
-  "_comment": "Before & After pairs. Replace `before`/`after` with real project photography (1600×1000 recommended, WebP/AVIF). Set placeholder:false once real photos are in, which removes the 'Illustration' tag.",
+  "_comment": "Before & After pairs: authentic PrimeTurf project photos (PT-labelled posts from the PrimeTurf Facebook page and WhatsApp before/after set). Same camera position before and after. Add new pairs as 16:10-ish WebP, same framing. Set placeholder:true only for non-photographic stand-ins.",
   "items": [
-    { "id": "garden", "title": "Back garden lawn", "caption": "Patchy lawn lifted, base re-levelled, full turf installation.", "type": "Residential", "before": "/assets/img/projects/garden-before.svg", "after": "/assets/img/projects/garden-after.svg", "placeholder": true },
-    { "id": "pool", "title": "Pool surround", "caption": "Worn grass around the coping replaced with UV-stabilised turf.", "type": "Residential", "before": "/assets/img/projects/pool-before.svg", "after": "/assets/img/projects/pool-after.svg", "placeholder": true },
-    { "id": "frontage", "title": "Commercial frontage", "caption": "Irrigated verge converted to a zero-water green frontage.", "type": "Commercial", "before": "/assets/img/projects/frontage-before.svg", "after": "/assets/img/projects/frontage-after.svg", "placeholder": true },
-    { "id": "green", "title": "Backyard putting green", "caption": "Unused corner shaped and prepared for a putting surface.", "type": "Putting green", "before": "/assets/img/projects/green-before.svg", "after": "/assets/img/projects/green-after.svg", "placeholder": true }
+    { "id": "back-garden", "title": "Back garden", "caption": "Bare, patchy ground next to the kennel replaced with a full lawn, edged against the paving.", "type": "Residential", "before": "/assets/img/projects/back-garden-before.webp", "after": "/assets/img/projects/back-garden-after.webp", "placeholder": false },
+    { "id": "side-passage", "title": "Side passage", "caption": "A narrow strip of dry soil along the boundary wall, turfed edge to edge.", "type": "Residential", "before": "/assets/img/projects/side-passage-before.webp", "after": "/assets/img/projects/side-passage-after.webp", "placeholder": false },
+    { "id": "courtyard", "title": "Courtyard lawn", "caption": "Excavated courtyard bed prepared and finished with artificial turf against the brick edging.", "type": "Courtyard", "before": "/assets/img/projects/courtyard-before.webp", "after": "/assets/img/projects/courtyard-after.webp", "placeholder": false }
   ]
 }

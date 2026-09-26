@@ -7,7 +7,6 @@
   "scripts": {
     "dev": "eleventy --serve",
     "build": "eleventy",
-    "placeholders": "node scripts/make-placeholders.mjs",
     "clean": "rm -rf _site"
   },
   "engines": {
