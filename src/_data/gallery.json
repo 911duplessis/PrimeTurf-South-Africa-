@@ -1,0 +1,45 @@
+[
+  {
+    "src": "/assets/img/work/putting-green-completed.webp",
+    "alt": "Completed backyard putting green with brick edging beside a house",
+    "caption": "Putting green, completed",
+    "w": 1080,
+    "h": 1080,
+    "feature": true
+  },
+  {
+    "src": "/assets/img/work/putting-green-base-prep.webp",
+    "alt": "Compacted base being prepared for a putting green",
+    "caption": "Putting green: base preparation",
+    "w": 1080,
+    "h": 1080
+  },
+  {
+    "src": "/assets/img/work/putting-green-infill.webp",
+    "alt": "Installer brushing infill into a new putting green",
+    "caption": "Putting green: infill and brushing",
+    "w": 1080,
+    "h": 1080
+  },
+  {
+    "src": "/assets/img/work/putting-green-dusk.webp",
+    "alt": "Putting green at dusk with garden lighting and entertainment area",
+    "caption": "Putting green at dusk",
+    "w": 1080,
+    "h": 1080
+  },
+  {
+    "src": "/assets/img/work/garden-lawn-before-after.webp",
+    "alt": "Garden lawn after installation, with an inset of the bare soil before",
+    "caption": "Garden lawn: before and after",
+    "w": 1080,
+    "h": 1080
+  },
+  {
+    "src": "/assets/img/work/play-area-hopscotch.webp",
+    "alt": "Play area turf with an inlaid coloured hopscotch",
+    "caption": "Play area with inlaid hopscotch",
+    "w": 1080,
+    "h": 1439
+  }
+]
