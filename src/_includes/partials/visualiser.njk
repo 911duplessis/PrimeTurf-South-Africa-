@@ -42,22 +42,29 @@
       <!-- 2. AREA -->
       <fieldset class="viz__step" data-step="area" hidden>
         <legend class="viz__legend"><span class="label">02</span> Mark where the turf goes</legend>
-        <p class="viz__hint">Tap around the edge of the lawn area to outline it. Then enter the length of one edge and we’ll calculate the area for you. Skip this and we’ll use the lower part of the photo.</p>
+        <p class="viz__hint">We look for the lawn in your photo and outline it for you. If the outline’s not right, clear it and tap around the area yourself.</p>
+        <div class="viewpoint" role="radiogroup" aria-labelledby="viewpoint-label">
+          <span class="field__label" id="viewpoint-label">Photo taken from</span>
+          <label class="opt"><input type="radio" name="viewpoint" value="ground" checked><span>Standing in the garden</span></label>
+          <label class="opt"><input type="radio" name="viewpoint" value="upstairs"><span>Upstairs / balcony</span></label>
+        </div>
         <div class="viz__canvas-wrap">
           <canvas class="viz__canvas" data-viz-mask-canvas aria-label="Photo. Tap to add outline points." role="img"></canvas>
         </div>
         <div class="viz__tools">
+          <button type="button" class="chip chip--accent" data-viz-detect>Detect lawn</button>
           <button type="button" class="chip" data-viz-undo>Undo point</button>
           <button type="button" class="chip" data-viz-clear>Clear outline</button>
           <span class="label viz__count" data-viz-points>0 points</span>
         </div>
+        <p class="detect-status" data-detect-status aria-live="polite" hidden></p>
         <div class="calib" data-calib hidden>
-          <label class="calib__label" for="viz-edge">How long is the <span class="calib__edge">highlighted edge</span>, in metres?</label>
+          <p class="calib__est" aria-live="polite" data-calib-out>Outline the area and we’ll estimate its size.</p>
+          <label class="calib__label" for="viz-edge">For a closer figure, how long is the <span class="calib__edge">highlighted edge</span>? <span class="calib__opt">Optional, in metres</span></label>
           <div class="calib__row">
             <input id="viz-edge" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 8,5" data-calib-len>
             <button type="button" class="chip" data-calib-next>Use a different edge</button>
           </div>
-          <p class="calib__out" aria-live="polite" data-calib-out>Enter one length and we’ll work out the area from your outline.</p>
         </div>
       </fieldset>
 
