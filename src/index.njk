@@ -33,11 +33,13 @@ scripts:
   </div>
 </section>
 
+{% include "partials/who-we-are.njk" %}
+
 {# ───────────────────────── 2. BENEFITS / SPEC LEDGER ───────────────────────── #}
 <section class="section" id="why" aria-labelledby="why-title">
   <div class="wrap">
     <header class="section-head">
-      <p class="eyebrow">The PrimeTurf standard</p>
+      <p class="eyebrow">Why PrimeTurf Gauteng &amp; Cape Town</p>
       <h2 id="why-title" class="display-l" data-reveal>Five things every installation is built on.</h2>
     </header>
     <ol class="ledger">
@@ -122,11 +124,20 @@ scripts:
       </div>
       {% endfor %}
     </div>
+      <aside class="refresh" data-reveal>
+      <div>
+        <h3 class="refresh__title">Already have artificial turf installed?</h3>
+        <p>We also restore and maintain existing installations. Professional cleaning, maintenance and refresh services revive your turf, leaving it clean, vibrant and as good as new.</p>
+      </div>
+      <a class="btn btn--outline" href="/services/maintenance-refresh/">Maintenance &amp; refresh</a>
+    </aside>
   </div>
 </section>
 
+{% include "partials/install-types.njk" %}
+
 {# ───────────────────────── 6. PRICING ───────────────────────── #}
-<section class="section section--tint" id="pricing" aria-labelledby="pricing-title">
+<section class="section" id="pricing" aria-labelledby="pricing-title">
   <div class="wrap pricing">
     <div class="pricing__copy">
       <p class="eyebrow">Straight numbers</p>
@@ -152,7 +163,7 @@ scripts:
 </section>
 
 {# ───────────────────────── 7. PROCESS ───────────────────────── #}
-<section class="section" id="process" aria-labelledby="process-title">
+<section class="section section--ruled" id="process" aria-labelledby="process-title">
   <div class="wrap">
     <div class="team">
       <header class="team__copy">

@@ -64,6 +64,17 @@
           </div>
           <input type="range" min="5" max="600" step="5" value="60" data-viz-m2-range aria-label="Approximate area slider" class="range">
           <p class="viz__hint label">Tip: length × width. A typical double garage is roughly 36 m².</p>
+          <details class="measure" data-measure>
+            <summary>Help me measure</summary>
+            <div class="measure__body">
+              <p class="viz__hint">Split the space into rectangles and enter each one’s length and width in metres. We add them up and fill in the area for you.</p>
+              <div data-measure-rows></div>
+              <div class="measure__foot">
+                <button type="button" class="chip" data-measure-add>+ Add another area</button>
+                <p class="measure__total" aria-live="polite">Total: <strong data-measure-total>0 m²</strong></p>
+              </div>
+            </div>
+          </details>
         </div>
         <div class="field">
           <span class="field__label" id="surface-label">What’s there now?</span>
@@ -74,6 +85,7 @@
             <label class="opt"><input type="radio" name="surface" value="old-turf"><span>Old artificial turf</span></label>
             <label class="opt"><input type="radio" name="surface" value="mixed"><span>Mixed / not sure</span></label>
           </div>
+          <p class="install-hint" data-install-hint aria-live="polite"></p>
         </div>
       </fieldset>
 
@@ -170,6 +182,13 @@
           </div>
         </div>
       </section>
+
+      <div class="live-est" data-live-est hidden aria-live="polite">
+        <span class="label">Indicative so far</span>
+        <strong class="live-est__total" data-live-total>—</strong>
+        <span class="live-est__rate" data-live-rate></span>
+        <span class="live-est__note">Updates as you answer. Fully installed, confirmed after a free site visit.</span>
+      </div>
 
       <div class="viz__nav" data-viz-nav>
         <button type="button" class="btn btn--outline" data-viz-back disabled>Back</button>

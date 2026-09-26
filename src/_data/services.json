@@ -1,11 +1,110 @@
 [
-  { "slug": "residential-lawns", "group": "residential", "title": "Residential Lawns", "summary": "Front and back gardens replaced with an evergreen lawn that never needs watering.", "body": "We lift the existing lawn or surface, prepare and compact a stable, free-draining base, and install turf matched to how the space is used — from quiet front gardens to busy family lawns.", "points": ["Existing lawn removal and base preparation", "Turf selected for look and foot traffic", "Clean edging against paving, beds and walls"] },
-  { "slug": "pool-surrounds", "group": "residential", "title": "Pool Surrounds", "summary": "A soft, clean edge around the pool with no mud tracked into the water.", "body": "Turf around pools stays green through splash and sun, and the free-draining base lets water run through rather than pool at the coping.", "points": ["Neat finishing against coping", "Drainage planned around splash zones", "UV-stabilised fibres for full sun"] },
-  { "slug": "putting-greens", "group": "residential", "title": "Putting Greens", "summary": "Backyard and estate putting greens, scoped to your space.", "body": "Putting surfaces need a firmer, flatter base than a lawn. We scope contours, cup positions and surrounds on site before quoting.", "points": ["Base prepared for a true roll", "Scoped to the available space", "Blends into surrounding lawn"] },
-  { "slug": "estates", "group": "commercial", "title": "Estates", "summary": "Common areas, verges and clubhouse surrounds that stay uniform all year.", "body": "For estates and HOAs, turf removes irrigation from the maintenance budget and keeps shared spaces consistent across seasons.", "points": ["Common areas and verges", "Clubhouse and amenity surrounds", "Phased installation to limit disruption"] },
-  { "slug": "commercial-properties", "group": "commercial", "title": "Commercial Properties", "summary": "Office parks, frontages and hospitality spaces with no irrigation overhead.", "body": "A permanently green frontage with predictable upkeep. We scope, supply and install with our own team — suited to tenders that need a single accountable contractor.", "points": ["Frontages, courtyards and roof spaces", "Single accountable contractor", "Scheduling around operating hours"] },
-  { "slug": "schools", "group": "commercial", "title": "Schools", "summary": "Hard-wearing play and assembly areas that stay usable after rain.", "body": "Turf gives schools a clean, usable surface through wet and dry seasons, with drainage that clears standing water after storms.", "points": ["Play areas and quads", "Drainage for heavy summer rain", "Installation planned around the school calendar"] },
-  { "slug": "restaurants", "group": "commercial", "title": "Restaurants", "summary": "Outdoor seating and beer-garden areas that look good every service.", "body": "A consistent green setting for outdoor seating and function areas, without watering schedules or worn patches.", "points": ["Outdoor seating and function areas", "Easy to clean", "Installation scheduled around trading hours"] },
-  { "slug": "sports-facilities", "group": "commercial", "title": "Sports Facilities", "summary": "Training and multi-use surfaces scoped to the sport and the site.", "body": "Sports surfaces are scoped individually. We assess the site, base and intended use before recommending a system.", "points": ["Site and base assessment", "Surface matched to intended use", "Drainage designed for the site"] },
-  { "slug": "maintenance-refresh", "group": "maintenance", "title": "Maintenance & Refresh", "summary": "Restore existing artificial turf — cleaning, brushing, infill and repairs.", "body": "Existing turf that has flattened, collected debris or lifted at the seams can often be restored rather than replaced. We assess it on site and tell you straight.", "points": ["Deep clean and power brush", "Infill top-up", "Seam and edge repairs"] }
+  {
+    "slug": "residential-lawns",
+    "group": "residential",
+    "title": "Residential Lawns",
+    "summary": "Front and back gardens replaced with an evergreen lawn that never needs watering.",
+    "body": "We lift the existing lawn or surface, prepare and compact a stable, free-draining base, and install turf matched to how the space is used — from quiet front gardens to busy family lawns.",
+    "points": [
+      "Existing lawn removal and base preparation",
+      "Turf selected for look and foot traffic",
+      "Clean edging against paving, beds and walls"
+    ]
+  },
+  {
+    "slug": "pool-surrounds",
+    "group": "residential",
+    "title": "Pool Surrounds",
+    "summary": "A soft, clean edge around the pool with no mud tracked into the water.",
+    "body": "Turf around pools stays green through splash and sun, and the free-draining base lets water run through rather than pool at the coping.",
+    "points": [
+      "Neat finishing against coping",
+      "Drainage planned around splash zones",
+      "UV-stabilised fibres for full sun"
+    ]
+  },
+  {
+    "slug": "putting-greens",
+    "group": "residential",
+    "title": "Putting Greens",
+    "summary": "Backyard and estate putting greens, scoped to your space.",
+    "body": "Specialising in premium artificial turf, putting greens and custom outdoor solutions, we transform ordinary spaces into extraordinary environments. Putting surfaces need a firmer, flatter base than a lawn, so we scope contours, cup positions and surrounds on site before quoting.",
+    "points": [
+      "Base prepared for a true roll",
+      "Scoped to the available space",
+      "Blends into surrounding lawn"
+    ]
+  },
+  {
+    "slug": "estates",
+    "group": "commercial",
+    "title": "Estates",
+    "summary": "Common areas, verges and clubhouse surrounds that stay uniform all year.",
+    "body": "For estates and HOAs, turf removes irrigation from the maintenance budget and keeps shared spaces consistent across seasons.",
+    "points": [
+      "Common areas and verges",
+      "Clubhouse and amenity surrounds",
+      "Phased installation to limit disruption"
+    ]
+  },
+  {
+    "slug": "commercial-properties",
+    "group": "commercial",
+    "title": "Commercial Properties",
+    "summary": "Office parks, frontages and hospitality spaces with no irrigation overhead.",
+    "body": "A permanently green frontage with predictable upkeep. We scope, supply and install with our own team — suited to tenders that need a single accountable contractor.",
+    "points": [
+      "Frontages, courtyards and roof spaces",
+      "Single accountable contractor",
+      "Scheduling around operating hours"
+    ]
+  },
+  {
+    "slug": "schools",
+    "group": "commercial",
+    "title": "Schools",
+    "summary": "Hard-wearing play and assembly areas that stay usable after rain.",
+    "body": "Turf gives schools a clean, usable surface through wet and dry seasons, with drainage that clears standing water after storms.",
+    "points": [
+      "Play areas and quads",
+      "Drainage for heavy summer rain",
+      "Installation planned around the school calendar"
+    ]
+  },
+  {
+    "slug": "restaurants",
+    "group": "commercial",
+    "title": "Restaurants",
+    "summary": "Outdoor seating and beer-garden areas that look good every service.",
+    "body": "A consistent green setting for outdoor seating and function areas, without watering schedules or worn patches.",
+    "points": [
+      "Outdoor seating and function areas",
+      "Easy to clean",
+      "Installation scheduled around trading hours"
+    ]
+  },
+  {
+    "slug": "sports-facilities",
+    "group": "commercial",
+    "title": "Sports Facilities",
+    "summary": "Training and multi-use surfaces scoped to the sport and the site.",
+    "body": "Sports surfaces are scoped individually. We assess the site, base and intended use before recommending a system.",
+    "points": [
+      "Site and base assessment",
+      "Surface matched to intended use",
+      "Drainage designed for the site"
+    ]
+  },
+  {
+    "slug": "maintenance-refresh",
+    "group": "maintenance",
+    "title": "Maintenance & Refresh",
+    "summary": "Already have artificial turf? We restore and maintain existing installations.",
+    "body": "We don’t just install artificial turf. We also specialise in restoring and maintaining existing installations. Our professional cleaning, maintenance and refresh services help revive the appearance of your turf, leaving it clean, vibrant and as good as new.",
+    "points": [
+      "Deep clean and power brush",
+      "Infill top-up",
+      "Seam and edge repairs"
+    ]
+  }
 ]

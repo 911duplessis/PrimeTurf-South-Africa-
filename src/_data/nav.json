@@ -1,8 +1,30 @@
 [
-  { "label": "Services", "href": "/services/" },
-  { "label": "Results", "href": "/#results" },
-  { "label": "Visualise", "href": "/visualise/" },
-  { "label": "Areas", "href": "/areas/" },
-  { "label": "Pricing", "href": "/#pricing" },
-  { "label": "Resources", "href": "/resources/" }
+  {
+    "label": "Services",
+    "href": "/services/"
+  },
+  {
+    "label": "Results",
+    "href": "/#results"
+  },
+  {
+    "label": "Visualise",
+    "href": "/visualise/"
+  },
+  {
+    "label": "Areas",
+    "href": "/areas/"
+  },
+  {
+    "label": "About",
+    "href": "/about/"
+  },
+  {
+    "label": "Pricing",
+    "href": "/#pricing"
+  },
+  {
+    "label": "Resources",
+    "href": "/resources/"
+  }
 ]

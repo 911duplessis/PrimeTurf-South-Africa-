@@ -66,6 +66,7 @@ function init(root) {
     btnNext.textContent = key === "contact" ? "See my concept" : "Continue";
     nav.hidden = key === "result";
     onEnter(key);
+    updateLive();
     if (focus) {
       const r = root.getBoundingClientRect();
       if (r.top < 0 || r.top > innerHeight * 0.5) root.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -136,6 +137,65 @@ function init(root) {
   }
   m2Range.addEventListener("input", (e) => { if (e.isTrusted) m2.value = m2Range.value; });
   m2.addEventListener("input", syncRange);
+
+  /* ---------- Size helper: add up length × width rectangles ---------- */
+  const measureRows = q("[data-measure-rows]");
+  const measureTotal = q("[data-measure-total]");
+  const fmtM2 = (n) => `${Math.round(n * 10) / 10} m²`;
+  function addMeasureRow() {
+    const i = measureRows.children.length + 1;
+    const row = document.createElement("div");
+    row.className = "measure__row";
+    row.innerHTML = `
+      <label>Length (m)<input type="number" inputmode="decimal" min="0" step="0.1" data-len aria-label="Area ${i} length in metres"></label>
+      <span class="measure__x" aria-hidden="true">×</span>
+      <label>Width (m)<input type="number" inputmode="decimal" min="0" step="0.1" data-wid aria-label="Area ${i} width in metres"></label>
+      <span class="measure__out" data-out>= 0 m²</span>
+      <button type="button" class="measure__del" aria-label="Remove area ${i}">×</button>`;
+    row.querySelector(".measure__del").addEventListener("click", () => { row.remove(); if (!measureRows.children.length) addMeasureRow(); sumMeasure(); });
+    measureRows.append(row);
+    return row;
+  }
+  function sumMeasure() {
+    let total = 0;
+    for (const row of measureRows.children) {
+      const a = (parseFloat(row.querySelector("[data-len]").value) || 0) * (parseFloat(row.querySelector("[data-wid]").value) || 0);
+      row.querySelector("[data-out]").textContent = `= ${fmtM2(a)}`;
+      total += a;
+    }
+    measureTotal.textContent = fmtM2(total);
+    if (total > 0) { m2.value = Math.max(1, Math.round(total)); syncRange(); updateLive(); }
+  }
+  addMeasureRow();
+  measureRows.addEventListener("input", sumMeasure);
+  q("[data-measure-add]").addEventListener("click", () => addMeasureRow().querySelector("input").focus());
+
+  /* ---------- Installation type follows the current surface ---------- */
+  const installHint = q("[data-install-hint]");
+  const INSTALL_HINTS = {
+    paving: "<strong>Hard installation.</strong> Turf is bonded directly onto your existing paving or concrete, so minimal preparation is needed.",
+    "old-turf": "<strong>Replacement.</strong> The old turf is lifted first, then the base is checked and prepared before the new turf goes down.",
+    default: "<strong>Soft installation.</strong> Our 7-step process: weed prevention, precision levelling, drainage, a stable base, compaction, secure bonding and precision installation.",
+  };
+  const updateInstallHint = () => {
+    const v = form.querySelector('[name="surface"]:checked')?.value;
+    installHint.innerHTML = INSTALL_HINTS[v] || INSTALL_HINTS.default;
+  };
+  form.addEventListener("change", (e) => { if (e.target.name === "surface") updateInstallHint(); });
+  updateInstallHint();
+
+  /* ---------- Live indicative estimate while answering ---------- */
+  const LIVE_STEPS = new Set(["size", "use", "look", "extras", "contact"]);
+  const liveEst = q("[data-live-est]");
+  function updateLive() {
+    if (!LIVE_STEPS.has(current())) { liveEst.hidden = true; return; }
+    const e = estimate(collectAnswers(), cfg.pricing);
+    q("[data-live-total]").textContent = `${formatRand(e.total.low)} – ${formatRand(e.total.high)}`;
+    q("[data-live-rate]").textContent = `${formatRand(e.perM2.low)}–${formatRand(e.perM2.high)} per m² · ${e.area} m²`;
+    liveEst.hidden = false;
+  }
+  form.addEventListener("input", updateLive);
+  form.addEventListener("change", updateLive);
 
   /* ---------- Enter hooks ---------- */
   function onEnter(key) {
