@@ -1,0 +1,26 @@
+---
+layout: layouts/page.njk
+title: Artificial Turf Services
+description: Residential lawns, pool surrounds, putting greens, estates, commercial properties, schools, restaurants, sports facilities and turf maintenance — across Gauteng and the Western Cape.
+eyebrow: Services
+heading: Every surface, one team.
+lede: Scoped, supplied and installed by PrimeTurf across Gauteng and the Western Cape.
+breadcrumbs:
+  - label: Services
+---
+<section class="section section--flush-top">
+  <div class="wrap">
+    <ul class="svc-grid">
+      {% for s in services %}
+      <li data-reveal>
+        <a class="svc-card" href="/services/{{ s.slug }}/">
+          <span class="mono svc-card__group">{{ s.group | capitalize }}</span>
+          <h2 class="svc-card__title">{{ s.title }}</h2>
+          <p>{{ s.summary }}</p>
+          <span class="svc-card__arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>

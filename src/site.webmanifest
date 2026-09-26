@@ -1,0 +1,1 @@
+{ "name": "PrimeTurf", "short_name": "PrimeTurf", "icons": [{ "src": "/assets/img/favicon.svg", "type": "image/svg+xml", "sizes": "any" }], "theme_color": "#0F1411", "background_color": "#F4F5F1", "display": "browser" }

@@ -1,0 +1,9 @@
+[
+  { "slug": "sandton", "name": "Sandton", "region": "Gauteng", "lat": -26.1076, "lng": 28.0567, "sameDay": true },
+  { "slug": "hyde-park", "name": "Hyde Park", "region": "Gauteng", "lat": -26.1245, "lng": 28.0336, "sameDay": true },
+  { "slug": "pretoria-east", "name": "Pretoria East", "region": "Gauteng", "lat": -25.7815, "lng": 28.3305, "sameDay": true },
+  { "slug": "centurion", "name": "Centurion", "region": "Gauteng", "lat": -25.8603, "lng": 28.1894, "sameDay": true },
+  { "slug": "edenvale", "name": "Edenvale", "region": "Gauteng", "lat": -26.1410, "lng": 28.1522, "sameDay": true },
+  { "slug": "boksburg", "name": "Boksburg", "region": "Gauteng", "lat": -26.2125, "lng": 28.2626, "sameDay": true },
+  { "slug": "cape-town", "name": "Cape Town", "region": "Western Cape", "lat": -33.9249, "lng": 18.4241, "sameDay": false }
+]

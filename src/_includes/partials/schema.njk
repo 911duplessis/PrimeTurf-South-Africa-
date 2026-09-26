@@ -1,0 +1,51 @@
+{#- Structured data. LocalBusiness is on every page; Service / FAQ / Breadcrumb are added per page via front matter. -#}
+{%- set businessId = site.url + "/#business" -%}
+{%- set graph = [] -%}
+{%- set areas = [] -%}
+{%- for r in site.regions %}{% set areas = (areas.push({ "@type": "AdministrativeArea", "name": r }), areas) %}{% endfor -%}
+{%- for l in locations %}{% set areas = (areas.push({ "@type": "Place", "name": l.name + ", " + l.region }), areas) %}{% endfor -%}
+{%- set offers = [] -%}
+{%- for s in services %}{% set offers = (offers.push({ "@type": "Offer", "itemOffered": { "@type": "Service", "name": s.title, "url": site.url + "/services/" + s.slug + "/" } }), offers) %}{% endfor -%}
+{%- set business = {
+  "@type": ["LocalBusiness", "HomeAndConstructionBusiness"],
+  "@id": businessId,
+  "name": site.name,
+  "url": site.url,
+  "description": site.description,
+  "telephone": site.contact.phoneE164,
+  "email": site.contact.email,
+  "image": site.social.ogImage | absoluteUrl(site.url),
+  "priceRange": "R450–R850 per m² (indicative, fully installed)",
+  "areaServed": areas,
+  "contactPoint": { "@type": "ContactPoint", "telephone": site.contact.phoneE164, "email": site.contact.email, "contactType": "sales", "areaServed": "ZA", "availableLanguage": ["en"] },
+  "hasOfferCatalog": { "@type": "OfferCatalog", "name": "Artificial turf services", "itemListElement": offers }
+} -%}
+{%- set graph = (graph.push(business), graph) -%}
+{%- set graph = (graph.push({ "@type": "WebSite", "@id": site.url + "/#website", "url": site.url, "name": site.name, "publisher": { "@id": businessId } }), graph) -%}
+
+{%- if schemaService -%}
+  {%- set graph = (graph.push({
+    "@type": "Service",
+    "name": schemaService.name,
+    "serviceType": "Artificial turf installation",
+    "description": schemaService.description,
+    "provider": { "@id": businessId },
+    "areaServed": schemaService.areaServed or areas,
+    "url": page.url | absoluteUrl(site.url)
+  }), graph) -%}
+{%- endif -%}
+
+{%- if faqSchema -%}
+  {%- set qa = [] -%}
+  {%- for f in faq %}{% set qa = (qa.push({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }), qa) %}{% endfor -%}
+  {%- set graph = (graph.push({ "@type": "FAQPage", "mainEntity": qa }), graph) -%}
+{%- endif -%}
+
+{%- if breadcrumbs -%}
+  {%- set items = [{ "@type": "ListItem", "position": 1, "name": "Home", "item": site.url + "/" }] -%}
+  {%- for c in breadcrumbs -%}
+    {%- set items = (items.push({ "@type": "ListItem", "position": loop.index + 1, "name": c.label, "item": (c.href or page.url) | absoluteUrl(site.url) }), items) -%}
+  {%- endfor -%}
+  {%- set graph = (graph.push({ "@type": "BreadcrumbList", "itemListElement": items }), graph) -%}
+{%- endif %}
+<script type="application/ld+json">{{ { "@context": "https://schema.org", "@graph": graph } | json | safe }}</script>

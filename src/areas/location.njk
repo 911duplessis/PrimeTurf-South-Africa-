@@ -1,0 +1,47 @@
+---
+pagination:
+  data: locations
+  size: 1
+  addAllPagesToCollections: true
+  alias: loc
+permalink: "/areas/{{ loc.slug }}/"
+layout: layouts/page.njk
+eleventyComputed:
+  title: "Artificial Turf Installation in {{ loc.name }}"
+  description: "Premium artificial turf supply and installation in {{ loc.name }}, {{ loc.region }}. Zero water, UV-stabilised, all-weather drainage. Free no-obligation quote."
+  eyebrow: "{{ loc.region }} · {{ (loc.lat * -1) | round(3) }}° S, {{ loc.lng | round(3) }}° E"
+  heading: "Artificial turf in {{ loc.name }}"
+  lede: "Scoped, supplied and installed by our own team. {{ regions[loc.region].visit }}"
+  breadcrumbs:
+    - label: Areas
+      href: /areas/
+    - label: "{{ loc.name }}"
+  schemaService:
+    name: "Artificial turf installation in {{ loc.name }}"
+    description: "Artificial turf supply and installation in {{ loc.name }}, {{ loc.region }}."
+    areaServed:
+      "@type": Place
+      name: "{{ loc.name }}, {{ loc.region }}"
+---
+{%- set reg = regions[loc.region] -%}
+<section class="section section--flush-top">
+  <div class="wrap detail">
+    <div class="detail__main prose">
+      <h2>Built for {{ loc.region }} conditions</h2>
+      <p>{{ reg.climate }} {{ reg.turf }}</p>
+      <h2>What we install in {{ loc.name }}</h2>
+      <ul class="link-list">{% for s in services %}<li><a href="/services/{{ s.slug }}/">{{ s.title }}</a> — {{ s.summary }}</li>{% endfor %}</ul>
+      <h2>Warranty</h2>
+      <p>{{ site.warranty.statement }}</p>
+      <h2>Indicative pricing</h2>
+      <p>{{ site.pricing.statement }}</p>
+    </div>
+    <aside class="detail__aside">
+      <div class="panel">
+        <p class="eyebrow">Free quote in {{ loc.name }}</p>
+        {% set presetLocation = loc.name %}
+        {% include "partials/quote-form.njk" %}
+      </div>
+    </aside>
+  </div>
+</section>

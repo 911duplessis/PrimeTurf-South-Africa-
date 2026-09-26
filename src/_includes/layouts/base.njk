@@ -1,0 +1,49 @@
+{%- set pageTitle = (title + " | " + site.name) if title and not homepage else (site.name + " — Premium Artificial Turf, Gauteng & Western Cape") -%}
+{%- set pageDesc = description or site.description -%}
+{%- set canonical = page.url | absoluteUrl(site.url) -%}
+{%- set ogImage = (ogImage or site.social.ogImage) | absoluteUrl(site.url) -%}
+<!doctype html>
+<html lang="{{ site.lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{{ pageTitle }}</title>
+  <meta name="description" content="{{ pageDesc }}">
+  <link rel="canonical" href="{{ canonical }}">
+  {%- if noindex and noindex != "false" %}<meta name="robots" content="noindex">{% endif %}
+  <meta name="theme-color" content="#0F1411">
+
+  <!-- Open Graph / social -->
+  <meta property="og:type" content="{{ ogType or 'website' }}">
+  <meta property="og:site_name" content="{{ site.name }}">
+  <meta property="og:locale" content="{{ site.locale }}">
+  <meta property="og:title" content="{{ pageTitle }}">
+  <meta property="og:description" content="{{ pageDesc }}">
+  <meta property="og:url" content="{{ canonical }}">
+  <meta property="og:image" content="{{ ogImage }}">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Geist:wght@400..600&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  {% include "partials/schema.njk" %}
+</head>
+<body class="{{ bodyClass }}">
+  <a class="skip" href="#main">Skip to content</a>
+  {% include "partials/header.njk" %}
+  <main id="main">
+    {{ content | safe }}
+  </main>
+  {% include "partials/footer.njk" %}
+  {% include "partials/action-bar.njk" %}
+
+  <script>window.PRIMETURF = {{ { contact: site.contact, pricing: site.pricing, forms: site.forms, visualiser: site.visualiser } | json | safe }};</script>
+  <script type="module" src="/assets/js/main.js"></script>
+  {% for s in scripts %}<script type="module" src="{{ s }}"></script>{% endfor %}
+</body>
+</html>

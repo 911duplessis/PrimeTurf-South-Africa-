@@ -1,0 +1,29 @@
+{#- Quote form. Posts JSON to site.forms.endpoint when configured; otherwise hands off to email/WhatsApp (see main.js → initQuoteForms). -#}
+<form class="quote-form" data-quote-form novalidate>
+  <div class="grid-2">
+    <div class="field"><label class="field__label" for="q-name">Name</label><input id="q-name" name="name" autocomplete="name" required></div>
+    <div class="field"><label class="field__label" for="q-phone">Mobile</label><input id="q-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required></div>
+    <div class="field"><label class="field__label" for="q-email">Email</label><input id="q-email" name="email" type="email" autocomplete="email"></div>
+    <div class="field">
+      <label class="field__label" for="q-area">Area</label>
+      <select id="q-area" name="location">
+        {% for l in locations %}<option{% if presetLocation == l.name %} selected{% endif %}>{{ l.name }}</option>{% endfor %}
+        <option>Other — Gauteng</option><option>Other — Western Cape</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field__label" for="q-service">Project type</label>
+      <select id="q-service" name="service">
+        {% for s in services %}<option{% if presetService == s.title %} selected{% endif %}>{{ s.title }}</option>{% endfor %}
+        <option>Tender / partnership enquiry</option>
+      </select>
+    </div>
+    <div class="field"><label class="field__label" for="q-m2">Approx. size <span class="field__opt">m², optional</span></label><input id="q-m2" name="areaM2" type="number" inputmode="decimal" min="1"></div>
+  </div>
+  <div class="field"><label class="field__label" for="q-msg">Tell us about the space <span class="field__opt">optional</span></label><textarea id="q-msg" name="message" rows="4"></textarea></div>
+  <div class="quote-form__foot">
+    <button class="btn btn--lime" type="submit">Request my free quote</button>
+    <p class="mono quote-form__meta">{{ site.promises.response }} · No obligation</p>
+  </div>
+  <p class="form-status" data-form-status role="status" hidden></p>
+</form>

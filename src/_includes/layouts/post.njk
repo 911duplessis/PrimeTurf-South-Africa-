@@ -1,0 +1,18 @@
+---
+layout: layouts/base.njk
+ogType: article
+---
+<article class="post">
+  <header class="page-hero">
+    <div class="wrap wrap--narrow">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/resources/">Resources</a></li><li><span aria-current="page">{{ title }}</span></li></ol></nav>
+      <p class="eyebrow"><time datetime="{{ date | isoDate }}">{{ date | readableDate }}</time></p>
+      <h1 class="display-l">{{ title }}</h1>
+      {% if description %}<p class="lede">{{ description }}</p>{% endif %}
+    </div>
+  </header>
+  <div class="wrap wrap--narrow prose">
+    {{ content | safe }}
+  </div>
+</article>
+{% include "partials/cta-band.njk" %}

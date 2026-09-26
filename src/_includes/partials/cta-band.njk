@@ -1,0 +1,14 @@
+<section class="cta-band" aria-labelledby="cta-band-title">
+  <div class="wrap cta-band__inner">
+    <div>
+      <p class="eyebrow eyebrow--lime">{{ site.promises.quote }}</p>
+      <h2 id="cta-band-title" class="display-m">Talk to Leon about your space.</h2>
+      <p class="cta-band__meta">{{ site.promises.response }}. {{ site.promises.siteVisit }}.</p>
+    </div>
+    <div class="cta-band__actions">
+      <a class="btn btn--lime" href="/contact/">Book a free site visit</a>
+      <a class="btn btn--ghost-light" href="https://wa.me/{{ site.contact.whatsapp }}" target="_blank" rel="noopener">{% include "partials/icon-wa.njk" %} WhatsApp</a>
+      <a class="btn btn--ghost-light" href="tel:{{ site.contact.phoneE164 }}">Call {{ site.contact.phoneDisplay }}</a>
+    </div>
+  </div>
+</section>

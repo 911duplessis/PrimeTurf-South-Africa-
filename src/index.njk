@@ -1,0 +1,241 @@
+---
+layout: layouts/base.njk
+homepage: true
+bodyClass: is-home
+faqSchema: true
+scripts:
+  - /assets/js/ba-slider.js
+  - /assets/js/visualiser/visualiser.js
+---
+{# ───────────────────────── 1. HERO ───────────────────────── #}
+<section class="hero" data-hero aria-labelledby="hero-title">
+  <div class="hero__field" aria-hidden="true">
+    <canvas class="hero__canvas hero__canvas--dry" data-hero-dry></canvas>
+    <canvas class="hero__canvas hero__canvas--turf" data-hero-turf></canvas>
+    <div class="hero__wipe-line" data-hero-line></div>
+    <div class="hero__grid"></div>
+  </div>
+  <div class="wrap hero__inner">
+    <p class="eyebrow eyebrow--pill" data-reveal><span class="dot"></span> Gauteng &amp; Western Cape</p>
+    <h1 id="hero-title" class="display-xl hero__title">
+      <span class="line" data-reveal>Always green.</span>
+      <span class="line line--muted" data-reveal>Never watered.</span>
+    </h1>
+    <p class="lede hero__lede" data-reveal>Premium artificial turf, scoped, supplied and installed by our own team — built for Highveld sun, summer storms and coastal air.</p>
+    <div class="hero__ctas" data-reveal>
+      <a class="btn btn--lime btn--lg" href="#visualise">Visualise your space</a>
+      <a class="btn btn--outline btn--lg" href="#quote">Get a free quote</a>
+    </div>
+    <dl class="spec-card" data-reveal aria-label="Installation specification">
+      <div><dt>Irrigation</dt><dd>0 L</dd></div>
+      <div><dt>Fibre</dt><dd>UV-stabilised</dd></div>
+      <div><dt>Drainage</dt><dd>All-weather</dd></div>
+      <div><dt>Warranty</dt><dd>6 yr + 24 mo</dd></div>
+    </dl>
+  </div>
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      {% for i in [1,2] %}{% for l in locations %}<span>{{ l.name }}</span><span class="ticker__sep">{{ (l.lat * -1) | round(2) }}° S</span>{% endfor %}{% endfor %}
+    </div>
+  </div>
+</section>
+
+{# ───────────────────────── 2. BENEFITS / SPEC LEDGER ───────────────────────── #}
+<section class="section" id="why" aria-labelledby="why-title">
+  <div class="wrap">
+    <header class="section-head">
+      <p class="eyebrow">The PrimeTurf standard</p>
+      <h2 id="why-title" class="display-l" data-reveal>Five things every installation is built on.</h2>
+    </header>
+    <ol class="ledger">
+      {% for b in benefits %}
+      <li class="ledger__row" data-reveal>
+        <span class="ledger__num mono">0{{ loop.index }}</span>
+        <h3 class="ledger__title">{{ b.title }}</h3>
+        <p class="ledger__body">{{ b.body }}</p>
+        <span class="ledger__label" aria-hidden="true">{{ b.label }}</span>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+{# ───────────────────────── 3. BEFORE & AFTER ───────────────────────── #}
+<section class="section section--ink" id="results" aria-labelledby="results-title">
+  <div class="wrap">
+    <header class="section-head section-head--split">
+      <div>
+        <p class="eyebrow eyebrow--lime">Before &amp; after</p>
+        <h2 id="results-title" class="display-l" data-reveal>Drag to see the difference.</h2>
+      </div>
+      <p class="section-head__aside">From tired lawns and bare soil to a finished surface that stays green through drought and downpour.</p>
+    </header>
+    {% include "partials/ba-gallery.njk" %}
+  </div>
+</section>
+
+{# ───────────────────────── 4. VISUALISER ───────────────────────── #}
+<section class="section section--tint" id="visualise" aria-labelledby="viz-title">
+  <div class="wrap">
+    <header class="section-head section-head--split">
+      <div>
+        <p class="eyebrow">Visualise your project</p>
+        <h2 id="viz-title" class="display-l" data-reveal>See a concept of your space — and a price range — in two minutes.</h2>
+      </div>
+      <p class="section-head__aside">Upload a photo, answer a few quote questions, and get a concept visual with an indicative installed price. A free site visit confirms the details.</p>
+    </header>
+    {% include "partials/visualiser.njk" %}
+  </div>
+</section>
+
+{# ───────────────────────── 5. SERVICES ───────────────────────── #}
+<section class="section" id="services" aria-labelledby="services-title">
+  <div class="wrap">
+    <header class="section-head section-head--split">
+      <div>
+        <p class="eyebrow">Services</p>
+        <h2 id="services-title" class="display-l" data-reveal>Homes, estates and commercial sites.</h2>
+      </div>
+      <a class="btn btn--text" href="/services/">All services →</a>
+    </header>
+    <div class="svc-cols">
+      {% set groups = [["residential","Residential","Gardens, pools and putting greens."],["commercial","Commercial","Estates, businesses, schools and sport."],["maintenance","Maintenance","Refresh existing artificial turf."]] %}
+      {% for g in groups %}
+      <div class="svc-col" data-reveal>
+        <p class="svc-col__head"><span class="mono">{{ loop.index }}/3</span> {{ g[1] }}</p>
+        <p class="svc-col__sub">{{ g[2] }}</p>
+        <ul class="svc-list">
+          {% for s in services | where("group", g[0]) %}
+          <li><a class="svc-link" href="/services/{{ s.slug }}/"><span class="svc-link__title">{{ s.title }}</span><span class="svc-link__sum">{{ s.summary }}</span><span class="svc-link__arrow" aria-hidden="true">→</span></a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{# ───────────────────────── 6. PRICING ───────────────────────── #}
+<section class="section section--tint" id="pricing" aria-labelledby="pricing-title">
+  <div class="wrap pricing">
+    <div class="pricing__copy">
+      <p class="eyebrow">Straight numbers</p>
+      <h2 id="pricing-title" class="display-l" data-reveal>R{{ site.pricing.minPerM2 }}–R{{ site.pricing.maxPerM2 }}<span class="unit"> per m²</span></h2>
+      <p class="lede">Typical fully installed range. Where your project lands depends on two things:</p>
+      <ul class="factor-list">
+        <li><strong>Turf grade</strong> — pile, density and intended use.</li>
+        <li><strong>Site preparation</strong> — removal, levelling, drainage and access.</li>
+      </ul>
+      <p class="fine">Indicative only. Your fixed quote follows a free site visit.</p>
+    </div>
+    <div class="calc" data-quick-calc data-reveal>
+      <label class="calc__label" for="calc-m2">Your area</label>
+      <output class="calc__m2 display-m" data-calc-m2-out for="calc-m2">50 m²</output>
+      <input id="calc-m2" type="range" min="10" max="500" step="5" value="50" class="range range--lg" data-calc-m2>
+      <div class="calc__result">
+        <span class="mono">Indicative installed</span>
+        <strong class="calc__total" data-calc-total>R22 500 – R42 500</strong>
+      </div>
+      <a class="btn btn--ink btn--block" href="#visualise">Get a tailored range →</a>
+    </div>
+  </div>
+</section>
+
+{# ───────────────────────── 7. PROCESS ───────────────────────── #}
+<section class="section" id="process" aria-labelledby="process-title">
+  <div class="wrap">
+    <header class="section-head">
+      <p class="eyebrow">How it works</p>
+      <h2 id="process-title" class="display-l" data-reveal>One team, start to finish.</h2>
+    </header>
+    <ol class="process">
+      <li class="process__step" data-reveal><span class="mono">Step 1</span><h3>Free quote request</h3><p>Call, WhatsApp or send the form. We respond within 2 hours.</p></li>
+      <li class="process__step" data-reveal><span class="mono">Step 2</span><h3>Site visit</h3><p>We measure and assess the site. Same-day visits available across Gauteng.</p></li>
+      <li class="process__step" data-reveal><span class="mono">Step 3</span><h3>Scope &amp; quote</h3><p>A clear written scope: turf, preparation, drainage and edging.</p></li>
+      <li class="process__step" data-reveal><span class="mono">Step 4</span><h3>Installation</h3><p>Supplied and installed by our own team — no subcontracted crews.</p></li>
+      <li class="process__step" data-reveal><span class="mono">Step 5</span><h3>Handover</h3><p>6-year product warranty and 24-month workmanship guarantee.</p></li>
+    </ol>
+  </div>
+</section>
+
+{# ───────────────────────── 8. COMMERCIAL / PARTNERS ───────────────────────── #}
+<section class="section section--ink partners" id="partners" aria-labelledby="partners-title">
+  <div class="wrap partners__inner">
+    <div>
+      <p class="eyebrow eyebrow--lime">Tenders, estates &amp; partners</p>
+      <h2 id="partners-title" class="display-l" data-reveal>A single accountable contractor.</h2>
+      <p class="lede">For property managers, developers, landscape architects and HOAs: we scope, supply and install with our own team across Gauteng and the Western Cape, with written warranties on product and workmanship.</p>
+      <div class="hero__ctas">
+        <a class="btn btn--lime" href="mailto:{{ site.contact.email }}?subject={{ 'Tender / partnership enquiry' | urlencode }}">Discuss a tender or partnership</a>
+        <a class="btn btn--ghost-light" href="/services/commercial-properties/">Commercial services</a>
+      </div>
+    </div>
+    <ul class="partners__list">
+      <li><span class="mono">Scope</span>Site assessment and written scope per phase</li>
+      <li><span class="mono">Supply</span>Turf supplied directly — one line of accountability</li>
+      <li><span class="mono">Install</span>Own installation team, scheduled around operations</li>
+      <li><span class="mono">Cover</span>6-year product warranty · 24-month workmanship guarantee</li>
+      <li><span class="mono">Reach</span>Gauteng and the Western Cape</li>
+    </ul>
+  </div>
+</section>
+
+{# ───────────────────────── 9. AREAS ───────────────────────── #}
+<section class="section" id="areas" aria-labelledby="areas-title">
+  <div class="wrap">
+    <header class="section-head section-head--split">
+      <div>
+        <p class="eyebrow">Where we work</p>
+        <h2 id="areas-title" class="display-l" data-reveal>Gauteng and the Western Cape.</h2>
+      </div>
+      <p class="section-head__aside">{{ site.promises.siteVisit }}.</p>
+    </header>
+    <ul class="area-grid">
+      {% for l in locations %}
+      <li data-reveal><a class="area-card" href="/areas/{{ l.slug }}/">
+        <span class="area-card__name">{{ l.name }}</span>
+        <span class="area-card__meta mono">{{ l.region }}</span>
+        <span class="area-card__coord mono">{{ (l.lat * -1) | round(3) }}° S · {{ l.lng | round(3) }}° E</span>
+        <span class="area-card__arrow" aria-hidden="true">→</span>
+      </a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+{# ───────────────────────── 10. FAQ ───────────────────────── #}
+<section class="section section--tint" id="faq" aria-labelledby="faq-title">
+  <div class="wrap faq">
+    <header>
+      <p class="eyebrow">Questions</p>
+      <h2 id="faq-title" class="display-l">Asked often.</h2>
+    </header>
+    <div class="faq__list">
+      {% for f in faq %}
+      <details class="faq__item"{% if loop.first %} open{% endif %}>
+        <summary>{{ f.q }}<span class="faq__icon" aria-hidden="true"></span></summary>
+        <p>{{ f.a }}</p>
+      </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{# ───────────────────────── 11. QUOTE ───────────────────────── #}
+<section class="section" id="quote" aria-labelledby="quote-title">
+  <div class="wrap quote">
+    <div class="quote__intro">
+      <p class="eyebrow">Free quote</p>
+      <h2 id="quote-title" class="display-l" data-reveal>Start with a conversation.</h2>
+      <p class="lede">{{ site.promises.quote }}. {{ site.promises.response }}. {{ site.promises.siteVisit }}.</p>
+      <ul class="contact-cards">
+        <li><a class="contact-card" href="tel:{{ site.contact.phoneE164 }}"><span class="mono">Call {{ site.contact.person }}</span><strong>{{ site.contact.phoneDisplay }}</strong></a></li>
+        <li><a class="contact-card" href="https://wa.me/{{ site.contact.whatsapp }}" target="_blank" rel="noopener"><span class="mono">WhatsApp</span><strong>{{ site.contact.phoneDisplay }}</strong></a></li>
+        <li><a class="contact-card" href="mailto:{{ site.contact.email }}"><span class="mono">Email</span><strong>{{ site.contact.email }}</strong></a></li>
+      </ul>
+    </div>
+    <div class="quote__form">
+      {% include "partials/quote-form.njk" %}
+    </div>
+  </div>
+</section>

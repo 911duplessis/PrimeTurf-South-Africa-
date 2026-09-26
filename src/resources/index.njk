@@ -1,0 +1,24 @@
+---
+layout: layouts/page.njk
+title: Resources
+description: Practical guides on artificial turf in South Africa — pricing, preparation, drainage and care.
+eyebrow: Resources
+heading: Guides & resources.
+lede: Plain-language answers for homeowners, estates and property managers.
+breadcrumbs:
+  - label: Resources
+---
+<section class="section section--flush-top">
+  <div class="wrap">
+    <ul class="post-list">
+      {% for post in collections.resources %}
+      <li data-reveal><a class="post-card" href="{{ post.url }}">
+        <time class="mono" datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time>
+        <h2 class="post-card__title">{{ post.data.title }}</h2>
+        <p>{{ post.data.description }}</p>
+        <span class="svc-card__arrow" aria-hidden="true">→</span>
+      </a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>

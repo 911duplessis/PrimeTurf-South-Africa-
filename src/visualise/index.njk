@@ -1,0 +1,23 @@
+---
+layout: layouts/base.njk
+title: Visualise Your Turf Project
+description: Upload a photo of your garden or site, answer a few quote questions, and get a concept visual with an indicative installed price range.
+breadcrumbs:
+  - label: Visualise
+scripts:
+  - /assets/js/ba-slider.js
+  - /assets/js/visualiser/visualiser.js
+---
+<section class="section section--tint viz-page">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><span aria-current="page">Visualise</span></li></ol></nav>
+    <header class="section-head section-head--split">
+      <div>
+        <p class="eyebrow">Visualise your project</p>
+        <h1 class="display-l">See a concept of your space, with an indicative price.</h1>
+      </div>
+      <p class="section-head__aside">Concept visuals are computer-generated impressions for planning only. Prices are indicative and confirmed after a free site visit.</p>
+    </header>
+    {% include "partials/visualiser.njk" %}
+  </div>
+</section>

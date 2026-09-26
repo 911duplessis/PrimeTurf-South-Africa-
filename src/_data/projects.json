@@ -1,0 +1,9 @@
+{
+  "_comment": "Before & After pairs. Replace `before`/`after` with real project photography (1600×1000 recommended, WebP/AVIF). Set placeholder:false once real photos are in, which removes the 'Illustration' tag.",
+  "items": [
+    { "id": "garden", "title": "Back garden lawn", "caption": "Patchy lawn lifted, base re-levelled, full turf installation.", "type": "Residential", "before": "/assets/img/projects/garden-before.svg", "after": "/assets/img/projects/garden-after.svg", "placeholder": true },
+    { "id": "pool", "title": "Pool surround", "caption": "Worn grass around the coping replaced with UV-stabilised turf.", "type": "Residential", "before": "/assets/img/projects/pool-before.svg", "after": "/assets/img/projects/pool-after.svg", "placeholder": true },
+    { "id": "frontage", "title": "Commercial frontage", "caption": "Irrigated verge converted to a zero-water green frontage.", "type": "Commercial", "before": "/assets/img/projects/frontage-before.svg", "after": "/assets/img/projects/frontage-after.svg", "placeholder": true },
+    { "id": "green", "title": "Backyard putting green", "caption": "Unused corner shaped and prepared for a putting surface.", "type": "Putting green", "before": "/assets/img/projects/green-before.svg", "after": "/assets/img/projects/green-after.svg", "placeholder": true }
+  ]
+}

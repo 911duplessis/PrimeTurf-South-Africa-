@@ -1,0 +1,12 @@
+{
+  "Gauteng": {
+    "climate": "High-altitude sun and heavy summer downpours.",
+    "turf": "UV-stabilised fibres hold their colour under strong Highveld sun, and the free-draining base clears summer storm water without pooling.",
+    "visit": "Same-day site visits available across Gauteng."
+  },
+  "Western Cape": {
+    "climate": "Coastal salt air and wet winters.",
+    "turf": "Turf engineered for Cape Town’s coastal salt air, with drainage that handles winter rain without pooling.",
+    "visit": "Site visits in Cape Town and surrounds — contact us to schedule."
+  }
+}
