@@ -49,7 +49,7 @@ const supportsFilter = () => "filter" in CanvasRenderingContext2D.prototype;
  * Tap-to-outline editor.
  * @returns {{ points: number[][], undo():void, clear():void, destroy():void }}
  */
-export function maskEditor(canvas, source, { onChange, initial = [] } = {}) {
+export function maskEditor(canvas, source, { onChange, initial = [], highlight } = {}) {
   const ctx = canvas.getContext("2d");
   canvas.width = source.width;
   canvas.height = source.height;
@@ -84,6 +84,15 @@ export function maskEditor(canvas, source, { onChange, initial = [] } = {}) {
       ctx.strokeStyle = "#D4A940";
       ctx.lineWidth = 3 * u;
       ctx.stroke();
+      // Reference edge the visitor measures, drawn in ivory over the gold.
+      const hi = poly ? highlight?.(poly) : null;
+      if (hi != null && hi >= 0) {
+        const [p, q] = [points[hi], points[(hi + 1) % points.length]];
+        ctx.beginPath();
+        ctx.moveTo(p[0] * w, p[1] * h); ctx.lineTo(q[0] * w, q[1] * h);
+        ctx.strokeStyle = "#1A3A2A"; ctx.lineWidth = 9 * u; ctx.stroke();
+        ctx.strokeStyle = "#FAF8F2"; ctx.lineWidth = 5 * u; ctx.stroke();
+      }
       points.forEach(([x, y], i) => {
         ctx.beginPath();
         ctx.arc(x * w, y * h, (i === 0 ? 10 : 7) * u, 0, Math.PI * 2);
@@ -110,6 +119,7 @@ export function maskEditor(canvas, source, { onChange, initial = [] } = {}) {
   return {
     get points() { return points; },
     undo() { points.pop(); draw(); },
+    redraw: draw,
     clear() { points = []; draw(); },
     destroy() { canvas.removeEventListener("pointerup", onPointer); },
   };

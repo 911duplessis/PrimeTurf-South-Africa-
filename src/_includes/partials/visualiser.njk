@@ -16,7 +16,7 @@
         <li data-for="area">Mark area</li>
         <li data-for="size">Size &amp; surface</li>
         <li data-for="use">Use</li>
-        <li data-for="look">Look</li>
+        <li data-for="look">Turf</li>
         <li data-for="extras">Requirements</li>
         <li data-for="contact">Your details</li>
         <li data-for="result">Concept</li>
@@ -42,7 +42,7 @@
       <!-- 2. AREA -->
       <fieldset class="viz__step" data-step="area" hidden>
         <legend class="viz__legend"><span class="label">02</span> Mark where the turf goes</legend>
-        <p class="viz__hint">Tap around the edge of the lawn area to outline it. Skip this and we’ll use the lower part of the photo.</p>
+        <p class="viz__hint">Tap around the edge of the lawn area to outline it. Then enter the length of one edge and we’ll calculate the area for you. Skip this and we’ll use the lower part of the photo.</p>
         <div class="viz__canvas-wrap">
           <canvas class="viz__canvas" data-viz-mask-canvas aria-label="Photo. Tap to add outline points." role="img"></canvas>
         </div>
@@ -50,6 +50,14 @@
           <button type="button" class="chip" data-viz-undo>Undo point</button>
           <button type="button" class="chip" data-viz-clear>Clear outline</button>
           <span class="label viz__count" data-viz-points>0 points</span>
+        </div>
+        <div class="calib" data-calib hidden>
+          <label class="calib__label" for="viz-edge">How long is the <span class="calib__edge">highlighted edge</span>, in metres?</label>
+          <div class="calib__row">
+            <input id="viz-edge" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 8,5" data-calib-len>
+            <button type="button" class="chip" data-calib-next>Use a different edge</button>
+          </div>
+          <p class="calib__out" aria-live="polite" data-calib-out>Enter one length and we’ll work out the area from your outline.</p>
         </div>
       </fieldset>
 
@@ -71,6 +79,7 @@
             <button type="button" class="chip" data-m2-preset="200">200 m²</button>
             <button type="button" class="chip" data-m2-preset="400">400 m²</button>
           </div>
+          <p class="area-source" data-area-source hidden>Calculated from your outline. Roughly ±25%, confirmed at the site visit.</p>
           <p class="viz__hint label" id="viz-m2-tip">Tip: length × width. A typical double garage is roughly 36 m².</p>
           <details class="measure" data-measure>
             <summary>Help me measure</summary>
@@ -113,12 +122,19 @@
 
       <!-- 5. LOOK -->
       <fieldset class="viz__step" data-step="look" hidden>
-        <legend class="viz__legend"><span class="label">05</span> Preferred look</legend>
-        <div class="looks" role="radiogroup" aria-label="Preferred look">
-          <label class="look"><input type="radio" name="look" value="natural" checked><span class="look__swatch" data-swatch="natural"></span><span class="look__name">Natural</span><span class="look__desc">Mixed greens with a hint of straw. Understated.</span></label>
-          <label class="look"><input type="radio" name="look" value="lush"><span class="look__swatch" data-swatch="lush"></span><span class="look__name">Lush &amp; dense</span><span class="look__desc">Deep, even green. Soft underfoot.</span></label>
-          <label class="look"><input type="radio" name="look" value="hardwearing"><span class="look__swatch" data-swatch="hardwearing"></span><span class="look__name">Hard-wearing</span><span class="look__desc">Shorter, resilient pile for high traffic.</span></label>
-          <label class="look"><input type="radio" name="look" value="putting"><span class="look__swatch" data-swatch="putting"></span><span class="look__name">Putting surface</span><span class="look__desc">Short, tight and fast-rolling.</span></label>
+        <legend class="viz__legend"><span class="label">05</span> Choose your turf</legend>
+        <p class="viz__hint">Our range, with the specs from each product card. Not sure? Pick the closest one. We bring samples to the free site visit.</p>
+        <div class="products" role="radiogroup" aria-label="PrimeTurf product">
+          {%- for p in products.items %}
+          <label class="product">
+            <input type="radio" name="product" value="{{ p.id }}"{% if p.id == products.default %} checked{% endif %}>
+            <img class="product__img" src="/assets/img/products/{{ p.id }}.webp" alt="{{ p.name }} turf close-up" width="640" height="400" loading="lazy">
+            <span class="product__tier label">{{ p.tier }}</span>
+            <span class="product__name">{{ p.name }}</span>
+            <span class="product__desc">{{ p.desc }}</span>
+            <span class="product__specs">{{ p.pile }} pile · {{ p.stitch }} · {{ p.guaranteeYears }}-year guarantee</span>
+          </label>
+          {%- endfor %}
         </div>
       </fieldset>
 

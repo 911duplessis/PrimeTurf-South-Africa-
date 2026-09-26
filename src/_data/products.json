@@ -1,19 +1,13 @@
 {
-  "_comment": "Individual turf product pages. Add real product specs from the supplier's data sheet only. Entries with published:false are not built. See README → Adding a turf product.",
+  "_note": "PrimeTurf turf range. Specs come from the PT product cards. `band` is the indicative installed R/m² range the estimator starts from (site prep is added, and the total is clamped to site.json pricing). `look` picks the colour style used to paint the concept visual. Set `published: true` on an item to also build its /turf/{id}/ page. CALIBRATE `band` against real quotes.",
+  "default": "spring-30",
   "items": [
-    {
-      "slug": "example-product",
-      "published": false,
-      "name": "Example Turf Name",
-      "summary": "One-line description from the supplier data sheet.",
-      "bestFor": ["Residential lawns"],
-      "specs": [
-        { "label": "Pile height", "value": "— mm" },
-        { "label": "Fibre", "value": "—" },
-        { "label": "UV stabilised", "value": "Yes" },
-        { "label": "Product warranty", "value": "6 years (manufacturer)" }
-      ],
-      "image": "/assets/img/og/og-default.jpg"
-    }
+    { "id": "deco-20", "name": "Deco 20mm", "tier": "Decorative", "pile": "20mm", "bestFor": "Borders, verges, display areas", "desc": "A low-profile decorative pile for verges, borders, entrance features and display areas.", "stitch": "16 stitches/10cm", "yarn": "C-shape PE 5200 + curly PP 2300", "guaranteeYears": 5, "band": [450, 620], "look": "hardwearing" },
+    { "id": "augusta-25", "name": "Augusta 25mm", "tier": "Residential", "pile": "25mm", "bestFor": "Everyday lawns", "desc": "A hard-wearing mid-short pile that holds its shape under everyday household traffic.", "stitch": "18 stitches/10cm", "yarn": "C-shape PE 5000 + curly PP 2500", "guaranteeYears": 6, "band": [510, 680], "look": "hardwearing" },
+    { "id": "zurich-25", "name": "Zurich 25mm", "tier": "Residential", "pile": "25mm", "bestFor": "Family gardens", "desc": "A denser 25mm option with a softer finish underfoot, for lawns that get sat on.", "stitch": "18 stitches/10cm", "yarn": "C-shape PE 5000 + curly PP 2500", "guaranteeYears": 6, "band": [540, 710], "look": "lush" },
+    { "id": "autumn-30", "name": "Autumn 30mm", "tier": "Residential", "pile": "30mm", "bestFor": "A natural, lived-in look", "desc": "A warmer-toned 30mm pile that reads as a natural, lived-in lawn rather than a flat green.", "stitch": "18 stitches/10cm", "yarn": "C-shape PE 6000 + curly PP 2800", "guaranteeYears": 6, "band": [600, 770], "look": "natural" },
+    { "id": "spring-30", "name": "Spring 30mm", "tier": "Residential", "pile": "30mm", "bestFor": "All-round gardens", "desc": "A fresh-toned 30mm pile. The balanced all-round choice for most residential gardens.", "stitch": "18 stitches/10cm", "yarn": "C-shape PE 6000 + curly PP 2800", "guaranteeYears": 6, "band": [620, 790], "look": "lush" },
+    { "id": "summer-35", "name": "Summer Fun 35mm", "tier": "Estate", "pile": "35mm", "bestFor": "Feature and estate lawns", "desc": "Our deepest pile. Specified for feature lawns, estate gardens and entrance features.", "stitch": "18 stitches/10cm", "yarn": "C-shape PE 6000 + curly PP 2800", "guaranteeYears": 6, "band": [690, 850], "look": "lush" },
+    { "id": "multisport-10", "name": "Multisport 10mm", "tier": "Sport", "pile": "10mm", "bestFor": "Sport, play areas, putting greens", "desc": "A short, dense sport pile for play surfaces, courts and putting greens where roll matters.", "stitch": "32 stitches/10cm", "yarn": "PE 7000, 3/16\" gauge", "guaranteeYears": 5, "band": [470, 640], "look": "putting" }
   ]
 }

@@ -44,7 +44,7 @@ export const label = (group, key) => LABELS[group]?.[key] ?? key;
 const roundTo = (n, step) => Math.round(n / step) * step;
 
 /**
- * @param {{areaM2:number, surface:string, use:string, look:string, extras:string[]}} a
+ * @param {{areaM2:number, surface:string, use:string, look:string, band?:number[], extras:string[]}} a
  * @param {{minPerM2:number, maxPerM2:number}} pricing  from site.json
  */
 export function estimate(a, pricing = { minPerM2: 450, maxPerM2: 850 }) {
@@ -53,10 +53,11 @@ export function estimate(a, pricing = { minPerM2: 450, maxPerM2: 850 }) {
   const area = Math.max(1, Number(a.areaM2) || 0);
   const notes = [];
 
-  let [low, high] = GRADE_BANDS[a.look] || GRADE_BANDS.natural;
+  // A chosen product carries its own band (products.json); otherwise fall back to the look.
+  let [low, high] = a.band || GRADE_BANDS[a.look] || GRADE_BANDS.natural;
 
-  // Heavier use nudges toward a more robust grade.
-  if (["pets", "commercial", "school-sport"].includes(a.use) && a.look === "natural") { low += 30; high += 40; }
+  // Heavier use nudges toward a more robust grade (look-only estimates).
+  if (!a.band && ["pets", "commercial", "school-sport"].includes(a.use) && a.look === "natural") { low += 30; high += 40; }
 
   const prep = (PREP_LOADINGS.surface[a.surface] ?? 0) +
     (a.extras || []).reduce((s, x) => s + (PREP_LOADINGS.extras[x] ?? 0), 0);

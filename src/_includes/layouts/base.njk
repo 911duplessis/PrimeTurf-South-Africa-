@@ -44,7 +44,7 @@
   {% include "partials/footer.njk" %}
   {% include "partials/action-bar.njk" %}
 
-  <script>window.PRIMETURF = {{ { base: "/" | htmlBaseUrl, contact: site.contact, pricing: site.pricing, forms: site.forms, visualiser: site.visualiser } | json | safe }};</script>
+  <script>window.PRIMETURF = {{ { base: "/" | htmlBaseUrl, contact: site.contact, pricing: site.pricing, forms: site.forms, visualiser: site.visualiser, products: products.items } | json | safe }};</script>
   <script type="module" src="/assets/js/main.js"></script>
   {% for s in scripts %}<script type="module" src="{{ s }}"></script>{% endfor %}
 </body>
