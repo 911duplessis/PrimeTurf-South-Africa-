@@ -48,7 +48,8 @@ export default async function () {
   if (existsSync(ROOT)) {
     for (const folder of readdirSync(ROOT).sort()) {
       const dir = path.join(ROOT, folder);
-      if (!statSync(dir).isDirectory()) continue;
+      // Folders starting with "_" (e.g. _marketing) are kept in the repo but not published.
+      if (folder.startsWith("_") || !statSync(dir).isDirectory()) continue;
       for (const name of readdirSync(dir).sort()) {
         if (!IMG_RE.test(name)) continue;
         const key = `${folder}/${name}`;
