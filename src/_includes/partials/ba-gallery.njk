@@ -24,7 +24,7 @@
   <div class="ba-tabs" role="tablist" aria-label="Projects">
     {% for p in projects.items %}
     <button class="ba-tab" type="button" role="tab" aria-selected="{{ 'true' if loop.first else 'false' }}"
-      data-before="{{ p.before }}" data-after="{{ p.after }}" data-title="{{ p.title }}" data-caption="{{ p.caption }}" data-type="{{ p.type }}" data-placeholder="{{ p.placeholder }}">
+      data-before="{{ p.before | htmlBaseUrl }}" data-after="{{ p.after | htmlBaseUrl }}" data-title="{{ p.title }}" data-caption="{{ p.caption }}" data-type="{{ p.type }}" data-placeholder="{{ p.placeholder }}">
       <span class="ba-tab__thumb"><img src="{{ p.after }}" alt="" loading="lazy" width="160" height="100"></span>
       <span class="ba-tab__label"><span class="label">{{ "0" if loop.index < 10 }}{{ loop.index }}</span> {{ p.title }}</span>
     </button>
