@@ -130,6 +130,16 @@ Before/after pairs live in `src/assets/img/projects/` as WebP, shot from the sam
 
 **Photo sourcing rule:** use only authentic PrimeTurf photos, meaning PT-watermarked, posted on the PrimeTurf Facebook page, or taken by the team. Several images in older PrimeTurf repos are AI-generated. They carry Gemini's ✦ sparkle mark, and some show invented "projects" such as "Sandton Villa · 240m²" and "Steyn City". Never publish them as work.
 
+### Portfolio (`/portfolio/`)
+The portfolio builds itself from folders, so photos can keep stacking up without any code changes.
+
+1. **Add a photo:** drop a JPG, PNG or WebP into `src/portfolio/photos/<category>/`, for example `src/portfolio/photos/putting-greens/`. The next build resizes it to 480, 960 and 1600px WebP, lazy-loads it and adds it to the grid. The caption comes from the file name (`garden-lawn-after.jpg` becomes "Garden lawn after").
+2. **Add a category:** create a new folder. It gets its own filter chip automatically. To set its label and position, add it to `src/_data/portfolioCategories.json`. Folders not listed there go at the end, with a label taken from the folder name.
+3. **Optional details:** in `src/_data/portfolioMeta.json`, key an entry by `"folder/file.jpg"` to set `caption`, `alt`, `location`, `tags` (to show the photo under extra categories as well), `featured: true` (to pin it to the top) or `date` (newer first).
+4. **Before/after pairs:** pairs in `projects.json` appear in the portfolio automatically under "Before & after", and they open as a slider in the lightbox.
+
+Filters are deep-linkable (`/portfolio/#putting-greens`). The grid shows 12 photos, then "Show more". The lightbox supports arrow keys, Esc and swipe. The same photo sourcing rule applies.
+
 ---
 
 ## 5. Before & After slider
@@ -140,7 +150,7 @@ Before/after pairs live in `src/assets/img/projects/` as WebP, shot from the sam
 - **Feel:** the position eases toward its target on `requestAnimationFrame`. The reveal uses `clip-path` on the "before" layer, which is GPU-friendly and needs no layout work.
 - **Accessibility:** the handle is `role="slider"` with `aria-valuenow`/`valuetext`. Arrow keys move it 5%, PgUp/PgDn 20%, and Home/End jump to the ends. Gallery tabs use `role="tab"` with arrow-key navigation, and captions are `aria-live`.
 - **Discoverability:** it "peeks" once the first time it scrolls into view. That is skipped when reduced motion is on.
-- **API:** `initCompare(figureEl)` enhances existing markup. `createCompare(container, {before, after})` builds one, and the visualiser uses it for its result.
+- **API:** `initCompare(figureEl)` enhances existing markup. `createCompare(container, {before, after, beforeLabel, afterLabel})` builds one. The visualiser uses it for its result, and the portfolio lightbox uses it for pairs.
 
 ---
 

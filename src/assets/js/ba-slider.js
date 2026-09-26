@@ -80,14 +80,14 @@ export function initCompare(fig) {
   return { set, get value() { return target; }, peek };
 }
 
-export function createCompare(container, { before, after, beforeAlt = "Before", afterAlt = "After" }) {
+export function createCompare(container, { before, after, beforeAlt = "Before", afterAlt = "After", beforeLabel = "Now", afterLabel = "Concept" }) {
   container.innerHTML = `
     <figure class="ba" data-ba>
       <div class="ba__frame" data-ba-frame>
         <img class="ba__img" alt="${afterAlt}">
         <div class="ba__before" data-ba-before><img class="ba__img" alt="${beforeAlt}"></div>
-        <span class="ba__tag ba__tag--before" aria-hidden="true">Now</span>
-        <span class="ba__tag ba__tag--after" aria-hidden="true">Concept</span>
+        <span class="ba__tag ba__tag--before" aria-hidden="true">${beforeLabel}</span>
+        <span class="ba__tag ba__tag--after" aria-hidden="true">${afterLabel}</span>
         <div class="ba__handle" data-ba-handle role="slider" tabindex="0" aria-label="Compare your photo with the concept" aria-valuemin="0" aria-valuemax="100">
           <span class="ba__knob" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6 3 12l6 6M15 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </div>
