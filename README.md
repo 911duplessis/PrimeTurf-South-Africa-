@@ -157,7 +157,7 @@ Filters are deep-linkable (`/portfolio/#putting-greens`). The grid shows 12 phot
 ## 6. The Visualiser: how it works
 
 ```
-photo → mark area → size & surface → use → look → requirements → contact → result
+photo → mark area → size & surface → use → choose turf → requirements → contact → result
 ```
 
 | File | Role |
@@ -165,8 +165,13 @@ photo → mark area → size & surface → use → look → requirements → con
 | `visualiser.js` | Flow controller: steps, validation, collecting answers, rendering the result, CTAs. It **never calls a model directly.** |
 | `providers.js` | **The AI seam.** `LocalProvider` (today) and `RemoteProvider` (AI). `getProvider()` picks one based on `site.json → visualiser.apiBase`. |
 | `renderer.js` | Loads and downscales the photo (≤1600px), runs the tap-to-outline editor, and composites procedural turf into the marked area while keeping the photo's light and shade. |
+| `area.js` | Works out m² from the outline. It projects the outline onto the ground, allowing for the camera angle, and scales it with one edge length the visitor enters. Expect about ±25%. |
 | `estimator.js` | A pure pricing function. It always stays **inside R450–R850/m²**. |
 | `lib/turf.js` | Turf texture painter, with looks `natural`, `lush`, `hardwearing` and `putting`. |
+
+**Mark area step:** after outlining, the visitor enters the length of the highlighted edge (the widest edge across the photo, nearest the camera; "Use a different edge" cycles through them). `area.js` turns that into m² and fills in the size step, which says "Calculated from your outline".
+
+**Choose turf step:** the PrimeTurf range from `src/_data/products.json` (name, tier, pile, stitch rate, guarantee and photo in `src/assets/img/products/`). Each product has an indicative `band` in R/m² that the estimator starts from, and a `look` that picks the concept colour style. To add a product, add an entry and a 640×400 WebP.
 
 **Size step:** "Help me measure" adds up length × width rectangles and fills in the m² automatically. The surface choice shows whether the job is a hard installation (bonded onto paving or concrete) or a soft installation (the 7-step base process). From this step on, an "Indicative so far" price updates live as each answer changes, using the same `estimate()` as the final result.
 
@@ -175,7 +180,7 @@ photo → mark area → size & surface → use → look → requirements → con
 **Honesty guardrails built in:** "Concept visual only" appears under the image and is stamped on it. The disclaimer states that the price is indicative and the image is an impression. Every figure is clamped to the published price range.
 
 ### Calibrate the estimator
-`estimator.js → GRADE_BANDS` and `PREP_LOADINGS` hold **starting assumptions**, not PrimeTurf's price list. Tune them against a handful of real quotes. The R450–R850 clamp stays in place either way.
+`products.json → band` (per product), `estimator.js → GRADE_BANDS` and `PREP_LOADINGS` hold **starting assumptions**, not PrimeTurf's price list. Tune them against a handful of real quotes. The R450–R850 clamp stays in place either way.
 
 ### Connect real AI
 1. **Deploy on Vercel** (see §7). `api/` is picked up automatically as serverless functions.

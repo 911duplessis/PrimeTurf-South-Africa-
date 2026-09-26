@@ -10,6 +10,7 @@
  * The controller never talks to a model directly — swap the provider, not this file.
  */
 import { loadToCanvas, maskEditor } from "./renderer.js";
+import { areaFromOutline, nearestEdge } from "./area.js";
 import { estimate, label } from "./estimator.js";
 import { getProvider } from "./providers.js";
 import { createCompare } from "../ba-slider.js";
@@ -40,7 +41,8 @@ function init(root) {
   const btnNext = q("[data-viz-next]");
   const btnSkip = q("[data-viz-skip]");
 
-  const state = { i: 0, photo: null, editor: null, polygon: null, analysis: null, concept: null, sample: false };
+  const state = { i: 0, photo: null, editor: null, polygon: null, analysis: null, concept: null, sample: false, edge: null };
+  const PRODUCTS = Object.fromEntries((cfg.products || []).map((p) => [p.id, p]));
 
   if (provider.isRemote) q("[data-viz-privacy]").textContent = "Your photo is sent securely to generate the concept. It isn’t published.";
 
@@ -128,6 +130,30 @@ function init(root) {
   q("[data-viz-undo]").addEventListener("click", () => state.editor?.undo());
   q("[data-viz-clear]").addEventListener("click", () => state.editor?.clear());
 
+  /* ---------- Area from the outline: one known length sets the scale ---------- */
+  const calib = q("[data-calib]");
+  const calibLen = q("[data-calib-len]");
+  const calibOut = q("[data-calib-out]");
+  const areaSource = q("[data-area-source]");
+  function measureOutline() {
+    const len = num(calibLen.value);
+    if (!state.polygon || !(len > 0)) {
+      calibOut.textContent = "Enter one length and we’ll work out the area from your outline.";
+      return;
+    }
+    const a = areaFromOutline(state.polygon, state.edge, len, state.photo);
+    if (!a) { calibOut.textContent = "We couldn’t measure that outline. Try another edge, or enter the size on the next step."; return; }
+    const m = Math.max(1, Math.round(a));
+    calibOut.innerHTML = `Your outline is about <strong>${m} m²</strong>. You can adjust it on the next step.`;
+    setArea(m, "outline");
+  }
+  calibLen.addEventListener("input", measureOutline);
+  q("[data-calib-next]").addEventListener("click", () => {
+    if (!state.polygon) return;
+    state.edge = (state.edge + 1) % state.polygon.length;
+    state.editor?.redraw();
+  });
+
   /* ---------- Step: size ---------- */
   // Text inputs + our own parsing: SA phone keyboards type "12,5", which
   // type="number" silently discards in some browsers (leaving the old value).
@@ -142,9 +168,12 @@ function init(root) {
     m2Range.style.setProperty("--fill", `${((m2Range.value - m2Range.min) / (m2Range.max - m2Range.min)) * 100}%`);
     presets.forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.m2Preset === v)));
   }
-  const setArea = (v) => { m2.value = String(v); areaTouched = true; syncRange(); updateLive(); };
+  const setArea = (v, source = "") => {
+    m2.value = String(v); areaTouched = true; syncRange(); updateLive();
+    areaSource.hidden = source !== "outline";
+  };
   ["input", "change"].forEach((ev) => m2Range.addEventListener(ev, () => setArea(m2Range.value)));
-  m2.addEventListener("input", () => { areaTouched = true; syncRange(); });
+  m2.addEventListener("input", () => { areaTouched = true; areaSource.hidden = true; syncRange(); });
   presets.forEach((b) => b.addEventListener("click", () => setArea(b.dataset.m2Preset)));
   syncRange();
 
@@ -212,8 +241,16 @@ function init(root) {
     if (key === "area" && state.photo && !state.editor) {
       state.editor = maskEditor(q("[data-viz-mask-canvas]"), state.photo, {
         initial: state.polygon || [],
+        // Runs during each draw, so the edge to measure is picked before it's painted.
+        highlight: (poly) => {
+          if (state.edge == null || state.edge >= poly.length) state.edge = nearestEdge(poly);
+          return state.edge;
+        },
         onChange: (pts) => {
           state.polygon = pts.length >= 3 ? pts.map((p) => [...p]) : null;
+          if (!state.polygon) state.edge = null;
+          calib.hidden = !state.polygon;
+          measureOutline();
           pointsOut.textContent = pts.length < 3 ? `${pts.length} point${pts.length === 1 ? "" : "s"} · ${pts.length ? "add " + (3 - pts.length) + " more" : "using default area"}` : `${pts.length} points · outline set`;
         },
       });
@@ -260,7 +297,9 @@ function init(root) {
       areaM2: num(f.get("areaM2")) || 0,
       surface: f.get("surface"),
       use: f.get("use"),
-      look: f.get("look"),
+      product: f.get("product"),
+      look: PRODUCTS[f.get("product")]?.look || "natural",
+      band: PRODUCTS[f.get("product")]?.band,
       extras: f.getAll("extras"),
       notes: String(f.get("notes") || "").trim(),
       contact: { name: f.get("name"), phone: f.get("phone"), email: f.get("email"), location: f.get("location") },
@@ -305,7 +344,7 @@ function init(root) {
       ["Area", `${est.area} m²`],
       ["Current surface", label("surface", answers.surface)],
       ["Use", label("use", answers.use)],
-      ["Look", label("look", answers.look)],
+      ["Turf", productName(answers.product)],
       ["Requirements", answers.extras.length ? answers.extras.map((x) => label("extras", x)).join(", ") : "None noted"],
     ];
     const ul = q("[data-viz-summary]");
@@ -323,6 +362,8 @@ function init(root) {
     output.hidden = false;
   }
 
+  function productName(id) { return PRODUCTS[id]?.name || "Not chosen yet"; }
+
   function summaryText() {
     const a = answers;
     return [
@@ -332,7 +373,7 @@ function init(root) {
       a.contact.email && `Email: ${a.contact.email}`,
       `Area: ${a.contact.location}`,
       `Size: ~${est.area} m² · Surface: ${label("surface", a.surface)}`,
-      `Use: ${label("use", a.use)} · Look: ${label("look", a.look)}`,
+      `Use: ${label("use", a.use)} · Turf: ${productName(a.product)}`,
       a.extras.length && `Requirements: ${a.extras.map((x) => label("extras", x)).join(", ")}`,
       a.notes && `Notes: ${a.notes}`,
       `Indicative range shown: ${formatRand(est.total.low)} – ${formatRand(est.total.high)}`,
