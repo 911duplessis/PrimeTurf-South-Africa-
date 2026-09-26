@@ -50,7 +50,7 @@ All tokens are CSS custom properties (`--pt-*`) at the top of `src/assets/css/ma
 /resources/{slug}/              Articles (Markdown)
 /projects/                      Case studies index (noindex until the first case study is published)
 /projects/{slug}/               Case studies (Markdown, drafts supported)
-/turf/{slug}/                   Turf product pages (built only when published: true)
+/turf/{id}/                     Turf product pages (built only when published: true)
 /sitemap.xml  /robots.txt  /404.html
 ```
 
@@ -72,7 +72,7 @@ All tokens are CSS custom properties (`--pt-*`) at the top of `src/assets/css/ma
 │  │  ├─ locations.json          Areas → generates /areas/{slug}/
 │  │  ├─ regions.json            Region climate copy used on area pages
 │  │  ├─ projects.json           Before/After pairs
-│  │  ├─ products.json           Turf products → /turf/{slug}/ when published
+│  │  ├─ products.json           Turf range: visualiser product step, and /turf/{id}/ pages when published
 │  │  ├─ faq.json · nav.json
 │  │  └─ build.js · publishedProducts.js
 │  ├─ _includes/

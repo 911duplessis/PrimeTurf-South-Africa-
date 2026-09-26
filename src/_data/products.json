@@ -1,5 +1,5 @@
 {
-  "_note": "PrimeTurf turf range. Specs come from the PT product cards. `band` is the indicative installed R/m² range the estimator starts from (site prep is added, and the total is clamped to site.json pricing). `look` picks the colour style used to paint the concept visual. CALIBRATE `band` against real quotes.",
+  "_note": "PrimeTurf turf range. Specs come from the PT product cards. `band` is the indicative installed R/m² range the estimator starts from (site prep is added, and the total is clamped to site.json pricing). `look` picks the colour style used to paint the concept visual. Set `published: true` on an item to also build its /turf/{id}/ page. CALIBRATE `band` against real quotes.",
   "default": "spring-30",
   "items": [
     { "id": "deco-20", "name": "Deco 20mm", "tier": "Decorative", "pile": "20mm", "bestFor": "Borders, verges, display areas", "desc": "A low-profile decorative pile for verges, borders, entrance features and display areas.", "stitch": "16 stitches/10cm", "yarn": "C-shape PE 5200 + curly PP 2300", "guaranteeYears": 5, "band": [450, 620], "look": "hardwearing" },
