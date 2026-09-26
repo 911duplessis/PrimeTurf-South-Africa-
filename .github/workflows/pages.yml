@@ -9,6 +9,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
 
 concurrency:
   group: pages
@@ -39,5 +40,20 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # If Settings → Pages → Source is still "Deploy from a branch", GitHub also
+      # publishes the raw repository on every push (the "pages build and deployment"
+      # run), which has no built site and turns every page into a 404. Wait for it,
+      # so this built site is always the last deployment. With Source set to
+      # "GitHub Actions" that run doesn't exist and this step finishes at once.
+      - name: Wait for GitHub's branch publisher to finish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 40); do
+            n=$(gh api "repos/${{ github.repository }}/actions/runs?head_sha=${{ github.sha }}&per_page=50" \
+              --jq '[.workflow_runs[] | select(.name == "pages build and deployment" and .status != "completed")] | length')
+            [ "$n" = "0" ] && exit 0
+            echo "Branch publisher still running, waiting…"; sleep 15
+          done
       - id: deployment
         uses: actions/deploy-pages@v4
