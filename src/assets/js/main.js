@@ -117,7 +117,11 @@ $$("[data-quote-form]").forEach((form) => {
 
     const btn = form.querySelector('[type="submit"]');
     btn.disabled = true;
-    const res = await submitLead({ type: "quote", ...data });
+    const res = await submitLead({
+      Enquiry: "Free quote request (website form)",
+      Name: data.name, Phone: data.phone, Email: data.email, Area: data.location,
+      Project: data.service, "Approx. size (m²)": data.areaM2, Notes: data.message,
+    }, { subject: `Quote request: ${data.name}${data.location ? `, ${data.location}` : ""}` });
     btn.disabled = false;
     status.hidden = false;
     if (res.ok) {

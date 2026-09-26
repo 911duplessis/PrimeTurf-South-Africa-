@@ -169,7 +169,7 @@
         <div class="grid-2">
           <div class="field"><label for="viz-name" class="field__label">Name</label><input id="viz-name" name="name" autocomplete="name" required></div>
           <div class="field"><label for="viz-phone" class="field__label">Mobile</label><input id="viz-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="07x xxx xxxx"></div>
-          <div class="field"><label for="viz-email" class="field__label">Email</label><input id="viz-email" name="email" type="email" autocomplete="email"></div>
+          <div class="field"><label for="viz-email" class="field__label">Email</label><input id="viz-email" name="email" type="email" autocomplete="email" aria-describedby="viz-email-tip"><p class="field__tip" id="viz-email-tip">Add your email and we’ll send you your branded quote.</p></div>
           <div class="field">
             <label for="viz-area" class="field__label">Area</label>
             <select id="viz-area" name="location">
@@ -203,14 +203,20 @@
             <div class="disclaimer" role="note">
               <strong>Indicative only.</strong> This range uses the typical fully installed guide of R{{ site.pricing.minPerM2 }}–R{{ site.pricing.maxPerM2 }} per m², adjusted for the answers you gave. The concept image is a computer-generated impression, not a design or a guarantee of the finished result. Your fixed quote is confirmed after a free site visit.
             </div>
+            <p class="quote-status" data-quote-status role="status" aria-live="polite">Preparing your branded quote…</p>
             <div class="viz__ctas">
-              <button type="button" class="btn btn--primary btn--block" data-viz-book>Book my free site visit</button>
+              <button type="button" class="btn btn--primary btn--block" data-viz-download-quote disabled>Download my quote</button>
+              <button type="button" class="btn btn--outline btn--block" data-viz-book hidden>Send my quote to PrimeTurf</button>
               <a class="btn btn--outline btn--block" data-viz-wa target="_blank" rel="noopener" href="https://wa.me/{{ site.contact.whatsapp }}">{% include "partials/icon-wa.njk" %} Send to Leon on WhatsApp</a>
               <a class="btn btn--outline btn--block" href="tel:{{ site.contact.phoneE164 }}">Call {{ site.contact.phoneDisplay }}</a>
-              <button type="button" class="btn btn--text" data-viz-download>Download concept image</button>
+              <button type="button" class="btn btn--text" data-viz-download>Download concept image only</button>
               <button type="button" class="btn btn--text" data-viz-restart>Start again</button>
             </div>
             <p class="viz__sent" data-viz-sent role="status" hidden></p>
+            <figure class="quote-preview" data-quote-preview hidden>
+              <img data-quote-img alt="Your branded indicative quote from PrimeTurf" width="1240" height="1754">
+              <figcaption class="label">Your quote</figcaption>
+            </figure>
           </div>
         </div>
       </section>

@@ -30,8 +30,8 @@
     "statement": "Fully installed ranges typically R200–R850 per m², depending on the turf range and site preparation. Indicative only — confirmed after a site visit."
   },
   "forms": {
-    "_comment": "Set endpoint to a form backend (Formspree, Basin, a Vercel function, etc.). When empty, forms fall back to WhatsApp / email hand-off.",
-    "endpoint": ""
+    "_comment": "Form backend. FormSubmit (formsubmit.co) emails each lead, with the branded quote attached, to the address in the URL. One-time setup: the first submission sends an activation email to that address; click the link and every later lead is delivered. After activating, you can swap the address for the random string FormSubmit sends you, to hide it from spam bots. Empty = WhatsApp / email hand-off only.",
+    "endpoint": "https://formsubmit.co/ajax/leon@primeturf.co.za"
   },
   "visualiser": {
     "_comment": "Set apiBase to your deployed AI endpoint (see /api and README). Empty = fully client-side concept overlay.",
