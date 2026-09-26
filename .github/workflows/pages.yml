@@ -25,6 +25,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # Project Pages URL is /<repo>/. Once primeturf.co.za points here,
+          # set the repository variable PATH_PREFIX to "/".
+          PATH_PREFIX: ${{ vars.PATH_PREFIX || format('/{0}/', github.event.repository.name) }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

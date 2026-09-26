@@ -22,7 +22,8 @@ const MAX_BYTES = 20 * 1024 * 1024;
 
 /** Sample photo + a matching outline, so the demo works without an upload. */
 const SAMPLE = {
-  src: "/assets/img/projects/back-garden-before.webp", // a real PrimeTurf "before" photo
+  // A real PrimeTurf "before" photo; `base` keeps it working under a sub-path.
+  src: `${window.PRIMETURF?.base || "/"}assets/img/projects/back-garden-before.webp`,
   polygon: [[0.1, 0.44], [0.37, 0.46], [0.62, 0.54], [0.66, 0.62], [0.69, 0.78], [0.84, 0.82], [0.84, 1], [0, 1], [0, 0.58], [0.16, 0.52]],
   areaM2: 30,
 };

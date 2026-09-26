@@ -3,7 +3,14 @@
  * Source lives in /src, output in /_site. Content is driven by JSON in src/_data
  * so new locations, services, turf products and projects are data entries, not new code.
  */
+import { HtmlBasePlugin } from "@11ty/eleventy";
+
 export default function (eleventyConfig) {
+  // Serve from a sub-path (GitHub Pages project URL) or a domain root.
+  // Set PATH_PREFIX, e.g. "/PrimeTurf-South-Africa-/"; defaults to "/".
+  // HtmlBasePlugin rewrites root-relative href/src in the HTML output.
+  eleventyConfig.addPlugin(HtmlBasePlugin);
+
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addPassthroughCopy({ "src/robots.txt": "robots.txt" });
   eleventyConfig.addPassthroughCopy({ "src/site.webmanifest": "site.webmanifest" });
@@ -42,6 +49,7 @@ export default function (eleventyConfig) {
 
   return {
     dir: { input: "src", includes: "_includes", data: "_data", output: "_site" },
+    pathPrefix: process.env.PATH_PREFIX || "/",
     templateFormats: ["njk", "md", "html"],
     markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk",
