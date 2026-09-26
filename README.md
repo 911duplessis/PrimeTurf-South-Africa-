@@ -33,7 +33,7 @@ All tokens are CSS custom properties (`--pt-*`) at the top of `src/assets/css/ma
 ├─ #results                     Before & After gallery (4 pairs)
 ├─ #visualise                   Visualise Your Project tool (full flow)
 ├─ #services                    Residential · Commercial · Maintenance
-├─ #pricing                     R450–R850/m² + quick area calculator
+├─ #pricing                     R200–R850/m², band per turf range + quick area calculator
 ├─ #process                     5-step process
 ├─ #partners                    Tenders, estates & partnerships
 ├─ #areas                       Areas served
@@ -166,12 +166,12 @@ photo → mark area → size & surface → use → choose turf → requirements 
 | `providers.js` | **The AI seam.** `LocalProvider` (today) and `RemoteProvider` (AI). `getProvider()` picks one based on `site.json → visualiser.apiBase`. |
 | `renderer.js` | Loads and downscales the photo (≤1600px), runs the tap-to-outline editor, and composites procedural turf into the marked area while keeping the photo's light and shade. |
 | `area.js` | Works out m² from the outline. It projects the outline onto the ground, allowing for the camera angle, and scales it with one edge length the visitor enters. Expect about ±25%. |
-| `estimator.js` | A pure pricing function. It always stays **inside R450–R850/m²**. |
+| `estimator.js` | A pure pricing function. It places each project inside its turf range's band (Value R200–450, Standard R350–600, Premium R500–850, Sport R285–625) by site difficulty, and always stays **inside R200–R850/m²**. |
 | `lib/turf.js` | Turf texture painter, with looks `natural`, `lush`, `hardwearing` and `putting`. |
 
 **Mark area step:** after outlining, the visitor enters the length of the highlighted edge (the widest edge across the photo, nearest the camera; "Use a different edge" cycles through them). `area.js` turns that into m² and fills in the size step, which says "Calculated from your outline".
 
-**Choose turf step:** the PrimeTurf range from `src/_data/products.json` (name, tier, pile, stitch rate, guarantee and photo in `src/assets/img/products/`). Each product has an indicative `band` in R/m² that the estimator starts from, and a `look` that picks the concept colour style. To add a product, add an entry and a 640×400 WebP.
+**Choose turf step:** the PrimeTurf range from `src/_data/products.json` (name, tier, pile, stitch rate, guarantee and photo in `src/assets/img/products/`). Each product links to a price band (`priceTier` → `priceBands`) that the estimator prices within, and a `look` that picks the concept colour style. To add a product, add an entry and a 640×400 WebP.
 
 **Size step:** "Help me measure" adds up length × width rectangles and fills in the m² automatically. The surface choice shows whether the job is a hard installation (bonded onto paving or concrete) or a soft installation (the 7-step base process). From this step on, an "Indicative so far" price updates live as each answer changes, using the same `estimate()` as the final result.
 
@@ -180,7 +180,7 @@ photo → mark area → size & surface → use → choose turf → requirements 
 **Honesty guardrails built in:** "Concept visual only" appears under the image and is stamped on it. The disclaimer states that the price is indicative and the image is an impression. Every figure is clamped to the published price range.
 
 ### Calibrate the estimator
-`products.json → band` (per product), `estimator.js → GRADE_BANDS` and `PREP_LOADINGS` hold **starting assumptions**, not PrimeTurf's price list. Tune them against a handful of real quotes. The R450–R850 clamp stays in place either way.
+The price bands in `products.json → priceBands` are PrimeTurf's installed prices; each product links to one through `priceTier`. The difficulty weights in `estimator.js → DIFFICULTY` (how far surface, slope, drainage and so on push a project up its band) are **starting assumptions**. Tune them against a handful of real quotes. The R200–R850 clamp stays in place either way.
 
 ### Connect real AI
 1. **Deploy on Vercel** (see §7). `api/` is picked up automatically as serverless functions.

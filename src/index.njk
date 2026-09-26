@@ -28,7 +28,7 @@ scripts:
       <div><dt>Irrigation</dt><dd>0 L</dd></div>
       <div><dt>Fibre</dt><dd>UV-stabilised</dd></div>
       <div><dt>Drainage</dt><dd>All-weather</dd></div>
-      <div><dt>Warranty</dt><dd>6 yr + 24 mo</dd></div>
+      <div><dt>Warranty</dt><dd>Up to 6 yr + 24 mo</dd></div>
     </dl>
   </div>
 </section>
@@ -142,9 +142,15 @@ scripts:
     <div class="pricing__copy">
       <p class="eyebrow">Straight numbers</p>
       <h2 id="pricing-title" class="display-l" data-reveal>R{{ site.pricing.minPerM2 }}–R{{ site.pricing.maxPerM2 }}<span class="unit"> per m²</span></h2>
-      <p class="lede">Typical fully installed range. Where your project lands depends on two things:</p>
+      <p class="lede">Typical fully installed range, including excavation, sub-base and edging. Each turf range has its own band:</p>
+      <ul class="price-bands">
+        {%- for b in products.priceBands %}
+        <li><span class="price-bands__name">{{ b.label }}</span>{%- set names = [] %}{% for p in products.items %}{% if p.priceTier == b.id %}{% set names = (names.push(p.name), names) %}{% endif %}{% endfor %}<span class="price-bands__eg">{{ names | join(" · ") }}</span><strong>R{{ b.band[0] }}–R{{ b.band[1] }}</strong></li>
+        {%- endfor %}
+      </ul>
+      <p>Where your project lands within its band depends on:</p>
       <ul class="factor-list">
-        <li><strong>Turf grade</strong> — pile, density and intended use.</li>
+        <li><strong>Turf range</strong> — pile, density and intended use.</li>
         <li><strong>Site preparation</strong> — removal, levelling, drainage and access.</li>
       </ul>
       <p class="fine">Indicative only. Your fixed quote follows a free site visit.</p>
@@ -155,7 +161,7 @@ scripts:
       <input id="calc-m2" type="range" min="10" max="500" step="5" value="50" class="range range--lg" data-calc-m2>
       <div class="calc__result">
         <span class="label">Indicative installed</span>
-        <strong class="calc__total" data-calc-total>R22 500 – R42 500</strong>
+        <strong class="calc__total" data-calc-total>R10 000 – R42 500</strong>
       </div>
       <a class="btn btn--primary btn--block" href="#visualise">Get a tailored range →</a>
     </div>
@@ -181,7 +187,7 @@ scripts:
       <li class="process__step" data-reveal><span class="label">Step 2</span><h3>Site visit</h3><p>We measure and assess the site. Same-day visits available across Gauteng.</p></li>
       <li class="process__step" data-reveal><span class="label">Step 3</span><h3>Scope &amp; quote</h3><p>A clear written scope: turf, preparation, drainage and edging.</p></li>
       <li class="process__step" data-reveal><span class="label">Step 4</span><h3>Installation</h3><p>Supplied and installed by our own team — no subcontracted crews.</p></li>
-      <li class="process__step" data-reveal><span class="label">Step 5</span><h3>Handover</h3><p>6-year product warranty and 24-month workmanship guarantee.</p></li>
+      <li class="process__step" data-reveal><span class="label">Step 5</span><h3>Handover</h3><p>Product warranty of up to 6 years and a 24-month workmanship guarantee.</p></li>
     </ol>
   </div>
 </section>
@@ -202,7 +208,7 @@ scripts:
       <li><span class="label">Scope</span>Site assessment and written scope per phase</li>
       <li><span class="label">Supply</span>Turf supplied directly — one line of accountability</li>
       <li><span class="label">Install</span>Own installation team, scheduled around operations</li>
-      <li><span class="label">Cover</span>6-year product warranty · 24-month workmanship guarantee</li>
+      <li><span class="label">Cover</span>Up to 6-year product warranty · 24-month workmanship guarantee</li>
       <li><span class="label">Reach</span>Gauteng and the Western Cape</li>
     </ul>
   </div>

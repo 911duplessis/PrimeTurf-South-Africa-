@@ -1,14 +1,17 @@
 /**
  * Indicative price estimator — pure function, no DOM.
  *
- * Business rule (site.json → pricing): fully installed work is typically
- * R450–R850 per m², depending on turf grade and site preparation.
- * Every figure this module returns is clamped inside that published range.
+ * Business rule (products.json → priceBands, site.json → pricing): fully
+ * installed work, covering material, labour, excavation, sub-base and edging,
+ * is priced per m² within a band for each turf range:
+ *   Value R200–450 · Standard R350–600 · Premium R500–850 · Sport R285–625.
+ * The band already includes preparation, so site conditions move a project
+ * *within* its band (easy sites low, difficult sites high) rather than adding
+ * on top. Every figure is clamped inside the band and the published R200–R850.
  *
  * ┌──────────────────────────────────────────────────────────────────────┐
- * │ CALIBRATE ME: the grade bands and preparation loadings below are     │
- * │ starting assumptions that keep output inside R450–R850/m². Tune them │
- * │ against real quotes so the estimator mirrors how PrimeTurf prices.   │
+ * │ CALIBRATE ME: the difficulty weights below are starting assumptions. │
+ * │ Tune them against real quotes so the estimator mirrors PrimeTurf.    │
  * └──────────────────────────────────────────────────────────────────────┘
  *
  * Future: when a vision model returns a measured area or detects site
@@ -16,19 +19,23 @@
  * — the pricing logic doesn't change.
  */
 
-/** Per-m² band by turf grade (the "look" answer). */
+/** Fallback bands when no product is chosen, keyed by the concept "look". */
 export const GRADE_BANDS = {
-  natural: [450, 620],
-  hardwearing: [500, 700],
-  lush: [560, 760],
-  putting: [680, 850],
+  hardwearing: [200, 450],
+  natural: [350, 600],
+  lush: [500, 850],
+  putting: [285, 625],
 };
 
-/** Site-preparation loadings, R per m², added to both ends of the band. */
-export const PREP_LOADINGS = {
-  surface: { lawn: 20, soil: 0, paving: 0, "old-turf": 35, mixed: 20 }, // paving = hard installation (bonded, minimal prep)
-  extras: { slope: 35, drainage: 35, roots: 25, access: 20, irrigation: 10, shade: 0 },
+/** How much each site condition pushes a project up its band (0 = easiest, 1 = hardest). */
+export const DIFFICULTY = {
+  surface: { paving: 0, soil: 0.15, lawn: 0.25, mixed: 0.3, "old-turf": 0.45 }, // paving = hard installation (bonded, minimal prep)
+  extras: { slope: 0.2, drainage: 0.2, roots: 0.15, access: 0.1, irrigation: 0.05, shade: 0 },
+  use: { commercial: 0.1, "school-sport": 0.1 },
 };
+
+/** Share of the band one estimate spans. */
+const WINDOW = 0.4;
 
 /** Uses that are always confirmed individually on site. */
 const SITE_ASSESSED_USES = new Set(["commercial", "school-sport", "putting"]);
@@ -47,28 +54,25 @@ const roundTo = (n, step) => Math.round(n / step) * step;
  * @param {{areaM2:number, surface:string, use:string, look:string, band?:number[], extras:string[]}} a
  * @param {{minPerM2:number, maxPerM2:number}} pricing  from site.json
  */
-export function estimate(a, pricing = { minPerM2: 450, maxPerM2: 850 }) {
+export function estimate(a, pricing = { minPerM2: 200, maxPerM2: 850 }) {
   const { minPerM2: MIN, maxPerM2: MAX } = pricing;
-  const clamp = (v) => Math.min(MAX, Math.max(MIN, v));
   const area = Math.max(1, Number(a.areaM2) || 0);
   const notes = [];
 
-  // A chosen product carries its own band (products.json); otherwise fall back to the look.
-  let [low, high] = a.band || GRADE_BANDS[a.look] || GRADE_BANDS.natural;
+  // A chosen product carries its range's band (products.json); otherwise fall back to the look.
+  const [lo, hi] = (a.band || GRADE_BANDS[a.look] || GRADE_BANDS.natural).map((v) => Math.min(MAX, Math.max(MIN, v)));
+  const span = hi - lo;
 
-  // Heavier use nudges toward a more robust grade (look-only estimates).
-  if (!a.band && ["pets", "commercial", "school-sport"].includes(a.use) && a.look === "natural") { low += 30; high += 40; }
-
-  const prep = (PREP_LOADINGS.surface[a.surface] ?? 0) +
-    (a.extras || []).reduce((s, x) => s + (PREP_LOADINGS.extras[x] ?? 0), 0);
-  low += prep; high += prep;
-
+  let d = (DIFFICULTY.surface[a.surface] ?? 0.25) +
+    (a.extras || []).reduce((s, x) => s + (DIFFICULTY.extras[x] ?? 0), 0) +
+    (DIFFICULTY.use[a.use] ?? 0);
   // Small areas carry proportionally more set-up; large, simple areas less.
-  if (area < 20) { low += 40; high += 40; notes.push("Small areas carry proportionally more set-up per m²."); }
-  else if (area > 250) { low -= 20; high -= 20; }
+  if (area < 20) { d += 0.2; notes.push("Small areas carry proportionally more set-up per m²."); }
+  else if (area > 250) d -= 0.1;
+  d = Math.min(1, Math.max(0, d));
 
-  low = clamp(low); high = clamp(Math.max(high, low + 60));
-  if (high > MAX) high = MAX;
+  const low = lo + d * span * (1 - WINDOW);
+  const high = Math.min(hi, low + span * WINDOW);
 
   if ((a.extras || []).some((x) => ["slope", "drainage", "roots"].includes(x))) notes.push("Slope, drainage and root work are confirmed on site.");
   if ((a.extras || []).includes("shade")) notes.push("Heavy shade noted — we’ll check drainage and leaf fall on site.");
@@ -76,7 +80,7 @@ export function estimate(a, pricing = { minPerM2: 450, maxPerM2: 850 }) {
   if (SITE_ASSESSED_USES.has(a.use)) notes.push(`${label("use", a.use)} projects are scoped individually after a site assessment.`);
 
   return {
-    perM2: { low: roundTo(low, 10), high: roundTo(high, 10) },
+    perM2: { low: Math.max(lo, roundTo(low, 10)), high: Math.min(hi, roundTo(high, 10)) },
     total: { low: roundTo(low * area, 500), high: roundTo(high * area, 500) },
     area,
     notes,
