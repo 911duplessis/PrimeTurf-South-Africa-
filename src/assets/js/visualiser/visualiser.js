@@ -92,7 +92,7 @@ function init(root) {
       state.sample = sample;
       state.polygon = sample ? SAMPLE.polygon : null;
       state.editor?.destroy(); state.editor = null;
-      if (sample) { form.elements.areaM2.value = SAMPLE.areaM2; syncRange(); }
+      if (sample && !areaTouched) { m2.value = String(SAMPLE.areaM2); syncRange(); }
       // Ask the vision model (if configured) for a head start — don't block the flow.
       state.analysis = null;
       provider.analyse(state.photo).then((a) => applyAnalysis(a)).catch(() => {});
@@ -118,7 +118,7 @@ function init(root) {
   function applyAnalysis(a) {
     if (!a) return;
     state.analysis = a;
-    if (a.areaM2?.low && a.areaM2?.high) { form.elements.areaM2.value = Math.round((a.areaM2.low + a.areaM2.high) / 2); syncRange(); }
+    if (a.areaM2?.low && a.areaM2?.high && !areaTouched) { m2.value = Math.round((a.areaM2.low + a.areaM2.high) / 2); syncRange(); }
     if (a.surface && form.querySelector(`[name="surface"][value="${a.surface}"]`)) form.querySelector(`[name="surface"][value="${a.surface}"]`).checked = true;
     if (a.polygon?.length >= 3 && !state.polygon) { state.polygon = a.polygon; if (state.editor) { state.editor.destroy(); state.editor = null; if (current() === "area") onEnter("area"); } }
   }
@@ -129,14 +129,24 @@ function init(root) {
   q("[data-viz-clear]").addEventListener("click", () => state.editor?.clear());
 
   /* ---------- Step: size ---------- */
+  // Text inputs + our own parsing: SA phone keyboards type "12,5", which
+  // type="number" silently discards in some browsers (leaving the old value).
+  const num = (v) => parseFloat(String(v).replace(/\s/g, "").replace(",", "."));
   const m2 = form.elements.areaM2;
   const m2Range = q("[data-viz-m2-range]");
+  const presets = [...root.querySelectorAll("[data-m2-preset]")];
+  let areaTouched = false;
   function syncRange() {
-    m2Range.value = Math.min(+m2Range.max, +m2.value || 0);
-    m2Range.dispatchEvent(new Event("input"));
+    const v = num(m2.value) || 0;
+    m2Range.value = Math.min(+m2Range.max, Math.max(+m2Range.min, v));
+    m2Range.style.setProperty("--fill", `${((m2Range.value - m2Range.min) / (m2Range.max - m2Range.min)) * 100}%`);
+    presets.forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.m2Preset === v)));
   }
-  m2Range.addEventListener("input", (e) => { if (e.isTrusted) m2.value = m2Range.value; });
-  m2.addEventListener("input", syncRange);
+  const setArea = (v) => { m2.value = String(v); areaTouched = true; syncRange(); updateLive(); };
+  ["input", "change"].forEach((ev) => m2Range.addEventListener(ev, () => setArea(m2Range.value)));
+  m2.addEventListener("input", () => { areaTouched = true; syncRange(); });
+  presets.forEach((b) => b.addEventListener("click", () => setArea(b.dataset.m2Preset)));
+  syncRange();
 
   /* ---------- Size helper: add up length × width rectangles ---------- */
   const measureRows = q("[data-measure-rows]");
@@ -147,9 +157,9 @@ function init(root) {
     const row = document.createElement("div");
     row.className = "measure__row";
     row.innerHTML = `
-      <label>Length (m)<input type="number" inputmode="decimal" min="0" step="0.1" data-len aria-label="Area ${i} length in metres"></label>
+      <label>Length (m)<input type="text" inputmode="decimal" autocomplete="off" data-len aria-label="Area ${i} length in metres"></label>
       <span class="measure__x" aria-hidden="true">×</span>
-      <label>Width (m)<input type="number" inputmode="decimal" min="0" step="0.1" data-wid aria-label="Area ${i} width in metres"></label>
+      <label>Width (m)<input type="text" inputmode="decimal" autocomplete="off" data-wid aria-label="Area ${i} width in metres"></label>
       <span class="measure__out" data-out>= 0 m²</span>
       <button type="button" class="measure__del" aria-label="Remove area ${i}">×</button>`;
     row.querySelector(".measure__del").addEventListener("click", () => { row.remove(); if (!measureRows.children.length) addMeasureRow(); sumMeasure(); });
@@ -159,12 +169,12 @@ function init(root) {
   function sumMeasure() {
     let total = 0;
     for (const row of measureRows.children) {
-      const a = (parseFloat(row.querySelector("[data-len]").value) || 0) * (parseFloat(row.querySelector("[data-wid]").value) || 0);
+      const a = (num(row.querySelector("[data-len]").value) || 0) * (num(row.querySelector("[data-wid]").value) || 0);
       row.querySelector("[data-out]").textContent = `= ${fmtM2(a)}`;
       total += a;
     }
     measureTotal.textContent = fmtM2(total);
-    if (total > 0) { m2.value = Math.max(1, Math.round(total)); syncRange(); updateLive(); }
+    if (total > 0) setArea(Math.max(1, Math.round(total)));
   }
   addMeasureRow();
   measureRows.addEventListener("input", sumMeasure);
@@ -219,7 +229,7 @@ function init(root) {
       return false;
     }
     if (key === "size") {
-      const v = +m2.value;
+      const v = num(m2.value);
       const bad = !(v >= 1 && v <= 20000);
       m2.setAttribute("aria-invalid", bad);
       if (bad) { m2.focus(); return false; }
@@ -247,7 +257,7 @@ function init(root) {
   function collectAnswers() {
     const f = new FormData(form);
     return {
-      areaM2: Number(f.get("areaM2")),
+      areaM2: num(f.get("areaM2")) || 0,
       surface: f.get("surface"),
       use: f.get("use"),
       look: f.get("look"),

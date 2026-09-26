@@ -338,12 +338,12 @@ ul, ol { margin: 0; padding: 0; }
 .calc__total { font-family: var(--pt-font-display); font-size: clamp(1.3rem, 1.1rem + 1vw, 1.8rem); font-weight: 400; color: var(--pt-primary-green); font-variant-numeric: tabular-nums; }
 @media (max-width: 900px) { .pricing { grid-template-columns: 1fr; } }
 
-.range { -webkit-appearance: none; appearance: none; width: 100%; height: 36px; background: transparent; cursor: pointer; --fill: 10%; }
+.range { -webkit-appearance: none; appearance: none; width: 100%; height: 44px; touch-action: manipulation; background: transparent; cursor: pointer; --fill: 10%; }
 .range::-webkit-slider-runnable-track { height: 4px; background: linear-gradient(to right, var(--pt-primary-green) var(--fill), var(--pt-hairline-strong) var(--fill)); }
 .range::-moz-range-track { height: 4px; background: var(--pt-hairline-strong); }
 .range::-moz-range-progress { height: 4px; background: var(--pt-primary-green); }
-.range::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -9px; border-radius: 50%; background: var(--pt-white); border: 2px solid var(--pt-primary-green); }
-.range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--pt-white); border: 2px solid var(--pt-primary-green); }
+.range::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; margin-top: -12px; border-radius: 50%; background: var(--pt-white); border: 2px solid var(--pt-primary-green); }
+.range::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: var(--pt-white); border: 2px solid var(--pt-primary-green); }
 
 /* ---------- Process ---------- */
 .team { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: var(--pt-space-lg) clamp(2rem, 1rem + 4vw, 5rem); align-items: center; margin-bottom: var(--pt-space-xl); }
@@ -475,6 +475,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 .viz__tools { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; margin-top: .9rem; }
 .viz__count { color: var(--pt-muted); margin-left: auto; }
 .m2-input { position: relative; max-width: 240px; }
+.size-presets { display: flex; flex-wrap: wrap; gap: .5rem; margin: .5rem 0 .25rem; }
+.size-presets .chip[aria-pressed="true"] { background: var(--pt-primary-green); border-color: var(--pt-primary-green); color: var(--pt-ivory); }
 .m2-input input { font-family: var(--pt-font-display); font-size: 1.5rem !important; padding-right: 3.2rem !important; }
 .m2-input__unit { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: var(--pt-muted); }
 .options { display: flex; flex-wrap: wrap; gap: .5rem; }

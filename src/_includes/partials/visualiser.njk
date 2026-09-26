@@ -59,11 +59,19 @@
         <div class="field">
           <label for="viz-m2" class="field__label">Approximate area</label>
           <div class="m2-input">
-            <input id="viz-m2" name="areaM2" type="number" inputmode="decimal" min="5" max="20000" step="1" value="60" required>
+            <input id="viz-m2" name="areaM2" type="text" inputmode="decimal" autocomplete="off" value="60" required aria-describedby="viz-m2-tip">
             <span class="m2-input__unit">m²</span>
           </div>
           <input type="range" min="5" max="600" step="5" value="60" data-viz-m2-range aria-label="Approximate area slider" class="range">
-          <p class="viz__hint label">Tip: length × width. A typical double garage is roughly 36 m².</p>
+          <div class="size-presets" role="group" aria-label="Quick sizes">
+            <button type="button" class="chip" data-m2-preset="20">20 m²</button>
+            <button type="button" class="chip" data-m2-preset="40">40 m²</button>
+            <button type="button" class="chip" data-m2-preset="60">60 m²</button>
+            <button type="button" class="chip" data-m2-preset="100">100 m²</button>
+            <button type="button" class="chip" data-m2-preset="200">200 m²</button>
+            <button type="button" class="chip" data-m2-preset="400">400 m²</button>
+          </div>
+          <p class="viz__hint label" id="viz-m2-tip">Tip: length × width. A typical double garage is roughly 36 m².</p>
           <details class="measure" data-measure>
             <summary>Help me measure</summary>
             <div class="measure__body">
