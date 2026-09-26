@@ -192,6 +192,8 @@ The site uses root-relative URLs (`/assets/…`), so serve it from the root of a
 3. Optional: add `ANTHROPIC_API_KEY` (and your image provider key) under Environment Variables.
 
 ### GitHub Pages (static only)
+> If Pages shows `Error: Invalid syntax for include tag … partials/quote-form.njk`, Pages is set to **Deploy from a branch** and is running Jekyll on the raw source. Switch the source to **GitHub Actions** (step 1). The root `.nojekyll` file stops Jekyll from processing the repo.
+
 1. Repo → Settings → Pages → Source: **GitHub Actions**. `.github/workflows/pages.yml` builds and deploys on every push to `main`.
 2. Set a **custom domain** (`primeturf.co.za`) in the same settings page. Without one, the site sits under `/<repo>/` and root-relative asset paths break.
 3. `api/` is ignored on Pages. The visualiser runs in local mode.
